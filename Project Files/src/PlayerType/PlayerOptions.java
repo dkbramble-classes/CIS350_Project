@@ -5,7 +5,8 @@ Edits characteristics for each player
 @author Dane Bramble
 @version September 2018
 *****************************************************************/
-import java.util.Scanner; 
+package PlayerType;
+import java.util.Scanner;
 
 public class PlayerOptions {
 	/*****************************************************************
@@ -13,24 +14,36 @@ public class PlayerOptions {
 
 	@param play the Player whose name will be updated
 	*****************************************************************/
-	private void inputName(Player play){
+	private static void inputName(Player play){
+		System.out.println("Enter Name:");
 		Scanner scan = new Scanner(System.in);
-		String name = scan.nextLine(); 
-		if (name.length() < 11){
+		String name = scan.nextLine();
+		scan.close();
+		
+		if (name.length() < 11 && name.length() > 0){
 			play.setName(name);
 		}
 		else{
-			System.out.println("Name can only be up to ten characters!");
+			System.out.println("Name must be between 1 and 10 characters!");
 		}
 		return;
 	}
+	
+//	public static void main(String [ ] args){
+//		Player play = new Player();
+//		play.setPosition(1);
+//		selectColor(play, 'r');
+//		inputName(play);
+//		System.out.println(play.getColor() + " " + play.getPosition() + " " + play.getName());
+//	}
+	
 	/*****************************************************************
 	Allows input to set the name of a player
 
 	@param play the Player whose name will be updated
 	@param c the color that the player has chosen
 	*****************************************************************/
-	private void selectColor(Player play, char c){
+	private static void selectColor(Player play, char c){
 		play.setColor(c);
 		return;
 	}
