@@ -26,11 +26,11 @@ public class ConnectLogic{
 		
 		//find the lowest point before chip hits bottom or another chip
 		if(depth + 1 < height){
-			while(gameGrid[depth+1][col] == 0){
+			while(gameGrid[col][depth+1] == 0){
 				depth++;
 			}
 			
-			gameGrid[depth][col] = player;
+			gameGrid[col][depth] = player;
 		}
 	}
 
