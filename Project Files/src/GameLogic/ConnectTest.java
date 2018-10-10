@@ -5,25 +5,46 @@ public class ConnectTest{
 	
 	private static int[][] grid;
 
-	public static void main(String[] args){	
-		logic = new ConnectLogic(5,4);
+	public static void main(String[] args){
+	
+		Scanner scn = new Scanner(System.in);
+		System.out.print("\nWidth: ");
+		int width = scn.nextInt();
+		System.out.print("Height: ");
+		int height = scn.nextInt();
+		System.out.print("Number of players: ");
+		int players = scn.nextInt();
+		
+		logic = new ConnectLogic(width,height,players);
+		
 		grid = logic.getGrid();
 		
 		printBoard();
-
-		Scanner scn = new Scanner(System.in);
-		int column = scn.nextInt();
-
-		logic.drop(column, 1);
-		printBoard();
+	
+		int column = 0;	
+		do{
+			logic.nextTurn();
+			column = scn.nextInt() - 1;
+			if(!logic.isValid(column)){
+				System.out.println("*out of bounds*");
+			}else{
+				logic.drop(column);
+				printBoard();
+			}
+		}while(column != -1);
 	}
 
 	public static void printBoard(){			
-		for(int i=0;i<logic.getX();i++){
-			for(int j=0;j<logic.getY();j++){
-				System.out.print(grid[i][j]);
+		
+		System.out.println("--------------");
+		for(int i=0;i<logic.getY();i++){
+			for(int j=0;j<logic.getX();j++){
+				System.out.print(grid[j][i] + " ");
 			}
 			System.out.println();
 		}
+
+		System.out.println("--------------");
+
 	}
 }
