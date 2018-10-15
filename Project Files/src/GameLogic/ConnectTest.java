@@ -7,8 +7,9 @@ public class ConnectTest{
 
 	public static void main(String[] args){
 	
+		
 		Scanner scn = new Scanner(System.in);
-		System.out.print("\nWidth: ");
+		System.out.print("--------\nWidth: ");
 		int width = scn.nextInt();
 		System.out.print("Height: ");
 		int height = scn.nextInt();
@@ -17,19 +18,25 @@ public class ConnectTest{
 		
 		logic = new ConnectLogic(width,height,players);
 		
+		
+		
 		grid = logic.getGrid();
 		
 		printBoard();
 	
 		int column = 0;	
 		do{
+			if(logic.checkWin() != 0){
+				System.out.println("Win!");
+				break;
+			}
 			logic.nextTurn();
 			column = scn.nextInt() - 1;
 			if(!logic.isValid(column)){
 				System.out.println("*out of bounds*");
 			}else{
 				logic.drop(column);
-				printBoard();
+				printBoard();	
 			}
 		}while(column != -1);
 	}
@@ -47,4 +54,5 @@ public class ConnectTest{
 		System.out.println("--------------");
 
 	}
+
 }
