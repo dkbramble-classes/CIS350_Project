@@ -67,22 +67,24 @@ public class ConnectLogic{
 	}
 
 	/**************************************************************************
-	*Check Win: 
+	*Check Win: find if a line of 4 exists horizontally, vertically, or
+	*			diagonally
 	**************************************************************************/
+	
+	//this is super ugly
+	//I am ashamed
 	public int checkWin(){
 		for(int i=0;i<width;i++){
 			for(int j=0;j<height;j++){
+
+				//check for each player
 				for(int p=1;p<=numPlayers;p++){
 				
 					if(j < height - 3){
 				
 	
 						//vertical win
-						/*System.out.println("Vertical:\n--------\nplayer:\t" + p + "\n"
-											+ (i+1) + "\t" + (j+1) + "\n" + (i+1) + "\t" 
-											+ (j+2) + "\n" + (i+1) + "\t" + (j+3) + "\n"
-											+ (i+1) + "\t" + (j+4) + "\n-----------");
-						*/if(gameGrid[i][j] == p && gameGrid[i][j+1] == p && 
+						if(gameGrid[i][j] == p && gameGrid[i][j+1] == p && 
 							gameGrid[i][j+2] == p && gameGrid[i][j+3] == p)
 						{
 							return p;	
@@ -91,7 +93,6 @@ public class ConnectLogic{
 
 					if(i < width - 3){
 					
-						//System.out.println("Horizontal-player:\t" + p);
 						//horizontal win
 						if(gameGrid[i][j] == p && gameGrid[i+1][j] == p && 
 							gameGrid[i+2][j] == p && gameGrid[i+3][j] == p)
@@ -102,8 +103,7 @@ public class ConnectLogic{
 
 					if(i < width-3 && j< height-3){
 						
-						//diagonal down
-						//System.out.println("Diagonal Down-player:\t" + p);
+						//diagonal down	
 						if(gameGrid[i][j] == p && gameGrid[i+1][j+1] == p && 
 							gameGrid[i+2][j+2] == p && gameGrid[i+3][j+3] == p)
 						{
@@ -114,8 +114,7 @@ public class ConnectLogic{
 
 					if(i < width - 3 && j > 3){
 
-							//diagonal up
-							//System.out.println("Diagonal Up-player\t" + p);
+							//diagonal up						
 							if(gameGrid[i][j] == p && gameGrid[i+1][j-1] == p && 
 								gameGrid[i+2][j-2] == p && gameGrid[i+3][j-3] == p)
 						{
