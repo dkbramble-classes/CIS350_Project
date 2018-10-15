@@ -23,9 +23,9 @@ public class ConnectLogic{
 	*Start Game: Initialize all spaces to be empty, and start with player 1
 	**************************************************************************/
 	public void startGame(int width, int height){
-		for(int j=0;j<width-1;j++){
-			for(int i=0;i<height-1;i++){
-				gameGrid[j][i] = 0;
+		for(int i=0;i<width-1;i++){
+			for(int j=0;j<height-1;j++){
+				gameGrid[i][j] = 0;
 			}
 		}
 
@@ -49,7 +49,7 @@ public class ConnectLogic{
 			}
 		}
 	
-		System.out.println(depth);
+		//System.out.println(depth);
 		gameGrid[col][depth] = activePlayer;
 		
 	}
@@ -69,11 +69,67 @@ public class ConnectLogic{
 	/**************************************************************************
 	*Check Win: 
 	**************************************************************************/
-	/*public int checkWin(){
+	public int checkWin(){
+		for(int i=0;i<width;i++){
+			for(int j=0;j<height;j++){
+				for(int p=1;p<=numPlayers;p++){
+				
+					if(j < height - 3){
+				
 	
-	}*/
+						//vertical win
+						/*System.out.println("Vertical:\n--------\nplayer:\t" + p + "\n"
+											+ (i+1) + "\t" + (j+1) + "\n" + (i+1) + "\t" 
+											+ (j+2) + "\n" + (i+1) + "\t" + (j+3) + "\n"
+											+ (i+1) + "\t" + (j+4) + "\n-----------");
+						*/if(gameGrid[i][j] == p && gameGrid[i][j+1] == p && 
+							gameGrid[i][j+2] == p && gameGrid[i][j+3] == p)
+						{
+							return p;	
+						}
+					}
 
+					if(i < width - 3){
+					
+						//System.out.println("Horizontal-player:\t" + p);
+						//horizontal win
+						if(gameGrid[i][j] == p && gameGrid[i+1][j] == p && 
+							gameGrid[i+2][j] == p && gameGrid[i+3][j] == p)
+						{
+							return p;	
+						}
+					}
 
+					if(i < width-3 && j< height-3){
+						
+						//diagonal down
+						//System.out.println("Diagonal Down-player:\t" + p);
+						if(gameGrid[i][j] == p && gameGrid[i+1][j+1] == p && 
+							gameGrid[i+2][j+2] == p && gameGrid[i+3][j+3] == p)
+						{
+							return p;	
+						}
+					}
+	
+
+					if(i < width - 3 && j > 3){
+
+							//diagonal up
+							//System.out.println("Diagonal Up-player\t" + p);
+							if(gameGrid[i][j] == p && gameGrid[i+1][j-1] == p && 
+								gameGrid[i+2][j-2] == p && gameGrid[i+3][j-3] == p)
+						{
+								return p;	
+						}
+					}
+				}
+			}
+		}	
+	
+		return 0;
+	}
+
+	
 	/**************************************************************************
 	*Is Valid: Returns the validity of a move, false if out of bounds
 	**************************************************************************/
