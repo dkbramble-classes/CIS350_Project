@@ -37,7 +37,7 @@ public class ConnectLogic{
 	/**************************************************************************
 	*Drop: Find the lowest space in the column, set it to be active player
 	**************************************************************************/
-	public void drop(int col){
+	public int drop(int col){
 		
 		int depth = 0;
 		
@@ -51,7 +51,7 @@ public class ConnectLogic{
 	
 		//System.out.println(depth);
 		gameGrid[col][depth] = activePlayer;
-		
+		return depth;
 	}
 
 	/**************************************************************************
