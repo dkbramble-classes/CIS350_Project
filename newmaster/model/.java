@@ -10,40 +10,25 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 
+public class ExitButton extends Button{
 
-/******************************************************************
-* Creates an Exit Button down-loaded from Kenney.nl
-******************************************************************/
-
-public class ExitButton extends Button {
-
-    //CSS to use .png files as the icon path
-		private final String FONT_PATH = "src/model/resources/"
-		    + "kenvector_future.ttf";
-		private final String EXIT_PRESSED_STYLE = "-fx-background-color:"
-		    + " transparent; "
-		    + "-fx-background-image: url('/model/resources/buttonX.png');";
-		private final String EXIT_FREE_STYLE = "-fx-background-color: "
-		    + "transparent;"
-		    + " -fx-background-image: url('/model/resources/buttonX.png');";
-
-
-/******************************************************************
-* constructor for ExitButton class, sets the height and width of 
-* icon along with the style
-******************************************************************/
-
+		private final String FONT_PATH = "src/model/resources/kenvector_future.ttf";
+		private final String EXIT_PRESSED_STYLE = "-fx-background-color: transparent; -fx-background-image: url('/model/resources/buttonX.png');";
+		private final String EXIT_FREE_STYLE = "-fx-background-color: transparent; -fx-background-image: url('/model/resources/buttonX.png');";
+//		private final String MUSIC_PRESSED_STYLE = "-fx-background-color: transparent; -fx-background-image: url('/model/resources/buttonX.png');";
+//		private final String MUSIC_FREE_STYLE = "-fx-background-color: transparent; -fx-background-image: url('/model/resources/buttonX.png');";
+//		
+		
 		public ExitButton(String text) {
 			setText(text);
 			setButtonFont();
 			setPrefWidth(100);
 			setPrefHeight(100);
 			setStyle(EXIT_FREE_STYLE);
+			//setStyle(MUSIC_FREE_STYLE);
 			initializeButtonListener();
 		}
-/******************************************************************
-* Sets the size of the button
-******************************************************************/
+
 		private void setButtonFont() {
 			try {
 				setFont(Font.loadFont(new FileInputStream(FONT_PATH), 25));
@@ -52,10 +37,6 @@ public class ExitButton extends Button {
 				}
 		}
 		
-/******************************************************************
-* Needs more work, but the button should have a shadow around it 
-* when pressed, when released it goes back to the "freestyle"
-******************************************************************/
 		private void setExitPressedStyle() {
 			setStyle(EXIT_FREE_STYLE);
 			setPrefHeight(20);
@@ -66,11 +47,18 @@ public class ExitButton extends Button {
 			setPrefHeight(20);
 			setLayoutY(getLayoutY() - 4);
 		}
-
+		//private void setMusicPressedStyle() {
+//			setStyle(EXIT_FREE_STYLE);
+//			setPrefHeight(20);
+//			setLayoutY(getLayoutY() + 4);
+//		}
+//
+//		private void setMusicFreeStyle() {
+//			setStyle(EXIT_FREE_STYLE);
+//			setPrefHeight(20);
+//			setLayoutY(getLayoutY() - 4);
+//		}
 		
-/******************************************************************
-* Will exit the program when the button is clicked
-******************************************************************/
 		private void initializeButtonListener() {
 			setOnMousePressed(new EventHandler<MouseEvent>() {
 
@@ -96,10 +84,6 @@ public class ExitButton extends Button {
 				
 			});
 			
-/******************************************************************
-* Shadow will disappear when the button is not clicked on
-******************************************************************/			
-
 			setOnMouseEntered(new EventHandler<MouseEvent>() {
 
 				@Override

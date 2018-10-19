@@ -1,36 +1,25 @@
 //icons imported from https://kenney.nl/assets/ui-pack
+
 package View;
 
-import javafx.scene.control.Button;
 import javafx.event.EventHandler;
-import javafx.event.Event;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-
-import java.awt.Insets;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import model.ExitButton;
 import model.PlayButton;
 import model.MusicButton;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
-import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
-import javafx.stage.Stage;
 
 public class ViewManager {
 	
@@ -42,9 +31,15 @@ public class ViewManager {
 	
 	private final static int MENU_BUTTONS_START_X = 100;
 	private final static int MENU_BUTTONS_START_Y = 150;
-	private final String FONT_PATH = "src/model/resources/kenvector_future.ttf";
+	private final String FONT_PATH = "src/model/"
+	    + "resources/kenvector_future.ttf";
 	
-	
+/******************************************************************
+* Class that deals with the second screen of the program; the 
+* player details including the names and colors of each person 
+* playing Connect 4
+******************************************************************/
+
 	public ViewManager() throws FileNotFoundException {
 		mainPane = new AnchorPane();
 		mainScene = new Scene(mainPane, WIDTH, HEIGHT);
@@ -53,24 +48,32 @@ public class ViewManager {
 		createButtons();
 		createBackground();
 	}
-		
+	
+/******************************************************************
+* returns the current stage
+******************************************************************/
+	//returns the current stage
 	public Stage getMainStage() {
 		return mainStage;
 	}
 	
-	
+/******************************************************************
+* Creates labels and buttons and adds all of them to the main pane
+******************************************************************/
+	 
 	private void createButtons() throws FileNotFoundException {
 		Label title = new Label("CONNECT 4");
 		title.setLayoutX(200);
 		title.setLayoutY(100);
-		title.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 70));
+		title.setFont(Font.loadFont(new FileInputStream(FONT_PATH),70));
 		title.setTextFill(Color.DARKSLATEGRAY);
 		
 		ExitButton exitButton = new ExitButton(null);
 		PlayButton startButton = new PlayButton("PLAY NOW");
 		PlayButton intenseButton = new PlayButton("INTENSE4");
 		MusicButton musicButton = new MusicButton(null);
-		mainPane.getChildren().addAll(exitButton, startButton, intenseButton, musicButton, title);
+		mainPane.getChildren().addAll(exitButton, startButton, 
+		    intenseButton, musicButton, title);
 		
 		exitButton.setLayoutX(700);
 		exitButton.setLayoutY(0);
@@ -81,30 +84,37 @@ public class ViewManager {
 		musicButton.setLayoutX(640);
 		musicButton.setLayoutY(27);
 		
-		startButton.setOnAction(new EventHandler<ActionEvent>() {
-
+/******************************************************************
+*  creates an instance of playerDetailsManager and creates the 
+*  screen when user clicks on the CONNECT 4 button on the main menu
+******************************************************************/
+		 
+		  startButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				PlayerDetailsManager playerDetailsManager = new PlayerDetailsManager();
+				PlayerDetailsManager playerDetailsManager = new 
+				    PlayerDetailsManager();
 				playerDetailsManager.createDetailsScreen(mainStage);
-				
-//				GameManager gameManager = new GameManager();
-//				gameManager.createNewGame(mainStage);
-				
+
 			}
 			
 		});
 
 	}
-
-	
-	
-	
-	private void createBackground() {
+		
+/******************************************************************
+* creates the background to the player details screen. same as 
+* main menu background.
+******************************************************************/
+  private void createBackground() {
 	
 		
-		Image backgroundImage = new Image("model/resources/Slider-CL01-Background-256x256.png", 256,256,false,true);
-		BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);
+		Image backgroundImage = new Image("model/resources/"
+		    + "Slider-CL01-Background-256x256.png",
+		    256,256,false,true);
+		BackgroundImage background = new BackgroundImage(backgroundImage,
+		    BackgroundRepeat.REPEAT,
+		    BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);
 		mainPane.setBackground(new Background(background));
 		
 	}
