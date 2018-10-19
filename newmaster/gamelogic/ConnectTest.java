@@ -1,9 +1,10 @@
 package gamelogic;
-import java.util.*;
 
-public class ConnectTest{
+import java.util.Scanner;
+
+public class ConnectTest {
 	private static ConnectLogic logic;
-	
+
 	private static int[][] grid;
 
 	public static void main(String[] args){

@@ -5,7 +5,7 @@ These are system functions to use during or before a game
 @version September 2018
 *****************************************************************/
 
-package ConnectSystem;
+package connectsystem;
 
 public class SystemOptions {
 

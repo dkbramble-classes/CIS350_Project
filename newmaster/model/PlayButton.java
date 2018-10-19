@@ -18,6 +18,7 @@ public class PlayButton extends Button{
 //		private final String MUSIC_PRESSED_STYLE = "-fx-background-color: transparent; -fx-background-image: url('/model/resources/buttonX.png');";
 //		private final String MUSIC_FREE_STYLE = "-fx-background-color: transparent; -fx-background-image: url('/model/resources/buttonX.png');";
 //		
+		
 		public PlayButton(String text) {
 			setText(text);
 			setButtonFont();

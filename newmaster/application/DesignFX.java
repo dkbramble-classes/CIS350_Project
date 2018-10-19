@@ -1,6 +1,5 @@
 package application;
 
-	
 import View.ViewManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -17,13 +16,13 @@ public class DesignFX extends Application {
 			primaryStage = manager.getMainStage();
 			primaryStage.show();
 			
-		} catch(Exception e) {
+		} catch (Exception e) { 
 			e.printStackTrace();
 		}
 	}
 	
 	public static void main(String[] args) {
-		launch(args);
+	  launch(args);
 	}
 }
 

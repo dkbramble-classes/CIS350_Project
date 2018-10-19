@@ -7,7 +7,7 @@ Each player has an order in which his turn will be.
 @version September 2018
 *****************************************************************/
 
-package PlayerType;
+package playertype;
 
 public class Player {
   private char color; //The color of the player's chip

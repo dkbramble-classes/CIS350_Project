@@ -6,7 +6,7 @@ Edits characteristics for each player
 @version September 2018
 *****************************************************************/
 
-package PlayerType;
+package playertype;
 
 import java.util.Scanner;
 
