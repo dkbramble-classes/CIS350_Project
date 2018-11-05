@@ -9,6 +9,8 @@ Each player has an order in which his turn will be.
 
 package playertype;
 
+import gamelogic.ConnectLogic;
+
 public class Player {
   private char color; //The color of the player's chip
   private int position; // The order of the players (1st, 2nd, 3rd, 4th)
@@ -35,6 +37,26 @@ public class Player {
     this.color = c;
     this.position = p;
     this.name = n;
+  }
+  
+  /*****************************************************************
+  Requests an input as a column, places it on the board if valid.
+  @param logic - the game logic for the player to interact with
+  */
+  
+  public int playerTurn(ConnectLogic logic) {
+    System.out.println(name + "'s turn");
+    int column = 2; // implement logic for getting the column here
+    if (!logic.isValid(column)) {
+      System.out.println("*out of bounds*");
+      column = -1;
+    } else {
+      logic.drop(column);
+      System.out.println("Player " 
+          + name + " (" + position + ") placed a chip at column " 
+          + (column + 1));
+    }
+    return column;
   }
 
   //Retrieve the player characteristics
