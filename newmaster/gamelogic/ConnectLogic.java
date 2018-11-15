@@ -55,10 +55,12 @@ public class ConnectLogic {
     int depth = 0;
     
     //find the lowest point before chip hits bottom or another chip 
-    while (gameGrid[col][depth + 1] == 0) {
-      depth++;
-      if (depth + 1 >= height) {
-        break;
+    if (height > 1) { //just in case
+      while (gameGrid[col][depth + 1] == 0) {
+        depth++;
+        if (depth + 1 >= height) {
+          break;
+        }
       }
     }
 
@@ -95,6 +97,18 @@ public class ConnectLogic {
           break;
         }
       }
+    }
+   
+    boolean possible = false;
+    for (int i = 0; i < width; i++) { //check if any more chips can be added
+      if (gameGrid [i][0] == 0) {
+        possible = true;
+        break;
+      }
+    }
+    if (!possible) {
+      column = -1; //if no more open slots, game over
+      System.out.println("Game board is filled, it's a tie!");
     }
     
     return column; //if -1, end the game

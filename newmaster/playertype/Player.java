@@ -46,7 +46,7 @@ public class Player {
   
   public int playerTurn(ConnectLogic logic) {
     System.out.println(name + "'s turn");
-    int column = 2; // implement logic for getting the column here
+    int column = 0; // this is the selected column, change on implementation
     if (!logic.isValid(column)) {
       System.out.println("*out of bounds*");
       column = -1;

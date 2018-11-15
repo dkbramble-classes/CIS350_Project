@@ -18,6 +18,8 @@ public class ComputerPlayer {
   private int position; // The order of the computer (1st, 2nd, 3rd, 4th)
   private String name; //The name displayed
   private char difficulty; // The computer's level of difficulty (e = easy, m = medium, h = hard)
+  private int min = -1;
+  private int max = -1;
 
   /*****************************************************************
     Constructor - a computer without a name , color, or position.
@@ -47,10 +49,72 @@ public class ComputerPlayer {
   
   /*****************************************************************
   Calculates the next chip placement for the computer player.
-  @param grid - the game board to use in calculations
+  @param logic - the game board to use in calculations
   */
-  public int calculateTurn(int[][] grid) {
-    return 0;
+  public int calculateTurn(ConnectLogic logic) {
+    Random rand = new Random();
+    int[][] grid = logic.getGrid();
+    boolean col = false;
+    int calcturn = 0;
+
+    if (min == -1) {
+      min = rand.nextInt(grid.length);
+      if ((grid.length - min) < 4) {
+        min -= 4;
+        if (min < 0) {
+          min = 0;
+        }
+      } 
+
+      calcturn = min;
+      max = min + 4;
+    } else {
+      
+      if (max > grid.length) {
+        max = grid.length;
+      }
+      
+      for (int i = min; i < max; i++) {
+        int count = 0; //amount of chips on top
+        int zeroes = 0; // amount spaces available in the column
+        
+        for (int j = 1; j < grid[i].length; j++) {
+          if (grid[i][j] == position) { //if the chips on top are yours
+            count++;
+          } else if (grid[i][j] != 0 
+              && grid[i][j] != position) { //if someone else's chip is on top dont bother
+            break; 
+          } else { //if this is an empty space
+            zeroes++;
+          }
+        }
+        
+        if (count > 1 && zeroes >= 2) { //if you are on top and there is room keep placing chips
+          calcturn = i;
+          col = true;
+          break;
+        }
+      }
+      
+      if (!col) {
+        calcturn = rand.nextInt(max - min) + min; //random integer within the given range
+        boolean valid = false;
+        int rangecount = 0;
+        while (!valid && rangecount < 4) { //if not a valid column, move until one is found 
+          if (logic.isValid(calcturn)) {
+            valid = true;
+          } else {
+            calcturn++;
+            rangecount++;
+            if (calcturn > max) {
+              calcturn = min;
+            }
+          }
+        }
+      }  
+    }
+    
+    return calcturn;
   }
   
   /*****************************************************************
@@ -59,43 +123,44 @@ public class ComputerPlayer {
   */
   public int computerTurn(ConnectLogic logic) {
     int column = 0;
-    int chance = 0;
     int[][] grid = logic.getGrid();
-    int cturn = calculateTurn(grid);
     
-    Random rand1 = new Random();
-    Random rand2 = new Random();
+    boolean valid = false;
     
-    if (difficulty == 'h') {
-      column = cturn;
-    } else if (difficulty == 'm') {
-      chance = rand2.nextInt(2);
-      if (chance == 0) {
-        column = rand1.nextInt(grid.length);
-      } else {
-        column = cturn;
-      }
+    Random rand = new Random();
+    
+    if (difficulty == 'm') {
+      column = calculateTurn(logic);; 
     } else {
-      column = rand1.nextInt(grid.length);
+      column = rand.nextInt(grid.length);
     }
     
-    System.out.println(
-        "Computer Player " 
-        + name + " (" + position + ") placed a chip at column "
-        + (column + 1));
     // if you want to delay the input for effect
     //    try {
     //      TimeUnit.SECONDS.sleep(4);
     //    } catch (InterruptedException e) {
     //      e.printStackTrace();
     //    }
+    int rangecount = 0;
+    while (!valid && rangecount < grid.length) { //if not a valid column, move until one is found 
+      if (logic.isValid(column)) {
+        valid = true;
+        logic.drop(column);
+      } else {
+        column = (column + 1) % grid.length;
+      }
+    }
     
-    if (!logic.isValid(column)) {
-      System.out.println("*out of bounds*");
+    if (rangecount >= grid.length) {
       column = -1;
     } else {
-      logic.drop(column);
+      System.out.println(
+          "Computer Player " 
+          + name + " (" + position + ") placed a chip at column "
+          + (column + 1));
     }
+    
+    
     return column;
   }
 

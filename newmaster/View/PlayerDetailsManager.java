@@ -35,7 +35,7 @@ public class PlayerDetailsManager {
   private AnchorPane playerDetailsPane;
   private Scene playerDetailsScene;
   private Stage playerDetailsStage;
-  private final String FONT_PATH = "src/model/resources/"
+  private final String FONT_PATH = "/Users/Dane/Documents/Github/350/CIS350_Project/newmaster/model/resources/"
       + "kenvector_future.ttf";
   private static final int SCREEN_WIDTH = 800;
   private static final int SCREEN_HEIGHT = 600;

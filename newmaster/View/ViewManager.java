@@ -31,7 +31,7 @@ public class ViewManager {
 	
 	private final static int MENU_BUTTONS_START_X = 100;
 	private final static int MENU_BUTTONS_START_Y = 150;
-	private final String FONT_PATH = "src/model/"
+	private final String FONT_PATH = "/Users/Dane/Documents/Github/350/CIS350_Project/newmaster/model/"
 	    + "resources/kenvector_future.ttf";
 	
 /******************************************************************
