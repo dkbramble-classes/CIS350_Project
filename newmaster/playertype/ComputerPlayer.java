@@ -11,15 +11,16 @@ package playertype;
 
 import gamelogic.ConnectLogic;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
+//import java.util.concurrent.TimeUnit;
 
 public class ComputerPlayer {
   private char color; //The color of the computer's chip
   private int position; // The order of the computer (1st, 2nd, 3rd, 4th)
   private String name; //The name displayed
   private char difficulty; // The computer's level of difficulty (e = easy, m = medium, h = hard)
-  private int min = -1;
-  private int max = -1;
+  private int min = -1; //the minimum range for the computer to pick
+  private int max = -1; // the maximum range for the computer to pick
+  private int current = -1; //the column location of this computer's last chip placement
 
   /*****************************************************************
     Constructor - a computer without a name , color, or position.
@@ -67,6 +68,7 @@ public class ComputerPlayer {
       } 
 
       calcturn = min;
+      current = min;
       max = min + 4;
     } else {
       
@@ -97,9 +99,14 @@ public class ComputerPlayer {
       }
       
       if (!col) {
-        calcturn = rand.nextInt(max - min) + min; //random integer within the given range
+        if ((current + 1) >= max && (current - 1) <= min) {
+          calcturn = rand.nextInt((current + 1) - (current - 1))
+              + (current - 1); //picks on of the slots by current position
+        } else {
+          calcturn = rand.nextInt(max - min) + min;
+        }
         boolean valid = false;
-        int rangecount = 0;
+        int rangecount = 0; // dont check more than 4 times
         while (!valid && rangecount < 4) { //if not a valid column, move until one is found 
           if (logic.isValid(calcturn)) {
             valid = true;
@@ -160,7 +167,7 @@ public class ComputerPlayer {
           + (column + 1));
     }
     
-    
+    current = column;
     return column;
   }
 
