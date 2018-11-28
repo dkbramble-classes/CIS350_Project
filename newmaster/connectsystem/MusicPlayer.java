@@ -27,7 +27,7 @@ public class MusicPlayer {
   String status; 
       
   AudioInputStream audioInputStream; 
-  static String filePath = "src/First Try.wav";  // the file path of the desired file
+  static String filePath = "model/resources/First Try.wav";  // the file path of the desired file
     
   /*****************************************************************
   Constructor - initializes the streams and clip.
