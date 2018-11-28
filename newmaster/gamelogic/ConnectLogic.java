@@ -79,7 +79,7 @@ public class ConnectLogic {
    *Next Turn: Increment whose turn it is, and run the logic for the current 
    *player to place a new chip.
    **************************************************************************/
-  public int nextTurn() {
+  public int nextTurn(int input) {
     if (activePlayer < numPlayers) { // set the next player
       activePlayer++;
     } else {
@@ -90,7 +90,7 @@ public class ConnectLogic {
     for (Player play : playerlist) { //Find if any players are the current player
       if (play != null) {
         if (play.getPosition() == activePlayer) {
-          column = play.playerTurn(this, 1); //place the players new chip
+          column = play.playerTurn(this, input); //place the players new chip
           break;
         }
       }

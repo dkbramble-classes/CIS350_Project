@@ -53,7 +53,7 @@ public class ConnectTest{
                 System.out.println(winner.getName() + " Wins!");
                 break;
             }
-            column = logic.nextTurn(); //place another chip
+            column = logic.nextTurn(1); //place another chip
         }while(column != -1); //will continue to loop until win condition or until out of bounds
         scn.close();
     }
