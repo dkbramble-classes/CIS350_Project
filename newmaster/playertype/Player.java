@@ -12,7 +12,7 @@ package playertype;
 import gamelogic.ConnectLogic;
 
 public class Player {
-  private char color; //The color of the player's chip
+  private String color; //The color of the player's chip
   private int position; // The order of the players (1st, 2nd, 3rd, 4th)
   private String name; //The name displayed
 
@@ -21,7 +21,7 @@ public class Player {
     Sets default values.
     *****************************************************************/
   public Player() {
-    this.color = 'n';
+    this.color = "n";
     this.position = 0;
     this.name = "DEFAULT";
   }
@@ -33,7 +33,7 @@ public class Player {
     @param n the name of the player
     */
   
-  public Player(char c, int p, String n) {
+  public Player(String c, int p, String n) {
     this.color = c;
     this.position = p;
     this.name = n;
@@ -60,7 +60,7 @@ public class Player {
   }
 
   //Retrieve the player characteristics
-  public char getColor() {
+  public String getColor() {
     return color;
   }
   
@@ -73,7 +73,7 @@ public class Player {
   }
 
   //set the player characteristics
-  public void setColor(char c) {
+  public void setColor(String c) {
     this.color = c;
     return;
   }
