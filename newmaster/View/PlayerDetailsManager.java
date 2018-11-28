@@ -9,7 +9,7 @@ package View;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import PlayerType.Player;
+import playertype.Player;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;

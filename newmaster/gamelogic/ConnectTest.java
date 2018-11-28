@@ -27,23 +27,13 @@ public class ConnectTest{
     //        Player play2 = new Player('d', 3, "Mr. Frodo");
     //        Player comp1 = new Player('d', 2, "DESTROYEROFWORLDS");
     //        Player comp2 = new Player('d', 4, "One-Eyed Willy");
-    ComputerPlayer play1 = new ComputerPlayer('d', 1, "hackerman", 'm');
-    ComputerPlayer play2 = new ComputerPlayer('d', 3, "Mr. Frodo", 'm');
-    ComputerPlayer comp1 = new ComputerPlayer('d', 2, "DESTROYEROFWORLDS", 'm');
-    ComputerPlayer comp2 = new ComputerPlayer('d', 4, "One-Eyed Willy", 'm');
+    ComputerPlayer play1 = new ComputerPlayer("d", 1, "hackerman", 'm');
+    ComputerPlayer play2 = new ComputerPlayer("d", 3, "Mr. Frodo", 'm');
+    ComputerPlayer comp1 = new ComputerPlayer("d", 2, "DESTROYEROFWORLDS", 'm');
+    ComputerPlayer comp2 = new ComputerPlayer("d", 4, "One-Eyed Willy", 'm');
         
         logic = new ConnectLogic(width,height); // establish game size
         
-        //create any players here. usage is (color, position, name);
-        //make sure positions are correct, bad stuff will happen if you skip a number
-//        Player play1 = new Player('d', 1, "hackerman");
-//        Player play2 = new Player('d', 3, "Mr. Frodo");
-//        Player comp1 = new Player('d', 2, "DESTROYEROFWORLDS");
-//        Player comp2 = new Player('d', 4, "One-Eyed Willy");
-        ComputerPlayer play1 = new ComputerPlayer("d", 1, "hackerman", 'm');
-        ComputerPlayer play2 = new ComputerPlayer("d", 3, "Mr. Frodo", 'm');
-        ComputerPlayer comp1 = new ComputerPlayer("d", 2, "DESTROYEROFWORLDS", 'm');
-        ComputerPlayer comp2 = new ComputerPlayer("d", 4, "One-Eyed Willy", 'm');
         
         //add the players to the game logic. can't add more than 4
         logic.addPlayer(play1);
@@ -65,28 +55,7 @@ public class ConnectTest{
         }while(column != -1); //will continue to loop until win condition or until out of bounds
         scn.close();
     }
-
-    //add the players to the game logic. can't add more than 4
-    logic.addPlayer(play1);
-    logic.addPlayer(play2);
-    logic.addPlayer(comp1);
-    logic.addPlayer(comp2);
-
-    grid = logic.getGrid(); //get the game board
-
-    int column = 0; 
-    do{
-      printBoard(); //print the board in terminal
-      if(logic.checkWin() != 0){ //if won
-        String winner = logic.getCurrentPlayer(); //get the winner's name
-        System.out.println(winner + " Wins!");
-        break;
-      }
-      column = logic.nextTurn(); //place another chip
-    }while(column != -1); //will continue to loop until win condition or until out of bounds
-    scn.close();
-  }
-
+  
   public static void printBoard(){            
 
     System.out.println("--------------");
