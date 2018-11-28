@@ -27,10 +27,10 @@ public class ConnectTest{
 //        Player play2 = new Player('d', 3, "Mr. Frodo");
 //        Player comp1 = new Player('d', 2, "DESTROYEROFWORLDS");
 //        Player comp2 = new Player('d', 4, "One-Eyed Willy");
-        ComputerPlayer play1 = new ComputerPlayer('d', 1, "hackerman", 'm');
-        ComputerPlayer play2 = new ComputerPlayer('d', 3, "Mr. Frodo", 'm');
-        ComputerPlayer comp1 = new ComputerPlayer('d', 2, "DESTROYEROFWORLDS", 'm');
-        ComputerPlayer comp2 = new ComputerPlayer('d', 4, "One-Eyed Willy", 'm');
+        ComputerPlayer play1 = new ComputerPlayer("d", 1, "hackerman", 'm');
+        ComputerPlayer play2 = new ComputerPlayer("d", 3, "Mr. Frodo", 'm');
+        ComputerPlayer comp1 = new ComputerPlayer("d", 2, "DESTROYEROFWORLDS", 'm');
+        ComputerPlayer comp2 = new ComputerPlayer("d", 4, "One-Eyed Willy", 'm');
         
         //add the players to the game logic. can't add more than 4
         logic.addPlayer(play1);

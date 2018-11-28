@@ -53,7 +53,7 @@ public class PlayerOptions {
    @param play the Player whose color will be updated
    @param c the color that the player has chosen
    */
-  private static void selectColor(Player play, char c) {
+  private static void selectColor(Player play, String c) {
     play.setColor(c);
     return;
   }
@@ -64,7 +64,7 @@ public class PlayerOptions {
   @param play the computer player whose color will be updated
   @param c the color that the player has chosen for the computer
   */
-  private static void selectColor(ComputerPlayer play, char c) {
+  private static void selectColor(ComputerPlayer play, String c) {
     play.setColor(c);
     return;
   }

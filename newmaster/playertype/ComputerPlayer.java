@@ -14,7 +14,7 @@ import java.util.Random;
 //import java.util.concurrent.TimeUnit;
 
 public class ComputerPlayer {
-  private char color; //The color of the computer's chip
+  private String color; //The color of the computer's chip
   private int position; // The order of the computer (1st, 2nd, 3rd, 4th)
   private String name; //The name displayed
   private char difficulty; // The computer's level of difficulty (e = easy, m = medium, h = hard)
@@ -27,7 +27,7 @@ public class ComputerPlayer {
     Sets default values.
     *****************************************************************/
   public ComputerPlayer() {
-    this.color = 'n';
+    this.color = "n";
     this.position = 0;
     this.name = "DEFAULT";
     this.difficulty = 'e';
@@ -41,7 +41,7 @@ public class ComputerPlayer {
     @param d the difficulty of the computer
     */
   
-  public ComputerPlayer(char c, int p, String n, char d) {
+  public ComputerPlayer(String c, int p, String n, char d) {
     this.color = c;
     this.position = p;
     this.name = n;
@@ -172,7 +172,7 @@ public class ComputerPlayer {
   }
 
   //Retrieve the computer characteristics
-  public char getColor() {
+  public String getColor() {
     return color;
   }
   
@@ -189,7 +189,7 @@ public class ComputerPlayer {
   }
 
   //set the computer characteristics
-  public void setColor(char c) {
+  public void setColor(String c) {
     this.color = c;
     return;
   }
