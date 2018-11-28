@@ -106,7 +106,7 @@ public class ComputerPlayer {
           calcturn = rand.nextInt(max - min) + min;
         }
         boolean valid = false;
-        int rangecount = 0; // dont check more than 4 times
+        int rangecount = 0; // don't check more than 4 times
         while (!valid && rangecount < 4) { //if not a valid column, move until one is found 
           if (logic.isValid(calcturn)) {
             valid = true;
@@ -143,11 +143,11 @@ public class ComputerPlayer {
     }
     
     // if you want to delay the input for effect
-    //    try {
-    //      TimeUnit.SECONDS.sleep(4);
-    //    } catch (InterruptedException e) {
-    //      e.printStackTrace();
-    //    }
+    //try {
+    //TimeUnit.SECONDS.sleep(4);
+    //}catch (InterruptedException e) {
+    //e.printStackTrace();
+    //}
     int rangecount = 0;
     while (!valid && rangecount < grid.length) { //if not a valid column, move until one is found 
       if (logic.isValid(column)) {
