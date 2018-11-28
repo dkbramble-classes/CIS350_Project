@@ -2,7 +2,7 @@
 Handles the execution of the Music Player.
 
 @author Dane Bramble
-@version October 2018
+@version November 2018
 *****************************************************************/
 
 package connectsystem;

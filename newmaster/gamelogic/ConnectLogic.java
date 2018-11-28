@@ -1,6 +1,6 @@
 package gamelogic;
 
-import playertype.ComputerPlayer;
+//import playertype.ComputerPlayer;
 import playertype.Player;
 
 public class ConnectLogic {
@@ -13,7 +13,7 @@ public class ConnectLogic {
   private int activePlayer; //the position of the player currently playing
 
   private Player[] playerlist = new Player[4]; //list holding all real players
-  private ComputerPlayer[] complist = new ComputerPlayer[4]; //list holding all computer players
+  //private ComputerPlayer[] complist = new ComputerPlayer[4]; //list holding all computer players
 
 
   /**************************************************************************
@@ -90,7 +90,7 @@ public class ConnectLogic {
     for (Player play : playerlist) { //Find if any players are the current player
       if (play != null) {
         if (play.getPosition() == activePlayer) {
-          column = play.playerTurn(this); //place the players new chip
+          column = play.playerTurn(this, 1); //place the players new chip
           break;
         }
       }
@@ -216,18 +216,18 @@ public class ConnectLogic {
    *Adds a computer player to the list of current players. 
    *@param play - the computer player to be added to the list
    */
-  public void addPlayer(ComputerPlayer play) {
-    if (numPlayers < 4) { //can't have more than 4
-      for (int i = 0; i < 4; i++) {
-        if (complist[i] == null) {
-          complist[i] = play;
-          numPlayers++;
-          break;
-        }
-      }
-    }
-    return;  
-  }
+//  public void addPlayer(ComputerPlayer play) {
+//    if (numPlayers < 4) { //can't have more than 4
+//      for (int i = 0; i < 4; i++) {
+//        if (complist[i] == null) {
+//          complist[i] = play;
+//          numPlayers++;
+//          break;
+//        }
+//      }
+//    }
+//    return;  
+//  }
 
 
   /**************************************************************************
@@ -290,9 +290,9 @@ public class ConnectLogic {
   }
 
 
-  public ComputerPlayer[] getComplist() {
-    return complist;
-  }
+//  public ComputerPlayer[] getComplist() {
+//    return complist;
+//  }
 
   public void setNumPlayers(int n) {
     numPlayers = n;

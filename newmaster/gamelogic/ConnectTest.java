@@ -1,7 +1,7 @@
 package gamelogic;
 import java.util.*;
 
-import playertype.ComputerPlayer;
+//import playertype.ComputerPlayer;
 import playertype.Player;
 
 public class ConnectTest{
@@ -23,10 +23,10 @@ public class ConnectTest{
 
     //create any players here. usage is (color, position, name);
     //make sure positions are correct, bad stuff will happen if you skip a number
-            Player play1 = new Player("d", 1, "hackerman", 'm', false);
-            Player play2 = new Player("d", 2, "Mr. Frodo", 'm', false);
-            Player play3 = new Player("d", 3, "DESTROYEROFWORLDS", 'm', false);
-            Player play4 = new Player("d", 4, "One-Eyed Willy", 'm', false);
+            Player play1 = new Player("d", 1, "hackerman", "m", true);
+            Player play2 = new Player("d", 2, "Mr. Frodo");
+            Player play3 = new Player("d", 3, "DESTROYEROFWORLDS", "m", true);
+            Player play4 = new Player("d", 4, "One-Eyed Willy");
 
 //    ComputerPlayer play1 = new ComputerPlayer("d", 1, "hackerman", 'm');
 //    ComputerPlayer play2 = new ComputerPlayer("d", 3, "Mr. Frodo", 'm');
