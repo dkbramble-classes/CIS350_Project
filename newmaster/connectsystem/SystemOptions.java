@@ -1,5 +1,5 @@
 /*****************************************************************
-These are system functions to use during or before a game.
+Handles the execution of the Music Player.
 
 @author Dane Bramble
 @version October 2018
@@ -9,25 +9,6 @@ package connectsystem;
 
 public class SystemOptions {
 
-
-  //  public static void startMusic(MusicPlayer audioPlayer) {
-  //      try
-  //      { 
-  //       String status = audioPlayer.getStatus();
-  //         if (status != "play"){
-  //           audioPlayer.play(); 
-  //       }
-  //
-  //      }  
-  //        
-  //      catch (Exception ex)  
-  //      { 
-  //          System.out.println("Error with starting sound file."); 
-  //          ex.printStackTrace(); 
-  //        
-  //      } 
-  //      return;
-  //  }
   /*****************************************************************
   If playing, the music will stop. If stopped, the music will resume.
   To start the music, create a MusicPlayer object. The music will stop
@@ -50,14 +31,5 @@ public class SystemOptions {
     } 
     return;
   }
-  
-  //    public static void main(String [ ] args) throws InterruptedException{
-  //       try {
-  //         MusicPlayer audioPlayer = new MusicPlayer(); //
-  //
-  //       } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-  //         System.out.println("error in playing music."); 
-  //         e.printStackTrace();
-  //       }
-  //    }
+
 }

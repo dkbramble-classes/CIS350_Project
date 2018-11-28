@@ -23,14 +23,15 @@ public class ConnectTest{
 
     //create any players here. usage is (color, position, name);
     //make sure positions are correct, bad stuff will happen if you skip a number
-    //        Player play1 = new Player('d', 1, "hackerman");
-    //        Player play2 = new Player('d', 3, "Mr. Frodo");
-    //        Player comp1 = new Player('d', 2, "DESTROYEROFWORLDS");
-    //        Player comp2 = new Player('d', 4, "One-Eyed Willy");
-    ComputerPlayer play1 = new ComputerPlayer("d", 1, "hackerman", 'm');
-    ComputerPlayer play2 = new ComputerPlayer("d", 3, "Mr. Frodo", 'm');
-    ComputerPlayer comp1 = new ComputerPlayer("d", 2, "DESTROYEROFWORLDS", 'm');
-    ComputerPlayer comp2 = new ComputerPlayer("d", 4, "One-Eyed Willy", 'm');
+            Player play1 = new Player("d", 1, "hackerman", 'm', false);
+            Player play2 = new Player("d", 2, "Mr. Frodo", 'm', false);
+            Player play3 = new Player("d", 3, "DESTROYEROFWORLDS", 'm', false);
+            Player play4 = new Player("d", 4, "One-Eyed Willy", 'm', false);
+
+//    ComputerPlayer play1 = new ComputerPlayer("d", 1, "hackerman", 'm');
+//    ComputerPlayer play2 = new ComputerPlayer("d", 3, "Mr. Frodo", 'm');
+//    ComputerPlayer comp1 = new ComputerPlayer("d", 2, "DESTROYEROFWORLDS", 'm');
+//    ComputerPlayer comp2 = new ComputerPlayer("d", 4, "One-Eyed Willy", 'm');
         
         logic = new ConnectLogic(width,height); // establish game size
         
@@ -38,8 +39,8 @@ public class ConnectTest{
         //add the players to the game logic. can't add more than 4
         logic.addPlayer(play1);
         logic.addPlayer(play2);
-        logic.addPlayer(comp1);
-        logic.addPlayer(comp2);
+        logic.addPlayer(play3);
+        logic.addPlayer(play4);
         
         grid = logic.getGrid(); //get the game board
         
@@ -47,8 +48,9 @@ public class ConnectTest{
         do{
             printBoard(); //print the board in terminal
             if(logic.checkWin() != 0){ //if won
-                String winner = logic.getCurrentPlayer(); //get the winner's name
-                System.out.println(winner + " Wins!");
+                
+                Player winner = logic.getCurrentPlayer(); //get the winner's name
+                System.out.println(winner.getName() + " Wins!");
                 break;
             }
             column = logic.nextTurn(); //place another chip

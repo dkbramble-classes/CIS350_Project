@@ -1,9 +1,7 @@
 /*****************************************************************
 This Music class starts playing a sound file in a 
 continuous loop. Offers methods to pause/resume. 
-To start the music, create a MusicPlayer object. 
-The music will stop automatically when the music player object 
-leaves the scope.Code based on class found on 
+Code based on class found on 
 https://www.geeksforgeeks.org/play-audio-file-using-java/
 
 @author Dane Bramble
@@ -100,23 +98,6 @@ public class MusicPlayer {
   */
   public String getStatus() {
     return status;
-  }
-  
-  /*****************************************************************
-  If playing, the music will stop. If stopped, the music will resume.
-  */
-  public void musicControl() {
-    try { 
-      if (status != "paused") { //if not paused, pause the music
-        this.pause(); 
-      } else {
-        this.resumeAudio(); //if paused, resume the music
-      }
-    } catch (Exception ex) {  //error handling 
-      System.out.println("Error with music control."); 
-      ex.printStackTrace(); 
-    } 
-    return;
   }
 
 }

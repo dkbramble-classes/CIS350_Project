@@ -96,14 +96,15 @@ public class ConnectLogic {
       }
     }
 
-    for (ComputerPlayer play : complist) { //find if any computer players are the current player
-      if (play != null) {
-        if (play.getPosition() == activePlayer) {
-          column = play.computerTurn(this); //place the computer players new chip
-          break;
-        }
-      }
-    }
+//    for (ComputerPlayer play : complist) { //find if any computer players are the current player
+//      if (play != null) {
+//        if (play.getPosition() == activePlayer) {
+//          column = play.computerTurn(this); //place the computer players new chip
+//          break;
+//        }
+//      }
+//    }
+    
     boolean possible = false;
     for (int i = 0; i < width; i++) { //check if any more chips can be added
       if (gameGrid [i][0] == 0) {
@@ -183,7 +184,7 @@ public class ConnectLogic {
    */
   public boolean isValid(int col) {
     boolean valid = false;
-    if (col >= 0 && col <= width) { //if within the column range
+    if (col >= 0 && col < width) { //if within the column range
       for (int depth : gameGrid[col]) {
         if (depth == 0) { // if the column isn't filled with chips
           valid = true;
@@ -255,26 +256,26 @@ public class ConnectLogic {
   /**************************************************************************
    *Get return the name of the player that is currently playing.
    **************************************************************************/
-  public String getCurrentPlayer() {
-    String current = "NULL";
+  public Player getCurrentPlayer() {
+    Player current = new Player();
     for (Player play : playerlist) { //check if a player is the current player
       if (play != null) {
         if (play.getPosition() == activePlayer) {
-          current = play.getName();
+          current = play;
           break;
         }
       }
     }
 
-    for (ComputerPlayer play : complist) { //check if a computer player is the current player
-      if (play != null) {
-        if (play.getPosition() == activePlayer) {
-          current = play.getName();
-          break;
-        }
-      }
-
-    }
+//    for (ComputerPlayer play : complist) { //check if a computer player is the current player
+//      if (play != null) {
+//        if (play.getPosition() == activePlayer) {
+//          current = play.getName();
+//          break;
+//        }
+//      }
+//
+//    }
     return current;
   }
 
