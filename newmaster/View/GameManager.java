@@ -3,7 +3,10 @@ package View;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import gamelogic.ConnectLogic;
+import javafx.animation.TranslateTransition;
 import javafx.scene.Scene;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
@@ -13,12 +16,13 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
-
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 
 public class GameManager{
@@ -30,20 +34,25 @@ public class GameManager{
   private Scene gameScene;
   private Stage gameStage;
   private Stage playerDetailsStage;
+  private boolean redMove = true; // new
+  private ConnectLogic game; // new
+  private Disc[][] grid =  new Disc[COLUMNS][ROWS]; // new
+  private Pane discRoot =  new Pane(); // new
 
   /******************************************************************
   * Creates the game panel.
   ******************************************************************/
   public GameManager() {
     gamePane = new AnchorPane();
-    gameScene = new Scene(gamePane, 800, 600);
+    gameScene = new Scene(gamePane, 800, 700);
     gameStage = new Stage();
     gameStage.setScene(gameScene);
     Shape gridShape = makeGrid();
     gridShape.setLayoutX(100);
-    gridShape.setLayoutX(50);
+    gridShape.setLayoutX(0); // changed
     gamePane.getChildren().add(gridShape);
     gamePane.getChildren().addAll(makeColumns());
+    gamePane.getChildren().add(discRoot); // new 
     createBackground();
   }
   
@@ -90,25 +99,87 @@ public class GameManager{
 
   }
   
+  /******************************************************************
+  * Transparent rectangle that indicates which column you are 
+  * choosing to drop a chip into.
+  ******************************************************************/
   private List<Rectangle> makeColumns(){
     List<Rectangle> list = new  ArrayList<>();
 
     for(int x = 0; x < COLUMNS; x++) {
-      Rectangle rect = new Rectangle(TILE_SIZE, (ROWS + 1)
+      Rectangle rect = new Rectangle(TILE_SIZE , (ROWS + 1)
           * TILE_SIZE);
-      rect.setTranslateX(x*(TILE_SIZE + 5) + TILE_SIZE / 3);
+      rect.setTranslateX(x * (TILE_SIZE + 5) + TILE_SIZE / 3);
       rect.setFill(Color.TRANSPARENT);
 
             rect.setOnMouseEntered(e -> rect.setFill
-                (Color.rgb(200,200,100,0.3)));
+                (Color.rgb(200, 200, 50, 0.3)));
             rect.setOnMouseExited(e -> rect.setFill
                 (Color.TRANSPARENT));
+            
+            final int column = x;
+            rect.setOnMouseClicked(e -> placeDisc(new Disc(redMove), column));
 
             list.add(rect);
 
         }
         return list;
     }
+  
+  /******************************************************************
+  * Method that implements game logic to determine winner.
+  ******************************************************************/
+  private void placeDisc(Disc disc, int column) {
+	  int row = ROWS - 1;
+	  do{
+		  if(!getDisc(column, row).isPresent())
+			  break;
+		  
+		  row--;
+	  } while(row >= 0);
+	  if(row < 0)
+		  return;
+	  
+	  grid[column][row] = disc;
+	  discRoot.getChildren().add(disc);
+	  disc.setTranslateX(column * (TILE_SIZE + 5) + TILE_SIZE / 3);
+	  
+	  TranslateTransition animation = new TranslateTransition(Duration.seconds(0.5), disc);
+	  animation.setToY(row * (TILE_SIZE + 5) + TILE_SIZE / 3);
+	  animation.setOnFinished(e -> {
+		  if(game.checkWin() == 1) {
+			  gameOver();
+		  }
+		  redMove = !redMove;
+	  }); 
+	  animation.play(); 
+  }
+  
+  private void gameOver() {
+	  System.out.println("Winner: " + (redMove ? "RED" : "Yellow"));
+  }
+  
+  private Optional<Disc> getDisc(int column, int row){
+	  if(column < 0 || column >= COLUMNS || row < 0 || row >= ROWS)
+		  return Optional.empty();
+	  
+	  return Optional.ofNullable(grid[column][row]);
+  }
+  
+  /******************************************************************
+  * Reference Logic: Method creates two disks, instead of viewing
+  * them as players. 
+  ******************************************************************/
+  private static class Disc extends Circle{
+	  private final boolean red;
+	  public Disc(boolean red) {
+		  super(TILE_SIZE /2, red ? Color.RED : Color.YELLOW);
+		  this.red = red;
+		  
+		  setCenterX(TILE_SIZE / 2);
+		  setCenterY(TILE_SIZE / 2);
+	  }
+  }
   
 private void createBackground() {
   
