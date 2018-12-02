@@ -18,29 +18,22 @@ public class ConnectLogic {
 
   /**************************************************************************
    *Connect Logic Constructor.
-   *@param width the width of the game board
-   *@param height the height of the game board
    */
-  public ConnectLogic(int width, int height) {
+  public ConnectLogic() {
     
     //default size in case of error
-    if (width <= 0 || height <= 0) {
-      width = 7;
-      height = 6;
-    }
-    gameGrid = new int[width][height];
-    this.width = width;
-    this.height = height;
+    this.width = 7;
+    this.height = 6;
     this.numPlayers = 0;
-    startGame(width, height);
   }
 
   /**************************************************************************
    *Start Game: Initialize all spaces to be empty, and start with player 1.
-   *@param width the width of the game board
-   *@param height the height of the game board
    */
-  public void startGame(int width, int height) {
+  public void startGame() {
+    
+    gameGrid = new int[width][height];
+    
     for (int i = 0; i < width - 1; i++) {
       for (int j = 0; j < height - 1; j++) {
         gameGrid[i][j] = 0;
@@ -52,6 +45,23 @@ public class ConnectLogic {
   }
 
 
+  /*************************************************************************
+   * Update Grid Size: Variable game board sized for different number of 
+   *                   players.
+   */
+  public void updateGridSize() {
+    if (numPlayers == 3) {
+      height = 7;
+      width = 9;
+    } else if (numPlayers == 4) {
+      height = 9;
+      width = 10;
+    } else { //default for 2 players or error
+      height = 6;
+      width = 7;
+    }
+ 
+  }
   /**************************************************************************
    *Drop: Find the lowest space in the column, set it to be active player.
    *@param col the column of the game board in which to drop the chip
@@ -209,6 +219,7 @@ public class ConnectLogic {
         }
       }
     }
+    updateGridSize();
     return;
   }
 
@@ -290,9 +301,9 @@ public class ConnectLogic {
   }
 
 
-//  public ComputerPlayer[] getComplist() {
-//    return complist;
-//  }
+  public Player[] getPlayerlist() {
+	  return playerlist;
+  }
 
   public void setNumPlayers(int n) {
     numPlayers = n;
