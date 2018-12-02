@@ -13,7 +13,6 @@ import java.io.IOException;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import playertype.Player;
 import gamelogic.ConnectLogic;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -35,6 +34,7 @@ import javafx.stage.Stage;
 import model.ExitButton;
 import model.MusicButton;
 import model.PlayButton;
+import playertype.Player;
 
 /******************************************************************
 * Class that deals with the second screen of the program; the 
@@ -49,7 +49,7 @@ public class PlayerDetailsManager extends Player{
   private Scene playerDetailsScene;
   private Stage playerDetailsStage;
   private Stage namePopUp;
-  private final String FONT_PATH = "kenvector_future.ttf";
+  private final String FONT_PATH = "src/kenvector_future.ttf";
   private static final int SCREEN_WIDTH = 800;
   private static final int SCREEN_HEIGHT = 600;
   private Stage menuStage;
@@ -733,14 +733,20 @@ public class PlayerDetailsManager extends Player{
 //      "\nPLAYER FOUR\nname: " + player4.getName() + "\ndifficulty: " + player4.getDifficulty() + "\nCPU: " + player4.getCompStatus() 
 //      + "\nColor:" + player4.getColor());
       
-      int width = 5;
-      int height = 5;
+      int width = 7;
+      int height = 6;
       ConnectLogic logic = new ConnectLogic(width, height);
+      //logic.startgame();
+
+      
+      //Check to see if one of the player's name text fields are empty,
+      //dont add that player
+      
       logic.addPlayer(player1);
       logic.addPlayer(player2);
       logic.addPlayer(player3);
-      logic.addPlayer(player4);
-      
+//      logic.addPlayer(player4);
+//      
       gameManager.setLogic(logic);
       
     });

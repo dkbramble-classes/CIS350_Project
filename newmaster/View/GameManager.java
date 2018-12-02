@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
-import gamelogic.ConnectLogic;
+
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.scene.Parent;
@@ -29,18 +29,19 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import playertype.Player;
+import gamelogic.ConnectLogic;
 
 
 public class GameManager extends Application{
 
   private static final int TILE_SIZE = 80;
+  private static final int COLUMNS = 7;
+  private static final int ROWS = 6;
   private Pane gamePane;
   private Scene gameScene;
   private Stage gameStage;
   private Shape gridShape;
   private Stage playerDetailsStage;
-  private int COLUMNS = 7;
-  private int ROWS = 6;
   private Disc[][] grid =  new Disc[COLUMNS][ROWS]; 
   private Pane discRoot =  new Pane(); 
   private ConnectLogic logic = new ConnectLogic(COLUMNS, ROWS); 
@@ -52,10 +53,10 @@ public class GameManager extends Application{
   ******************************************************************/
   public GameManager() {
 
-	  logic.addPlayer(play2);
-	  logic.addPlayer(play4);
-	//logic.addPlayer(play1);
-	//logic.addPlayer(play3);
+//	  logic.addPlayer(play1);
+//	  logic.addPlayer(play2);
+//	logic.addPlayer(play3);
+//	logic.addPlayer(play3);
 	
 	  Pane gamePane = new Pane();
       gameScene = new Scene(gamePane, 800, 700);
@@ -73,25 +74,37 @@ public class GameManager extends Application{
   /******************************************************************
   * This method returns gamePane, which acts as the rectangles
   * that allow you to pick what column to place your chip. 
-  * Without this, the option to place another chip in the same
-  * column would not work. 
+  * Without this, the option to place another 
   ******************************************************************/
   private Parent createContent(){
   	
     createBackground();
     return gamePane;
+    
+
+//  System.out.print("\nPLAYER ONE\nname: " + player1.getName() + "\ndifficulty: " + player1.getDifficulty() + "\nCPU: " + player1.getCompStatus() 
+//  + "\nColor:" + player1.getColor() +
+//  "\nPLAYER TWO\nname: " + player2.getName() + "\ndifficulty: " + player2.getDifficulty() + "\nCPU: " + player2.getCompStatus() 
+//  + "\nColor:" + player2.getColor()+
+//  "\nPLAYER THREE\nname: " + player3.getName() + "\ndifficulty: " + player3.getDifficulty() + "\nCPU: " + player3.getCompStatus() 
+//  + "\nColor:" + player3.getColor()+
+//  "\nPLAYER FOUR\nname: " + player4.getName() + "\ndifficulty: " + player4.getDifficulty() + "\nCPU: " + player4.getCompStatus() 
+//  + "\nColor:" + player4.getColor());
+  
+    
+    
   }
   
-  Player play2 = new Player("r", 1, "Mr. Frodo");
-  Player play4 = new Player("g", 2, "One-Eyed Willy");
+    //System.out.print(logic.getCurrentPlayer().getName()));
   
-//Player play1 = new Player("d", 1, "hackerman", "m", true);
-//Player play3 = new Player("d", 3, "DESTROYEROFWORLDS", "m", true);
+//  Player play2 = new Player("Red", 2, "Mr. Frodo");
+//  Player play3 = new Player("Green", 3, "One-Eyed Willy");
+//  Player play1 = new Player("Blue", 1, "hackerman");
+//  Player play3 = new Player("Yellow", 3, "DESTROYEROFWORLDS");
 
   
   /******************************************************************
-  * This method is used to take the players from the Player Details
-  * menu into the actual game.
+  * Goes to the next page in the game menu.
   ******************************************************************/ 
   public void createNewGame(Stage playerDetailsStage) {
     this.playerDetailsStage = playerDetailsStage;
@@ -101,18 +114,14 @@ public class GameManager extends Application{
   }
   
   /******************************************************************
-   * This method takes in the logic from ConnectLogic.
+   * Setter that takes in logic from ConnectLogic.
    ******************************************************************/
   public void setLogic(ConnectLogic logic) {
 	  this.logic = logic;
-	  
-	   COLUMNS = logic.getY();
-	   ROWS = logic.getX();
-	  
   }
   
   /******************************************************************
-  * Creates the legitimate Connect4 game board grid.
+  * Creates the game board grid.
   ******************************************************************/
   private Shape makeGrid(){
     Shape shape = new Rectangle((COLUMNS + 1) * TILE_SIZE, 
@@ -168,9 +177,7 @@ public class GameManager extends Application{
     }
   
   /******************************************************************
-  * This method creates the actual animation when placing a chip in 
-  * a column and implements the game logic from ConnectLogic to 
-  * determine the winner.
+  * Method that implements game logic to determine winner.
   ******************************************************************/
   private void placeDisc(Disc disc, int column) {
 	  int row = ROWS - 1;
@@ -196,17 +203,14 @@ public class GameManager extends Application{
 		  logic.nextTurn(column);
 		  if(logic.checkWin() == 1){ //if won
                 ShowMessage(winner + " Wins!");
-                
                   
 		  }
 		  winner = logic.getCurrentPlayer().getName();
-		  animation.play();  
+		  animation.play();
+		  
 	  }
   }
   
-  /******************************************************************
-  * This method creates a message after a player wins.
-  ******************************************************************/
   private void ShowMessage(String message) {
 	  Alert alert = new Alert(AlertType.INFORMATION);
 	  alert.setTitle("Game Finished");
@@ -216,10 +220,6 @@ public class GameManager extends Application{
 	  alert.show();
   }
   
-  /******************************************************************
-  * The optional method gets the chip of a player and checks to make 
-  * sure the columns are empty when the game starts. 
-  ******************************************************************/
   private Optional<Disc> getDisc(int column, int row){
 	  if(column < 0 || column >= COLUMNS 
 			  || row < 0 || row >= ROWS)
@@ -229,7 +229,8 @@ public class GameManager extends Application{
   }
   
   /******************************************************************
-  * This creates the actual chips after the players enter the game.
+  * Reference Logic: Method creates two disks, instead of viewing
+  * them as players. 
   ******************************************************************/
   private static class Disc extends Circle{
 	  public Disc(Color playcolor) {
@@ -251,10 +252,6 @@ public class GameManager extends Application{
     
   }
 
-  /******************************************************************
-  * This method initializes the chip color to the player when 
-  * entering the game. 
-  ******************************************************************/
   private Color findColor(){
 	  Color color = Color.RED;
 	  String playcolor = logic.getCurrentPlayer().getColor();
@@ -275,11 +272,6 @@ public class GameManager extends Application{
 	  return color;
 	}
 
-  /******************************************************************
-  * The start method is called after the initial method has 
-  * returned, and after the system is ready for the application to 
-  * begin running.
-  ******************************************************************/
   @Override
   public void start(Stage stage) throws Exception{ 
 	  stage.setScene(new Scene(createContent()));
