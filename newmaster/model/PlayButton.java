@@ -48,32 +48,7 @@ public class PlayButton extends Button{
 					setFont(Font.font("Verdana", 20));
 				}
 		}
-/******************************************************************
-* Needs more work, but the button should have a shadow around it 
-* when pressed, when released it goes back to the "freestyle"
-******************************************************************/
-		private void setExitPressedStyle() {
-			setStyle(PLAY_PRESSED_STYLE);
-			setPrefHeight(20);
-			setLayoutY(getLayoutY() + 4);
-		}
-		private void setExitFreeStyle() {
-			setStyle(PLAY_PRESSED_STYLE);
-			setPrefHeight(20);
-			setLayoutY(getLayoutY() - 4);
-		}
-		
-		//private void setMusicPressedStyle() {
-//			setStyle(PLAY_FREE_STYLE);
-//			setPrefHeight(20);
-//			setLayoutY(getLayoutY() + 4);
-//		}
-//
-//		private void setMusicFreeStyle() {
-//			setStyle(PLAY_FREE_STYLE);
-//			setPrefHeight(20);
-//			setLayoutY(getLayoutY() - 4);
-//		}
+
 		
 /******************************************************************
 * Needs more work, but the button should have a shadow around it 
@@ -81,30 +56,7 @@ public class PlayButton extends Button{
 ******************************************************************/
 		
 		private void initializeButtonListener() {
-			setOnMousePressed(new EventHandler<MouseEvent>() {
 
-				@Override
-				public void handle(MouseEvent event) {
-					if(event.getButton().equals(MouseButton.PRIMARY)) {
-						setExitPressedStyle();			
-						//SEND TO NEXT SCREEN TO PICK NAMES AND COLORS
-					}
-					
-				}
-				
-			});
-			setOnMouseReleased(new EventHandler<MouseEvent>() {
-
-				@Override
-				public void handle(MouseEvent event) {
-					if(event.getButton().equals(MouseButton.PRIMARY)) {
-						setExitFreeStyle();
-					}
-					
-				}
-				
-			});
-			
 			setOnMouseEntered(new EventHandler<MouseEvent>() {
 
 				@Override
