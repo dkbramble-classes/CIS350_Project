@@ -300,11 +300,18 @@ public class ConnectLogic {
     gameGrid[col][depth] = player;
   }
 
-
+  /**************************************************************************
+   * Get Player List: used for testing
+   * @return list of players in the game
+   */
   public Player[] getPlayerlist() {
-	  return playerlist;
+    return playerlist;
   }
 
+  /**************************************************************************
+   * Set Number of Players: used for testing
+   * @param n Number of players
+   */
   public void setNumPlayers(int n) {
     numPlayers = n;
   }
