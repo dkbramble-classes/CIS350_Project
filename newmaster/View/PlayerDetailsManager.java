@@ -13,8 +13,8 @@ import java.io.IOException;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import PlayerType.Player;
-import application.ConnectLogic;
+import playertype.Player;
+import gamelogic.ConnectLogic;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -49,8 +49,7 @@ public class PlayerDetailsManager extends Player{
   private Scene playerDetailsScene;
   private Stage playerDetailsStage;
   private Stage namePopUp;
-  private final String FONT_PATH = "src/model/resources/"
-      + "kenvector_future.ttf";
+  private final String FONT_PATH = "kenvector_future.ttf";
   private static final int SCREEN_WIDTH = 800;
   private static final int SCREEN_HEIGHT = 600;
   private Stage menuStage;
