@@ -38,8 +38,7 @@ public class ViewManager {
 	
 	private final static int MENU_BUTTONS_START_X = 100;
 	private final static int MENU_BUTTONS_START_Y = 150;
-	private final String FONT_PATH = "src/model/"
-	    + "resources/kenvector_future.ttf";
+	private final String FONT_PATH = "kenvector_future.ttf";
 	
 /******************************************************************
 * Class that deals with the second screen of the program; the 
@@ -75,7 +74,8 @@ public class ViewManager {
  * @throws UnsupportedAudioFileException 
 ******************************************************************/
 	 
-	private void createButtons() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+	private void createButtons() throws UnsupportedAudioFileException, 
+	 IOException, LineUnavailableException {
 		Label title = new Label("CONNECT 4");
 		title.setLayoutX(180);
 		title.setLayoutY(100);
@@ -103,12 +103,25 @@ public class ViewManager {
 *  screen when user clicks on the CONNECT 4 button on the main menu
 ******************************************************************/
 		 
-		  startButton.setOnAction(new EventHandler<ActionEvent>() {
+		  startButton.setOnAction(new EventHandler<ActionEvent>()  {
 			@Override
 			public void handle(ActionEvent event) {
-				PlayerDetailsManager playerDetailsManager = new 
-				    PlayerDetailsManager();
-				playerDetailsManager.createDetailsScreen(mainStage);
+				PlayerDetailsManager playerDetailsManager;
+        try {
+          playerDetailsManager = new 
+              PlayerDetailsManager();
+          playerDetailsManager.createDetailsScreen(mainStage);
+        } catch (UnsupportedAudioFileException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        } catch (IOException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        } catch (LineUnavailableException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+				
 
 			}
 			
