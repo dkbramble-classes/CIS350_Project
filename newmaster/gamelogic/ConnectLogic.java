@@ -5,14 +5,14 @@ import playertype.Player;
 
 public class ConnectLogic {
 
-  private int[][] gameGrid;
+  public int[][] gameGrid;
 
   private int width; // the width of the board
   private int height; // the height of the board
   private int numPlayers; //number of players in the game
   private int activePlayer; //the position of the player currently playing
 
-  private Player[] playerlist = new Player[4]; //list holding all real players
+  public Player[] playerlist = new Player[4]; //list holding all real players
   //private ComputerPlayer[] complist = new ComputerPlayer[4]; //list holding all computer players
 
 

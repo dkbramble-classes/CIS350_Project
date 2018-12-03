@@ -49,7 +49,7 @@ public class PlayerDetailsManager extends Player{
   private Scene playerDetailsScene;
   private Stage playerDetailsStage;
   //private Stage namePopUp;
-  private final String FONT_PATH = "kenvector_future.ttf";
+  private static final String FONT_PATH = "kenvector_future.ttf";
   private static final int SCREEN_WIDTH = 800;
   private static final int SCREEN_HEIGHT = 600;
   private Stage menuStage;

@@ -38,7 +38,7 @@ public class ViewManager {
 	
 	//private final static int MENU_BUTTONS_START_X = 100;
 	//private final static int MENU_BUTTONS_START_Y = 150;
-	private final String FONT_PATH = "kenvector_future.ttf";
+	private static final String FONT_PATH = "kenvector_future.ttf";
 	
 /******************************************************************
 * Class that deals with the second screen of the program; the 

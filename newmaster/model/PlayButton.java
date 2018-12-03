@@ -16,12 +16,11 @@ import javafx.scene.text.Font;
 public class PlayButton extends Button{
 
   //CSS to use .png files as the icon path
-		private final String FONT_PATH = "src/model/resources/"
-		    + "kenvector_future.ttf";
+		private static final String FONT_PATH = "kenvector_future.ttf";
 //		private final String PLAY_PRESSED_STYLE = "-fx-background-color:"
 //		    + " transparent; -fx-background-image: url('/model/resources/"
 //		    + "blue_button04.png);";
-		private final String PLAY_FREE_STYLE = "-fx-background-color: "
+		private static final String PLAY_FREE_STYLE = "-fx-background-color: "
 		    + "transparent; -fx-background-image: url('/model/resources/"
 		    + "blue_button04.png');";
 

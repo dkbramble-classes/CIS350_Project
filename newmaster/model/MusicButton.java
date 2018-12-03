@@ -22,14 +22,13 @@ import javafx.scene.text.Font;
 public class MusicButton extends Button{
 
     //CSS to use .png files as the icon path
-		private final String FONT_PATH = "src/model/resources/"
-		    + "kenvector_future.ttf";
+		private static final String FONT_PATH = "kenvector_future.ttf";
 		
-		private final String audioOn = "-fx-background-color: "
+		private static final String audioOn = "-fx-background-color: "
 		    + "transparent; -fx-background-image: url('/model/resources/"
 		    + "audioOn.png');";
 		
-		private final String audioOff = "-fx-background-color: "
+		private static final String audioOff = "-fx-background-color: "
         + "transparent; -fx-background-image: url('/model/resources/"
         + "audioOff.png');";
 		MusicPlayer audioPlayer = new MusicPlayer();
