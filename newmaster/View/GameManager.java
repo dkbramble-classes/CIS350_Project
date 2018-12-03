@@ -203,11 +203,15 @@ public class GameManager extends Application{
 		  animation.setToY(row * (TILE_SIZE + 5) + (TILE_SIZE / 3));
 		  
 		  System.out.println(column);
-		  logic.nextTurn(column);
+		  int result = 0;
+		  result = logic.nextTurn(column);
 		  
-		  if(logic.checkWin() == 1){ //if won
-                //ShowMessage(winner + " Wins!");
-                  
+      if (result == -20){ //a tie
+        ShowMessage("No more chips can be placed, it's a tie!");
+		  }
+      
+		  if(logic.checkWin() != 0){ //if won
+          ShowMessage(winner + " Wins!");               
 		  }
 		  winner = logic.getCurrentPlayer().getName();
 		  animation.play();
@@ -219,9 +223,9 @@ public class GameManager extends Application{
 	  Alert alert = new Alert(AlertType.INFORMATION);
 	  alert.setTitle("Game Finished");
 	  alert.setHeaderText(message);
-	  alert.setContentText("GAME IS OVER, RETURNING TO MENU.");
+	  alert.setContentText("The Game is over, now returning to menu.");
 	  
-	  alert.show();
+	  alert.showAndWait();
   }
   
   private Optional<Disc> getDisc(int column, int row){

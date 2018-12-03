@@ -40,7 +40,7 @@ public class ConnectLogic {
       }
     }
 
-    activePlayer = 0;
+    activePlayer = 1;
 
   }
 
@@ -90,11 +90,6 @@ public class ConnectLogic {
    *player to place a new chip.
    **************************************************************************/
   public int nextTurn(int input) {
-    if (activePlayer < numPlayers) { // set the next player
-      activePlayer++;
-    } else {
-      activePlayer = 1;
-    }
 
     int column = -1;
     for (Player play : playerlist) { //Find if any players are the current player
@@ -124,8 +119,14 @@ public class ConnectLogic {
     }
 
     if (!possible) {
-      column = -1; //if no more open slots, game over
+      column = -20; //if no more open slots, game over
       System.out.println("Game board is filled, it's a tie!");
+    }
+    
+    if (activePlayer < numPlayers) { // set the next player
+      activePlayer++;
+    } else {
+      activePlayer = 1;
     }
 
     return column; //if -1, end the game
