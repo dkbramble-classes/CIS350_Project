@@ -3,17 +3,12 @@
 //
 //https://www.iconfinder.com/icons/2075802/arrow_back_redo_return_icon
 
-package View;
+package view;
 
-
+import gamelogic.ConnectLogic;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-
-import gamelogic.ConnectLogic;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -31,6 +26,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 import model.ExitButton;
 import model.MusicButton;
 import model.PlayButton;
@@ -39,10 +38,10 @@ import playertype.Player;
 /******************************************************************
 * Class that deals with the second screen of the program; the 
 * player details including the names and colors of each person 
-* playing Connect 4
+* playing Connect 4.
 ******************************************************************/
 
-public class PlayerDetailsManager extends Player{
+public class PlayerDetailsManager extends Player {
 
   private AnchorPane playerDetailsPane;
   private AnchorPane dialogPane;
@@ -53,28 +52,32 @@ public class PlayerDetailsManager extends Player{
   private static final int SCREEN_WIDTH = 800;
   private static final int SCREEN_HEIGHT = 600;
   private Stage menuStage;
+  public Player player1 = new Player();
+  public Player player2 = new Player();
+  public Player player3 = new Player();
+  public Player player4 = new Player();
   //private int maxChar = 10;
   
-/******************************************************************
-*   initializes the pane, scene, and stage, creates the background 
-*   image, adds all the items, including buttons, labels, and icons
- * @throws LineUnavailableException 
- * @throws IOException 
- * @throws UnsupportedAudioFileException 
-******************************************************************/
+  /******************************************************************
+  *   initializes the pane, scene, and stage, creates the background 
+  *   image, adds all the items, including buttons, labels, and icons.
+   * @throws LineUnavailableException if not instantiated
+   * @throws IOException if issues with input
+   * @throws UnsupportedAudioFileException 
+  ******************************************************************/
 
   public PlayerDetailsManager() throws 
-   UnsupportedAudioFileException, IOException,
-   LineUnavailableException {
+       UnsupportedAudioFileException, IOException,
+       LineUnavailableException {
     initializeStage();
     createBackground();
     createItems();
   }
 
-/******************************************************************
-* initializes the pane, scene, and stage, creates the background 
-* image
-******************************************************************/
+  /******************************************************************
+  * initializes the pane, scene, and stage, creates the background 
+  * image.
+  ******************************************************************/
   
   private void initializeStage() {
     playerDetailsPane = new AnchorPane();
@@ -85,10 +88,10 @@ public class PlayerDetailsManager extends Player{
 
   }
   
-/******************************************************************
-*   will be called from ViewManager, hides the menu screen and 
-*   shows the player details screen
-******************************************************************/
+  /******************************************************************
+  *   will be called from ViewManager, hides the menu screen and 
+  *   shows the player details screen.
+  ******************************************************************/
 
   public void createDetailsScreen(Stage menuStage) {
     this.menuStage = menuStage;
@@ -97,19 +100,14 @@ public class PlayerDetailsManager extends Player{
 
   }
 
-/******************************************************************
-*   Creates labels, buttons, and drop down menus for the different 
-*   color options. Still need to add text fields for the players 
-*   names and link that data to each player
-******************************************************************/
-
-  Player player1 = new Player();
-  Player player2 = new Player();
-  Player player3 = new Player();
-  Player player4 = new Player();
+  /******************************************************************
+  *   Creates labels, buttons, and drop down menus for the different 
+  *   color options. Still need to add text fields for the players 
+  *   names and link that data to each player.
+  ******************************************************************/
   
   public void createItems() throws UnsupportedAudioFileException, 
-   IOException, LineUnavailableException {
+       IOException, LineUnavailableException {
     Label title = new Label("PLAYER   DETAILS");
     Label names = new Label("NAME");
     title.setLayoutX(135);
@@ -138,13 +136,9 @@ public class PlayerDetailsManager extends Player{
     });
 
     
-    
-    Button playGame = new Button(null);
-
-    
     Button plus1 = new Button(null);
     plus1
-    .setStyle("-fx-background-color: transparent; -fx-background-image: "
+        .setStyle("-fx-background-color: transparent; -fx-background-image: "
         + "url('/model/resources/plus-sign.png');");
     plus1.setPrefHeight(24);
     plus1.setPrefWidth(24);
@@ -153,7 +147,7 @@ public class PlayerDetailsManager extends Player{
     
     Button plus2 = new Button(null);
     plus2
-    .setStyle("-fx-background-color: transparent; -fx-background-image: "
+         .setStyle("-fx-background-color: transparent; -fx-background-image: "
         + "url('/model/resources/plus-sign.png');");
     plus2.setPrefHeight(24);
     plus2.setPrefWidth(24);
@@ -162,7 +156,7 @@ public class PlayerDetailsManager extends Player{
 
     Button plus3 = new Button(null);
     plus3
-    .setStyle("-fx-background-color: transparent; -fx-background-image: "
+        .setStyle("-fx-background-color: transparent; -fx-background-image: "
         + "url('/model/resources/plus-sign.png');");
     plus3.setPrefHeight(24);
     plus3.setPrefWidth(24);
@@ -171,7 +165,7 @@ public class PlayerDetailsManager extends Player{
 
     Button plus4 = new Button(null);
     plus4
-    .setStyle("-fx-background-color: transparent; -fx-background-image: "
+        .setStyle("-fx-background-color: transparent; -fx-background-image: "
         + "url('/model/resources/plus-sign.png');");
     plus4.setPrefHeight(24);
     plus4.setPrefWidth(24);
@@ -179,10 +173,10 @@ public class PlayerDetailsManager extends Player{
     plus4.setLayoutY(440);
     
     
-/******************************************************************
-*  Creates separate dialog boxes that captures computer player 
-*  information.
-******************************************************************/
+    /******************************************************************
+    *  Creates separate dialog boxes that captures computer player 
+    *  information.
+    ******************************************************************/
     
     //player 1 dialog box for potential CPU 
     
@@ -264,7 +258,7 @@ public class PlayerDetailsManager extends Player{
       //confirm difficulty button
       Button confirm = new Button(null);
       confirm
-      .setStyle("-fx-background-color: transparent; -fx-background-image: "
+          .setStyle("-fx-background-color: transparent; -fx-background-image: "
           + "url('/model/resources/smallPlayButton.png');");
       confirm.setPrefHeight(48);
       confirm.setPrefWidth(48);
@@ -284,7 +278,7 @@ public class PlayerDetailsManager extends Player{
       
     });
     
-//player 2 dialog box for potential CPU 
+    //player 2 dialog box for potential CPU 
     
     plus2.setOnAction(e -> {
       dialogPane = new AnchorPane();
@@ -364,7 +358,7 @@ public class PlayerDetailsManager extends Player{
       //confirm difficulty button
       Button confirm = new Button(null);
       confirm
-      .setStyle("-fx-background-color: transparent; -fx-background-image: "
+          .setStyle("-fx-background-color: transparent; -fx-background-image: "
           + "url('/model/resources/smallPlayButton.png');");
       confirm.setPrefHeight(48);
       confirm.setPrefWidth(48);
@@ -385,7 +379,7 @@ public class PlayerDetailsManager extends Player{
     });
 
     
-//player 3 dialog box for potential CPU 
+    //player 3 dialog box for potential CPU 
     
     plus3.setOnAction(e -> {
       dialogPane = new AnchorPane();
@@ -465,7 +459,7 @@ public class PlayerDetailsManager extends Player{
       //confirm difficulty button
       Button confirm = new Button(null);
       confirm
-      .setStyle("-fx-background-color: transparent; -fx-background-image: "
+          .setStyle("-fx-background-color: transparent; -fx-background-image: "
           + "url('/model/resources/smallPlayButton.png');");
       confirm.setPrefHeight(48);
       confirm.setPrefWidth(48);
@@ -486,7 +480,7 @@ public class PlayerDetailsManager extends Player{
     });
 
 
-//player 4 dialog box for potential CPU 
+    //player 4 dialog box for potential CPU 
     
     plus4.setOnAction(e -> {
       dialogPane = new AnchorPane();
@@ -566,7 +560,7 @@ public class PlayerDetailsManager extends Player{
       //confirm difficulty button
       Button confirm = new Button(null);
       confirm
-      .setStyle("-fx-background-color: transparent; -fx-background-image: "
+          .setStyle("-fx-background-color: transparent; -fx-background-image: "
           + "url('/model/resources/smallPlayButton.png');");
       confirm.setPrefHeight(48);
       confirm.setPrefWidth(48);
@@ -591,19 +585,19 @@ public class PlayerDetailsManager extends Player{
     //Text fields and choice boxes to capture each player's
     //unique name and color
     
-    TextField player1Name = new TextField ();
+    TextField player1Name = new TextField();
     player1Name.setLayoutX(140);
     player1Name.setLayoutY(230);
     
-    TextField player2Name = new TextField ();
+    TextField player2Name = new TextField();
     player2Name.setLayoutX(140);
     player2Name.setLayoutY(300);
     
-    TextField player3Name = new TextField ();
+    TextField player3Name = new TextField();
     player3Name.setLayoutX(140);
     player3Name.setLayoutY(370);
     
-    TextField player4Name = new TextField ();
+    TextField player4Name = new TextField();
     player4Name.setLayoutX(140);
     player4Name.setLayoutY(440);
     
@@ -629,17 +623,18 @@ public class PlayerDetailsManager extends Player{
     color4.setLayoutY(440);
     
     
-  //number icons and play game and return to menu icons
+    //number icons and play game and return to menu icons
     returnToMenu
-    .setStyle("-fx-background-color: transparent; -fx-background-image: "
+        .setStyle("-fx-background-color: transparent; -fx-background-image: "
         + "url('/model/resources/backArrow.png');");
     returnToMenu.setPrefHeight(45);
     returnToMenu.setPrefWidth(64);
     returnToMenu.setLayoutX(20);
     returnToMenu.setLayoutY(20);
+    Button playGame = new Button(null);
 
     playGame
-    .setStyle("-fx-background-color: transparent; -fx-background-image:"
+        .setStyle("-fx-background-color: transparent; -fx-background-image:"
         + " url('/model/resources/playButton.png');");
     playGame.setPrefHeight(120);
     playGame.setPrefWidth(120);
@@ -648,7 +643,7 @@ public class PlayerDetailsManager extends Player{
 
     Button playerOneIcon = new Button(null);
     playerOneIcon
-    .setStyle("-fx-background-color: transparent; -fx-background-image: "
+        .setStyle("-fx-background-color: transparent; -fx-background-image: "
         + "url('/model/resources/numberone.png');");
     playerOneIcon.setPrefHeight(48);
     playerOneIcon.setPrefWidth(48);
@@ -657,7 +652,7 @@ public class PlayerDetailsManager extends Player{
 
     Button playerTwoIcon = new Button(null);
     playerTwoIcon
-    .setStyle("-fx-background-color: transparent; -fx-background-image: "
+        .setStyle("-fx-background-color: transparent; -fx-background-image: "
         + "url('/model/resources/numbertwo.png');");
     playerTwoIcon.setPrefHeight(48);
     playerTwoIcon.setPrefWidth(48);
@@ -666,7 +661,7 @@ public class PlayerDetailsManager extends Player{
 
     Button playerThreeIcon = new Button(null);
     playerThreeIcon
-    .setStyle("-fx-background-color: transparent; -fx-background-image: "
+        .setStyle("-fx-background-color: transparent; -fx-background-image: "
         + "url('/model/resources/numberthree.png');");
     playerThreeIcon.setPrefHeight(48);
     playerThreeIcon.setPrefWidth(48);
@@ -675,7 +670,7 @@ public class PlayerDetailsManager extends Player{
 
     Button playerFourIcon = new Button(null);
     playerFourIcon
-    .setStyle("-fx-background-color: transparent; -fx-background-image: "
+        .setStyle("-fx-background-color: transparent; -fx-background-image: "
         + "url('/model/resources/numberfour.png');");
     playerFourIcon.setPrefHeight(48);
     playerFourIcon.setPrefWidth(48);
@@ -721,17 +716,7 @@ public class PlayerDetailsManager extends Player{
       player4.setColor(color4.getValue());
       
       
-      
-//      System.out.print("\nPLAYER ONE\nname: " + player1.getName() + "\ndifficulty: " + player1.getDifficulty() + "\nCPU: " + player1.getCompStatus() 
-//      + "\nColor:" + player1.getColor() +
-//      "\nPLAYER TWO\nname: " + player2.getName() + "\ndifficulty: " + player2.getDifficulty() + "\nCPU: " + player2.getCompStatus() 
-//      + "\nColor:" + player2.getColor()+
-//      "\nPLAYER THREE\nname: " + player3.getName() + "\ndifficulty: " + player3.getDifficulty() + "\nCPU: " + player3.getCompStatus() 
-//      + "\nColor:" + player3.getColor()+
-//      "\nPLAYER FOUR\nname: " + player4.getName() + "\ndifficulty: " + player4.getDifficulty() + "\nCPU: " + player4.getCompStatus() 
-//      + "\nColor:" + player4.getColor());
-      
-     // int width = 7;
+      // int width = 7;
       //int height = 6;
       ConnectLogic logic = new ConnectLogic();
       
@@ -744,7 +729,7 @@ public class PlayerDetailsManager extends Player{
       logic.addPlayer(player1);
       logic.addPlayer(player2);
       logic.addPlayer(player3);
-//      logic.addPlayer(player4);
+      //  logic.addPlayer(player4);
       logic.startGame();
       
       GameManager gameManager = new GameManager(logic.getX(), logic.getY());
@@ -758,10 +743,10 @@ public class PlayerDetailsManager extends Player{
   }
  
 
-/******************************************************************
-* Needs more work, but the button should have a shadow around it 
-* when pressed, when released it goes back to the "freestyle"
-******************************************************************/
+  /******************************************************************
+  * Needs more work, but the button should have a shadow around it 
+  * when pressed, when released it goes back to the "freestyle".
+  ******************************************************************/
   //creates the background to the player details screen. 
   //same as main menu background
   private void createBackground() {
