@@ -19,7 +19,6 @@ public class ConnectTest{
     int height = 6; //scn.nextInt();
     
 
-    logic = new ConnectLogic(width,height); // establish game size
 
     //create any players here. usage is (color, position, name);
     //make sure positions are correct, bad stuff will happen if you skip a number
@@ -33,7 +32,8 @@ public class ConnectTest{
 //    ComputerPlayer comp1 = new ComputerPlayer("d", 2, "DESTROYEROFWORLDS", 'm');
 //    ComputerPlayer comp2 = new ComputerPlayer("d", 4, "One-Eyed Willy", 'm');
         
-        logic = new ConnectLogic(width,height); // establish game size
+        logic = new ConnectLogic(); // establish game size
+        logic.startGame();
         
         
         //add the players to the game logic. can't add more than 4

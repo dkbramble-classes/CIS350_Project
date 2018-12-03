@@ -49,7 +49,7 @@ public class PlayerDetailsManager extends Player{
   private Scene playerDetailsScene;
   private Stage playerDetailsStage;
   private Stage namePopUp;
-  private final String FONT_PATH = "src/kenvector_future.ttf";
+  private final String FONT_PATH = "kenvector_future.ttf";
   private static final int SCREEN_WIDTH = 800;
   private static final int SCREEN_HEIGHT = 600;
   private Stage menuStage;
@@ -720,8 +720,6 @@ public class PlayerDetailsManager extends Player{
       player4.setName(player4Name.getText());
       player4.setColor(color4.getValue());
       
-      GameManager gameManager = new GameManager();
-      gameManager.createNewGame(playerDetailsStage);
       
       
 //      System.out.print("\nPLAYER ONE\nname: " + player1.getName() + "\ndifficulty: " + player1.getDifficulty() + "\nCPU: " + player1.getCompStatus() 
@@ -735,18 +733,22 @@ public class PlayerDetailsManager extends Player{
       
       int width = 7;
       int height = 6;
-      ConnectLogic logic = new ConnectLogic(width, height);
-      //logic.startgame();
+      ConnectLogic logic = new ConnectLogic();
+      
 
       
       //Check to see if one of the player's name text fields are empty,
       //dont add that player
       
+      
       logic.addPlayer(player1);
       logic.addPlayer(player2);
       logic.addPlayer(player3);
 //      logic.addPlayer(player4);
-//      
+      logic.startGame();
+      
+      GameManager gameManager = new GameManager(logic.getX(), logic.getY());
+      gameManager.createNewGame(playerDetailsStage);
       gameManager.setLogic(logic);
       
     });

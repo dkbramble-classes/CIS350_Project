@@ -35,30 +35,32 @@ import gamelogic.ConnectLogic;
 public class GameManager extends Application{
 
   private static final int TILE_SIZE = 80;
-  private static final int COLUMNS = 7;
-  private static final int ROWS = 6;
+  private int COLUMNS;
+  private int ROWS;
   private Pane gamePane;
   private Scene gameScene;
   private Stage gameStage;
   private Shape gridShape;
   private Stage playerDetailsStage;
-  private Disc[][] grid =  new Disc[COLUMNS][ROWS]; 
+  private Disc[][] grid; 
   private Pane discRoot =  new Pane(); 
-  private ConnectLogic logic = new ConnectLogic(COLUMNS, ROWS); 
+  private ConnectLogic logic = new ConnectLogic(); 
   private String winner = "";
   
   /******************************************************************
   * Creates the game panel for when you start a new game from
   * the Players Detail Manager;
   ******************************************************************/
-  public GameManager() {
+  public GameManager(int columns, int rows) {
 
 //	  logic.addPlayer(play1);
 //	  logic.addPlayer(play2);
 //	logic.addPlayer(play3);
 //	logic.addPlayer(play3);
-	
-	  Pane gamePane = new Pane();
+      COLUMNS = columns;
+      ROWS = rows;
+      grid = new Disc[columns][rows];
+	    Pane gamePane = new Pane();
       gameScene = new Scene(gamePane, 800, 700);
       gameStage = new Stage();
       gameStage.setScene(gameScene);
@@ -200,9 +202,11 @@ public class GameManager extends Application{
 				  (Duration.seconds(0.5), disc);
 		  animation.setToY(row * (TILE_SIZE + 5) + (TILE_SIZE / 3));
 		  
+		  System.out.println(column);
 		  logic.nextTurn(column);
+		  
 		  if(logic.checkWin() == 1){ //if won
-                ShowMessage(winner + " Wins!");
+                //ShowMessage(winner + " Wins!");
                   
 		  }
 		  winner = logic.getCurrentPlayer().getName();
