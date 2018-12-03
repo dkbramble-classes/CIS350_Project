@@ -20,9 +20,9 @@ public class ExitButton extends Button {
     //CSS to use .png files as the icon path
 		private final String FONT_PATH = "src/model/resources/"
 		    + "kenvector_future.ttf";
-		private final String EXIT_PRESSED_STYLE = "-fx-background-color:"
-		    + " transparent; "
-		    + "-fx-background-image: url('/model/resources/buttonX.png');";
+//		private final String EXIT_PRESSED_STYLE = "-fx-background-color:"
+//		    + " transparent; "
+//		    + "-fx-background-image: url('/model/resources/buttonX.png');";
 		private final String EXIT_FREE_STYLE = "-fx-background-color: "
 		    + "transparent;"
 		    + " -fx-background-image: url('/model/resources/buttonX.png');";

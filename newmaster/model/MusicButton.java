@@ -81,8 +81,8 @@ public class MusicButton extends Button{
 					    setStyle(audioOff);
 					  else if(getStyle() == audioOff)
               setStyle(audioOn);
-					  SystemOptions system = new SystemOptions();
-					  system.musicControl(audioPlayer);
+					  //SystemOptions system = new SystemOptions();
+					  SystemOptions.musicControl(audioPlayer); // this needs to be in designFX, creates a new song every time the details page is entered
 					}
 					
 				}

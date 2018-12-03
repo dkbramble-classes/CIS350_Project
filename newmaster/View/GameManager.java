@@ -1,11 +1,11 @@
 package View;
 
 
-import java.awt.EventQueue;
+//import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javax.swing.JOptionPane;
+//import javax.swing.JOptionPane;
 
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
@@ -16,7 +16,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
+//import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -28,7 +28,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import playertype.Player;
+//import playertype.Player;
 import gamelogic.ConnectLogic;
 
 
@@ -37,7 +37,7 @@ public class GameManager extends Application{
   private static final int TILE_SIZE = 80;
   private int COLUMNS;
   private int ROWS;
-  private Pane gamePane;
+  private Pane gamePane = new Pane();
   private Scene gameScene;
   private Stage gameStage;
   private Shape gridShape;

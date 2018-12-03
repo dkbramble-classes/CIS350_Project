@@ -48,12 +48,12 @@ public class PlayerDetailsManager extends Player{
   private AnchorPane dialogPane;
   private Scene playerDetailsScene;
   private Stage playerDetailsStage;
-  private Stage namePopUp;
+  //private Stage namePopUp;
   private final String FONT_PATH = "kenvector_future.ttf";
   private static final int SCREEN_WIDTH = 800;
   private static final int SCREEN_HEIGHT = 600;
   private Stage menuStage;
-  private int maxChar = 10;
+  //private int maxChar = 10;
   
 /******************************************************************
 *   initializes the pane, scene, and stage, creates the background 
@@ -731,8 +731,8 @@ public class PlayerDetailsManager extends Player{
 //      "\nPLAYER FOUR\nname: " + player4.getName() + "\ndifficulty: " + player4.getDifficulty() + "\nCPU: " + player4.getCompStatus() 
 //      + "\nColor:" + player4.getColor());
       
-      int width = 7;
-      int height = 6;
+     // int width = 7;
+      //int height = 6;
       ConnectLogic logic = new ConnectLogic();
       
 

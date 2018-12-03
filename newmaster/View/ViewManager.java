@@ -8,14 +8,14 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+//import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import connectsystem.MusicPlayer;
-import connectsystem.SystemOptions;
+//import connectsystem.MusicPlayer;
+//import connectsystem.SystemOptions;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import model.ExitButton;
@@ -36,8 +36,8 @@ public class ViewManager {
 	private Scene mainScene;
 	private Stage mainStage;
 	
-	private final static int MENU_BUTTONS_START_X = 100;
-	private final static int MENU_BUTTONS_START_Y = 150;
+	//private final static int MENU_BUTTONS_START_X = 100;
+	//private final static int MENU_BUTTONS_START_Y = 150;
 	private final String FONT_PATH = "kenvector_future.ttf";
 	
 /******************************************************************
