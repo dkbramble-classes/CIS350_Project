@@ -31,7 +31,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import model.ExitButton;
-import model.MusicButton;
+//import model.MusicButton;
 import model.PlayButton;
 import playertype.Player;
 
@@ -118,9 +118,9 @@ public class PlayerDetailsManager extends Player {
     colors.setLayoutX(500);
     colors.setLayoutY(170);
 
-    MusicButton musicButton = new MusicButton(null);
-    musicButton.setLayoutX(640);
-    musicButton.setLayoutY(27);
+    //MusicButton musicButton = new MusicButton(null);
+//    musicButton.setLayoutX(640);
+//    musicButton.setLayoutY(27);
     ExitButton exitButton = new ExitButton(null);
     exitButton.setLayoutX(700);
     exitButton.setLayoutY(0);
@@ -142,7 +142,7 @@ public class PlayerDetailsManager extends Player {
         + "url('/model/resources/plus-sign.png');");
     plus1.setPrefHeight(24);
     plus1.setPrefWidth(24);
-    plus1.setLayoutX(300);
+    plus1.setLayoutX(315);
     plus1.setLayoutY(230);
     
     Button plus2 = new Button(null);
@@ -151,7 +151,7 @@ public class PlayerDetailsManager extends Player {
         + "url('/model/resources/plus-sign.png');");
     plus2.setPrefHeight(24);
     plus2.setPrefWidth(24);
-    plus2.setLayoutX(300);
+    plus2.setLayoutX(315);
     plus2.setLayoutY(300);
 
     Button plus3 = new Button(null);
@@ -160,7 +160,7 @@ public class PlayerDetailsManager extends Player {
         + "url('/model/resources/plus-sign.png');");
     plus3.setPrefHeight(24);
     plus3.setPrefWidth(24);
-    plus3.setLayoutX(300);
+    plus3.setLayoutX(315);
     plus3.setLayoutY(370);
 
     Button plus4 = new Button(null);
@@ -169,7 +169,7 @@ public class PlayerDetailsManager extends Player {
         + "url('/model/resources/plus-sign.png');");
     plus4.setPrefHeight(24);
     plus4.setPrefWidth(24);
-    plus4.setLayoutX(300);
+    plus4.setLayoutX(315);
     plus4.setLayoutY(440);
     
     
@@ -692,7 +692,7 @@ public class PlayerDetailsManager extends Player {
         playerOneIcon, playerTwoIcon, playerThreeIcon,
         playerFourIcon, color1, color2, color3, color4, 
         returnToMenu, playGame, player1Name, player2Name, 
-        player3Name, player4Name, musicButton, exitButton, plus1,
+        player3Name, player4Name, exitButton, plus1,
         plus2, plus3, plus4);
     
     
@@ -719,22 +719,81 @@ public class PlayerDetailsManager extends Player {
       // int width = 7;
       //int height = 6;
       ConnectLogic logic = new ConnectLogic();
+
       
 
       
-      //Check to see if one of the player's name text fields are empty,
-      //dont add that player
       
+      int counter = 0;
+      if(player1Name.getText().isEmpty()) {
+        counter++;
+      }
+      if(player2Name.getText().isEmpty()) {
+        counter++;
+      }
+      if(player3Name.getText().isEmpty()) {
+        counter++;
+      }
+      if(player4Name.getText().isEmpty()) {
+        counter++;
+      }
       
-      logic.addPlayer(player1);
-      logic.addPlayer(player2);
-      logic.addPlayer(player3);
-      //  logic.addPlayer(player4);
+      if(counter > 2) {
+        dialogPane = new AnchorPane();
+        final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(playerDetailsStage);
+        Scene dialogScene = new Scene(dialogPane, 350, 70);
+        dialog.setScene(dialogScene);
+        dialog.show();
+        dialogPane.setStyle("-fx-background-color: #E9EE24;");
+        
+        
+        Label alert = new Label("      Not  enough  players,\n"
+            + "Need  at  least  two  to  play");
+        alert.setLayoutX(30);
+        alert.setLayoutY(25);
+        try {
+          alert.setFont(Font.loadFont(new 
+              FileInputStream(FONT_PATH),15));
+        } catch (FileNotFoundException e1) {
+          e1.printStackTrace();
+        }
+        alert.setTextFill(Color.DARKSLATEGRAY);
+        dialogPane.getChildren().addAll(alert);
+      }
+      
+      else {     
+      //Validation to make sure each player that wants to play,
+      //has a color selected, or else they aren't added to the
+      //game
+      if(color1.getValue() != null && 
+          player1Name.getText().isEmpty() == false) {
+        logic.addPlayer(player1);
+      }
+      
+      if(color2.getValue() != null && 
+          player2Name.getText().isEmpty() == false) {
+        logic.addPlayer(player2);
+      }
+      
+      if(color3.getValue() != null && 
+          player3Name.getText().isEmpty() == false) {
+        logic.addPlayer(player3);
+      }
+      
+      if(color4.getValue() != null && 
+          player4Name.getText().isEmpty() == false) {
+        logic.addPlayer(player4);
+      } 
+      
       logic.startGame();
       
       GameManager gameManager = new GameManager(logic.getX(), logic.getY());
       gameManager.createNewGame(playerDetailsStage);
       gameManager.setLogic(logic);
+      
+      }
       
     });
     

@@ -38,6 +38,7 @@ public class ViewManager {
   private AnchorPane mainPane;
   private Scene mainScene;
   private Stage mainStage;
+  private Stage gameStage;
   
   //private final static int MENU_BUTTONS_START_X = 100;
   //private final static int MENU_BUTTONS_START_Y = 150;
@@ -88,9 +89,8 @@ public class ViewManager {
     ExitButton exitButton = new ExitButton(null);
     PlayButton startButton = new PlayButton("PLAY NOW");
     //PlayButton intenseButton = new PlayButton("INTENSE4");
-    MusicButton musicButton = new MusicButton(null);
-    mainPane.getChildren().addAll(exitButton, startButton, 
-        musicButton, title);
+    // MusicButton musicButton = new MusicButton(null);
+    mainPane.getChildren().addAll(exitButton, startButton, title);
     
     exitButton.setLayoutX(700);
     exitButton.setLayoutY(0);
@@ -98,8 +98,8 @@ public class ViewManager {
     startButton.setLayoutY(300);
     //  intenseButton.setLayoutX(320);
     //  intenseButton.setLayoutY(330);
-    musicButton.setLayoutX(640);
-    musicButton.setLayoutY(27);
+    //musicButton.setLayoutX(640);
+    //musicButton.setLayoutY(27);
 
     /******************************************************************
     *  creates an instance of playerDetailsManager and creates the 
@@ -144,6 +144,13 @@ public class ViewManager {
         BackgroundRepeat.REPEAT,
         BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);
     mainPane.setBackground(new Background(background));
+
+  }
+  
+  public void createNewGame(Stage gameStage) {
+    this.gameStage = gameStage;
+    this.gameStage.hide();
+    mainStage.show();
 
   }
 }

@@ -3,10 +3,15 @@ package view;
 
 //import java.awt.EventQueue;
 import gamelogic.ConnectLogic;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 //import javax.swing.JOptionPane;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
@@ -14,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
@@ -161,7 +167,14 @@ public class GameManager extends Application {
       rect.setOnMouseExited(e -> rect.setFill(Color.TRANSPARENT));
          
       final int column = x;
-      rect.setOnMouseClicked(e -> placeDisc(new Disc(findColor()), column));
+      rect.setOnMouseClicked(e -> {
+        try {
+          placeDisc(new Disc(findColor()), column);
+        } catch (Throwable e1) {
+          // TODO Auto-generated catch block
+          e1.printStackTrace();
+        }
+      });
         
       list.add(rect);
     }
@@ -170,8 +183,11 @@ public class GameManager extends Application {
   
   /******************************************************************
   * Method that implements game logic to determine winner.
+   * @throws Throwable 
+   * @throws Exception 
+   * @throws UnsupportedAudioFileException 
   ******************************************************************/
-  private void placeDisc(Disc disc, int column) {
+  private void placeDisc(Disc disc, int column) throws UnsupportedAudioFileException, Exception, Throwable {
     int row = gridRows - 1;
     if (!logic.getCurrentPlayer().getCompStatus()) {
       do {
@@ -209,14 +225,41 @@ public class GameManager extends Application {
     }
   }
   
-  private void showMessage(String message) {
-    Alert alert = new Alert(AlertType.INFORMATION);
-    alert.setTitle("Game Finished");
-    alert.setHeaderText(message);
-    alert.setContentText("The Game is over, now returning to menu.");
+  private void showMessage(String message) throws UnsupportedAudioFileException, Exception, Throwable {
+//  Alert alert = new Alert(AlertType.INFORMATION);
+//  alert.setTitle("Game Finished");
+//  alert.setHeaderText(message);
+//  alert.setContentText("GAME IS OVER, RETURNING TO MENU.");
+//  if(result.get() == ButtonType.OK)
+//  alert.show();
+  
+  
+  
+  Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+  alert.setTitle("Game Finished");
+  alert.setHeaderText(message);
+  alert.setResizable(false);
+  alert.setContentText("GAME IS OVER, SELECT OK TO RETURN TO MENU, "
+      + "OR CANCEL TO SEE THE RESULTS FROM YOUR GAME!");
 
-    alert.showAndWait();
+  Optional<ButtonType> result = alert.showAndWait();
+  ButtonType button = result.orElse(ButtonType.CANCEL);
+
+  if (button == ButtonType.OK) {
+      restartApp();
+  } else {
+      alert.close();
   }
+}
+
+
+public void restartApp() throws
+UnsupportedAudioFileException, IOException,
+LineUnavailableException {
+  ViewManager viewManager = new ViewManager();
+  viewManager.createNewGame(gameStage);
+
+}
   
   private Optional<Disc> getDisc(int column, int row) {
     if (column < 0 || column >= gridColumns 
