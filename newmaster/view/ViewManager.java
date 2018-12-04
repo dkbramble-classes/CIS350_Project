@@ -3,7 +3,6 @@
 package view;
 
 import java.io.FileInputStream;
-//import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
@@ -21,12 +20,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
-//import connectsystem.MusicPlayer;
-//import connectsystem.SystemOptions;
 import model.ExitButton;
-import model.MusicButton;
 import model.PlayButton;
 
 
@@ -50,10 +45,9 @@ public class ViewManager {
   * playing Connect 4.
    * @throws LineUnavailableException if the code cannot be executed
    * @throws IOException if there is an issue with the input
-   * @throws UnsupportedAudioFileException 
   ******************************************************************/
 
-  public ViewManager() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+  public ViewManager() throws IOException, LineUnavailableException {
     mainPane = new AnchorPane();
     mainScene = new Scene(mainPane, WIDTH, HEIGHT);
     mainStage = new Stage();
@@ -75,10 +69,9 @@ public class ViewManager {
   * Creates labels and buttons and adds all of them to the main pane.
    * @throws LineUnavailableException if the code cannot be executed
    * @throws IOException if there is an issue with the input
-   * @throws UnsupportedAudioFileException 
   ******************************************************************/
 
-  private void createButtons() throws UnsupportedAudioFileException, 
+  private void createButtons() throws
       IOException, LineUnavailableException {
     Label title = new Label("CONNECT 4");
     title.setLayoutX(180);
@@ -111,12 +104,8 @@ public class ViewManager {
       public void handle(ActionEvent event) {
         PlayerDetailsManager playerDetailsManager;
         try {
-          playerDetailsManager = new 
-              PlayerDetailsManager();
+          playerDetailsManager = new PlayerDetailsManager();
           playerDetailsManager.createDetailsScreen(mainStage);
-        } catch (UnsupportedAudioFileException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
         } catch (IOException e) {
           // TODO Auto-generated catch block
           e.printStackTrace();

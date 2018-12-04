@@ -28,7 +28,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 import model.ExitButton;
 //import model.MusicButton;
@@ -63,11 +62,9 @@ public class PlayerDetailsManager extends Player {
   *   image, adds all the items, including buttons, labels, and icons.
    * @throws LineUnavailableException if not instantiated
    * @throws IOException if issues with input
-   * @throws UnsupportedAudioFileException 
   ******************************************************************/
 
-  public PlayerDetailsManager() throws 
-       UnsupportedAudioFileException, IOException,
+  public PlayerDetailsManager() throws IOException,
        LineUnavailableException {
     initializeStage();
     createBackground();
@@ -106,7 +103,7 @@ public class PlayerDetailsManager extends Player {
   *   names and link that data to each player.
   ******************************************************************/
   
-  public void createItems() throws UnsupportedAudioFileException, 
+  public void createItems() throws
        IOException, LineUnavailableException {
     Label title = new Label("PLAYER   DETAILS");
     Label names = new Label("NAME");
