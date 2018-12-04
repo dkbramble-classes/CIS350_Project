@@ -191,7 +191,8 @@ public class GameManager extends Application {
       if (!computer) { //if not a computer
         System.out.println(column); //for logging
         int result = 0;
-        result = logic.nextTurn(column); //place the chip in the logic
+        winner = logic.getCurrentPlayer().getName(); //set winner name
+        result = logic.nextTurn(column); //place the chip in the logic       
         animation.setOnFinished(e -> { //once the animation is done
           try {
             checkComputer(column); //check if the next player is a computer
@@ -211,7 +212,6 @@ public class GameManager extends Application {
           gameOver = true; //stop accepting button presses
           return;
         }
-        winner = logic.getCurrentPlayer().getName(); //set winner name
       } else { //if its a computer
 
         animation.setOnFinished(e -> { 
@@ -335,7 +335,7 @@ public class GameManager extends Application {
   
   private void checkComputer(int column) throws Throwable {
     boolean computer = logic.getCurrentPlayer().getCompStatus();
-    if (computer) { //if the current player is a computer
+    if (computer & !gameOver) { //if the current player is a computer
       int result;
       Color color = findColor(); //get computer chip color
       winner = logic.getCurrentPlayer().getName(); //get computer name in case it wins
