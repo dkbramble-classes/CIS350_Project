@@ -15,6 +15,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -49,6 +50,8 @@ public class GameManager extends Application {
   private Pane gamePane = new Pane();
   private Scene gameScene;
   private Stage gameStage;
+  private boolean compDone = true;
+  private boolean gameOver = false;
   private Shape gridShape;
   private Stage playerDetailsStage;
   private Disc[][] grid; 
@@ -70,7 +73,7 @@ public class GameManager extends Application {
     gridRows = rows;
     grid = new Disc[columns][rows];
     Pane gamePane = new Pane();
-    gameScene = new Scene(gamePane, 800, 700);
+    gameScene = new Scene(gamePane);
     gameStage = new Stage();
     gameStage.setScene(gameScene);
     gridShape = makeGrid();
@@ -169,9 +172,8 @@ public class GameManager extends Application {
       final int column = x;
       rect.setOnMouseClicked(e -> {
         try {
-          placeDisc(new Disc(findColor()), column);
+          placeDisc(new Disc(findColor()), column, false);
         } catch (Throwable e1) {
-          // TODO Auto-generated catch block
           e1.printStackTrace();
         }
       });
@@ -187,9 +189,10 @@ public class GameManager extends Application {
    * @throws Exception 
    * @throws UnsupportedAudioFileException 
   ******************************************************************/
-  private void placeDisc(Disc disc, int column) throws UnsupportedAudioFileException, Exception, Throwable {
-    int row = gridRows - 1;
-    if (!logic.getCurrentPlayer().getCompStatus()) {
+  private void placeDisc(Disc disc, int column, boolean computer) throws UnsupportedAudioFileException, Exception, Throwable {
+    if(!gameOver){
+     compDone = false;
+     int row = gridRows - 1;
       do {
         if (!getDisc(column, row).isPresent()) {
           break;
@@ -207,49 +210,68 @@ public class GameManager extends Application {
 
       TranslateTransition animation = new TranslateTransition(Duration.seconds(0.5), disc);
       animation.setToY(row * (TILE_SIZE + 5) + (TILE_SIZE / 3));
+      if (!computer) {
+        System.out.println(column);
+        int result = 0;
+        result = logic.nextTurn(column);
+        animation.setOnFinished(e -> {
+          //compDone = true;
+          try {
+            checkComputer(column);
+          } catch (Throwable e1) {
+            e1.printStackTrace();
+          }
+        });
+        animation.play();
+        if (result == -20) { //a tie
+          showMessage("No more chips can be placed, it's a tie!");
+          gameOver = true;
+          
+        }
+        
+        if (logic.checkWin() != 0) { //if won
+          showMessage(winner + " Wins!");
+          gameOver = true;
+          return;
+        }
+        winner = logic.getCurrentPlayer().getName();
+      } else {
 
-      System.out.println(column);
-      int result = 0;
-      result = logic.nextTurn(column);
-      
-      if (result == -20) { //a tie
-        showMessage("No more chips can be placed, it's a tie!");
-      }
-      
-      if (logic.checkWin() != 0) { //if won
-        showMessage(winner + " Wins!");               
-      }
-      winner = logic.getCurrentPlayer().getName();
-      animation.play();
+          animation.setOnFinished(e -> {try {
+            checkComputer(column);
+          } catch (Throwable e1) {
+            e1.printStackTrace();
+          }});
+          animation.play();
 
+      }
     }
   }
   
   private void showMessage(String message) throws UnsupportedAudioFileException, Exception, Throwable {
-//  Alert alert = new Alert(AlertType.INFORMATION);
-//  alert.setTitle("Game Finished");
-//  alert.setHeaderText(message);
-//  alert.setContentText("GAME IS OVER, RETURNING TO MENU.");
-//  if(result.get() == ButtonType.OK)
-//  alert.show();
-  
-  
-  
-  Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+
+  Alert alert = new Alert(Alert.AlertType.INFORMATION);
   alert.setTitle("Game Finished");
   alert.setHeaderText(message);
   alert.setResizable(false);
-  alert.setContentText("GAME IS OVER, SELECT OK TO RETURN TO MENU, "
-      + "OR CANCEL TO SEE THE RESULTS FROM YOUR GAME!");
+  alert.setContentText("The Game is over, returning to menu");
 
-  Optional<ButtonType> result = alert.showAndWait();
-  ButtonType button = result.orElse(ButtonType.CANCEL);
-
-  if (button == ButtonType.OK) {
-      restartApp();
-  } else {
-      alert.close();
-  }
+//  Optional<ButtonType> result = alert.showAndWait();
+//  ButtonType button = result.orElse(ButtonType.CANCEL);
+//
+//  if (button == ButtonType.OK) {
+//      restartApp();
+//  } else {
+//      alert.close();
+//  }
+  
+  alert.setOnHidden(evt -> {try {
+    restartApp();
+  } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+    e.printStackTrace();
+  }});
+  //alert.setOnCloseRequest(value);
+  alert.show();
 }
 
 
@@ -313,6 +335,26 @@ LineUnavailableException {
         break;
     }
     return color;
+  }
+  
+  private void checkComputer(int column) throws UnsupportedAudioFileException, Exception, Throwable {
+    boolean computer = logic.getCurrentPlayer().getCompStatus();
+    if (computer) {
+      int result;
+      Color color = findColor();
+      winner = logic.getCurrentPlayer().getName();
+      result = logic.nextTurn(column);
+      placeDisc(new Disc(color), result, computer);
+      if (result == -20 && !gameOver) { //a tie
+            showMessage("No more chips can be placed, it's a tie!");
+            gameOver = true;
+      }
+          
+      if (logic.checkWin() != 0 && !gameOver) { //if won
+          showMessage(winner + " Wins!");  
+          gameOver = true;
+      }
+    }
   }
 
   @Override
