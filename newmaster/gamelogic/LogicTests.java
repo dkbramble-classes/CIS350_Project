@@ -17,13 +17,13 @@ class LogicTests {
     logic.startGame();
     
     boolean result = true;
-    for(int x = 0; x < logic.getX() - 3; x++) {
-      for(int y = 0; y < logic.getY(); y++) {
+    for (int x = 0; x < logic.getX() - 3; x++) {
+      for (int y = 0; y < logic.getY(); y++) {
         logic.setSpace(x, y, 1);
-        logic.setSpace(x+1, y, 1);
-        logic.setSpace(x+2, y, 1);
-        logic.setSpace(x+3, y, 1);
-        if(logic.checkWin() != 1) {
+        logic.setSpace(x + 1, y, 1);
+        logic.setSpace(x + 2, y, 1);
+        logic.setSpace(x + 3, y, 1);
+        if (logic.checkWin() != 1) {
           fail();
         }
         logic.startGame();
@@ -41,13 +41,13 @@ class LogicTests {
     logic.startGame();
     
     boolean result = true;
-    for(int x = 0; x < logic.getX(); x++) {
-      for(int y = 0; y < logic.getY() - 3; y++) {
+    for (int x = 0; x < logic.getX(); x++) {
+      for (int y = 0; y < logic.getY() - 3; y++) {
         logic.setSpace(x, y, 1);
-        logic.setSpace(x, y+1, 1);
-        logic.setSpace(x, y+2, 1);
-        logic.setSpace(x, y+3, 1);
-        if(logic.checkWin() != 1) {
+        logic.setSpace(x, y + 1, 1);
+        logic.setSpace(x, y + 2, 1);
+        logic.setSpace(x, y + 3, 1);
+        if (logic.checkWin() != 1) {
           fail();
         }
         logic.startGame();
@@ -65,13 +65,13 @@ class LogicTests {
     logic.startGame();
     
     boolean result = true;
-    for(int x = 0; x < logic.getX() - 3; x++) {
-      for(int y = 0; y < logic.getY() - 3; y++) {
-        logic.setSpace(x, y+3, 1);
-        logic.setSpace(x+1, y+2, 1);
-        logic.setSpace(x+2, y+1, 1);
-        logic.setSpace(x+3, y, 1);
-        if(logic.checkWin() != 1) {
+    for (int x = 0; x < logic.getX() - 3; x++) {
+      for (int y = 0; y < logic.getY() - 3; y++) {
+        logic.setSpace(x, y + 3, 1);
+        logic.setSpace(x + 1, y + 2, 1);
+        logic.setSpace(x + 2, y + 1, 1);
+        logic.setSpace(x + 3, y, 1);
+        if (logic.checkWin() != 1) {
           fail();
         }
         logic.startGame();
@@ -89,13 +89,13 @@ class LogicTests {
     logic.startGame();
     
     boolean result = true;
-    for(int x = 0; x < logic.getX() - 3; x++) {
-      for(int y = 0; y < logic.getY() - 3; y++) {
+    for (int x = 0; x < logic.getX() - 3; x++) {
+      for (int y = 0; y < logic.getY() - 3; y++) {
         logic.setSpace(x, y, 1);
-        logic.setSpace(x+1, y+1, 1);
-        logic.setSpace(x+2, y+2, 1);
-        logic.setSpace(x+3, y+3, 1);
-        if(logic.checkWin() != 1) {
+        logic.setSpace(x + 1, y + 1, 1);
+        logic.setSpace(x + 2, y + 2, 1);
+        logic.setSpace(x + 3, y + 3, 1);
+        if (logic.checkWin() != 1) {
           fail();
         }
         logic.startGame();
