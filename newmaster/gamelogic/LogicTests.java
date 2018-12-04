@@ -1,71 +1,112 @@
 package gamelogic;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.jupiter.api.Test;
 import playertype.Player;
 
 class LogicTests {
 
+  
   @Test
-  void badDimensions() {
+  public void checkEveryHorizontal() {
     ConnectLogic logic = new ConnectLogic();
+    logic.setNumPlayers(4);
+    logic.updateGridSize();
     logic.startGame();
-    assertEquals(logic.getX(),7);
+    
+    boolean result = true;
+    for(int x = 0; x < logic.getX() - 3; x++) {
+      for(int y = 0; y < logic.getY(); y++) {
+        logic.setSpace(x, y, 1);
+        logic.setSpace(x+1, y, 1);
+        logic.setSpace(x+2, y, 1);
+        logic.setSpace(x+3, y, 1);
+        if(logic.checkWin() != 1) {
+          fail();
+        }
+        logic.startGame();
+      }
+    }
+    
+    assertEquals(result,true);
   }
   
   
   @Test
-  void checkWinHorizontal() {
+  public void checkEveryVertical() {
     ConnectLogic logic = new ConnectLogic();
-    logic.startGame();
     logic.setNumPlayers(1);
-    logic.setSpace(2, 2, 1);
-    logic.setSpace(3, 2, 1);
-    logic.setSpace(4, 2, 1);
-    logic.setSpace(5, 2, 1);
-    printBoard(logic);
-    assertEquals(logic.checkWin(),1);
+    logic.startGame();
+    
+    boolean result = true;
+    for(int x = 0; x < logic.getX(); x++) {
+      for(int y = 0; y < logic.getY() - 3; y++) {
+        logic.setSpace(x, y, 1);
+        logic.setSpace(x, y+1, 1);
+        logic.setSpace(x, y+2, 1);
+        logic.setSpace(x, y+3, 1);
+        if(logic.checkWin() != 1) {
+          fail();
+        }
+        logic.startGame();
+      }
+    }
+    
+    assertEquals(result,true);
+  }
+  
+  
+  @Test
+  public void checkEveryDiagUp() {
+    ConnectLogic logic = new ConnectLogic();
+    logic.setNumPlayers(1);
+    logic.startGame();
+    
+    boolean result = true;
+    for(int x = 0; x < logic.getX() - 3; x++) {
+      for(int y = 0; y < logic.getY() - 3; y++) {
+        logic.setSpace(x, y+3, 1);
+        logic.setSpace(x+1, y+2, 1);
+        logic.setSpace(x+2, y+1, 1);
+        logic.setSpace(x+3, y, 1);
+        if(logic.checkWin() != 1) {
+          fail();
+        }
+        logic.startGame();
+      }
+    }
+    
+    assertEquals(result,true);
+  }
+  
+  
+  @Test
+  public void checkEveryDiagDown() {
+    ConnectLogic logic = new ConnectLogic();
+    logic.setNumPlayers(1);
+    logic.startGame();
+    
+    boolean result = true;
+    for(int x = 0; x < logic.getX() - 3; x++) {
+      for(int y = 0; y < logic.getY() - 3; y++) {
+        logic.setSpace(x, y, 1);
+        logic.setSpace(x+1, y+1, 1);
+        logic.setSpace(x+2, y+2, 1);
+        logic.setSpace(x+3, y+3, 1);
+        if(logic.checkWin() != 1) {
+          fail();
+        }
+        logic.startGame();
+      }
+    }
+    
+    assertEquals(result,true);
   }
 
   @Test
-  void checkWinVertical() {
-    ConnectLogic logic = new ConnectLogic();
-    logic.startGame();
-    logic.setNumPlayers(1);
-    logic.setSpace(2, 2, 1);
-    logic.setSpace(2, 3, 1);
-    logic.setSpace(2, 4, 1);
-    logic.setSpace(2, 5, 1);
-    assertEquals(logic.checkWin(),1);
-  }
-
-  @Test
-  void checkWinDiagonalUp() {
-    ConnectLogic logic = new ConnectLogic();
-    logic.startGame();
-    logic.setNumPlayers(1);
-    logic.setSpace(2, 5, 1);
-    logic.setSpace(3, 4, 1);
-    logic.setSpace(4, 3, 1);
-    logic.setSpace(5, 2, 1);
-    assertEquals(logic.checkWin(),1);
-  }
-
-  @Test
-  void checkWinDiagonalDown() {
-    ConnectLogic logic = new ConnectLogic();
-    logic.startGame();
-    logic.setNumPlayers(1);
-    logic.setSpace(0, 0, 1);
-    logic.setSpace(1, 1, 1);
-    logic.setSpace(2, 2, 1);
-    logic.setSpace(3, 3, 1);
-    assertEquals(logic.checkWin(),1);
-  }
-
-  @Test
-  void checkWinFullBoard() {
+  public void checkWinFullBoard() {
     ConnectLogic logic = new ConnectLogic();
     logic.startGame();
     logic.setNumPlayers(1);
@@ -81,7 +122,7 @@ class LogicTests {
 
 
   @Test
-  void checkWinNoWin() {
+  public void checkWinNoWin() {
     ConnectLogic logic = new ConnectLogic();
     logic.startGame();
     logic.setNumPlayers(1); 
@@ -92,7 +133,7 @@ class LogicTests {
   }
 
   @Test
-  void setSpace() {
+  public void setSpace() {
     ConnectLogic logic = new ConnectLogic();
     logic.startGame();
     logic.setSpace(4, 5, 2);
@@ -100,28 +141,28 @@ class LogicTests {
   }
 
   @Test
-  void invalidOver() {
+  public void invalidOver() {
     ConnectLogic logic = new ConnectLogic();
     logic.startGame();
     assertEquals(logic.isValid(8),false);
   }
 
   @Test
-  void invalidUnder() {
+  public void invalidUnder() {
     ConnectLogic logic = new ConnectLogic();
     logic.startGame();
     assertEquals(logic.isValid(-1),false);
   }
 
   @Test
-  void isValid() {
+  public void isValid() {
     ConnectLogic logic = new ConnectLogic();
     logic.startGame();
     assertEquals(logic.isValid(6),true);
   }
 
   @Test
-  void addPlayer() {
+  public void addPlayer() {
     ConnectLogic logic = new ConnectLogic();
     logic.startGame();
     logic.addPlayer(new Player("d", 1, "lenny"));
@@ -130,7 +171,7 @@ class LogicTests {
 
 
   @Test
-  void addPlayerTooMany() {
+  public void addPlayerTooMany() {
     ConnectLogic logic = new ConnectLogic();
     logic.startGame();
 
@@ -145,7 +186,7 @@ class LogicTests {
   }
 
   @Test
-  void drop() {
+  public void drop() {
     ConnectLogic logic = new ConnectLogic();
     logic.startGame();
     logic.addPlayer(new Player());
@@ -157,7 +198,7 @@ class LogicTests {
   }
 
   @Test 
-  void nextTurnFullBoard() {
+  public void nextTurnFullBoard() {
     ConnectLogic logic = new ConnectLogic();
     logic.startGame();
     logic.addPlayer(new Player("d", 2, "tester"));
@@ -171,7 +212,7 @@ class LogicTests {
   }
 
   @Test
-  void getCurrentPlayer() {
+  public void getCurrentPlayer() {
     ConnectLogic logic = new ConnectLogic();
     logic.startGame();
     logic.addPlayer(new Player("d", 1, "tester"));
@@ -182,7 +223,7 @@ class LogicTests {
   
 
   @Test
-  void getCurrentPlayerNone() {
+  public void getCurrentPlayerNone() {
     ConnectLogic logic = new ConnectLogic();
     logic.startGame();
     logic.nextTurn(2);

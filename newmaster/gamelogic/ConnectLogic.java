@@ -172,7 +172,7 @@ public class ConnectLogic {
           }
 
 
-          if (i < width - 3 && j > 3) {
+          if (i < width - 3 && j >= 3) {
 
             //diagonal up                       
             if (gameGrid[i][j] == p && gameGrid[i + 1][j - 1] == p 
