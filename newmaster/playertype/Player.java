@@ -11,9 +11,10 @@ The player can also be a computer player with different difficulties
 
 package playertype;
 
+import gamelogic.ConnectLogic;
 import java.util.Random;
 
-import gamelogic.ConnectLogic;
+
 
 public class Player {
   private String color; //The color of the player's chip
@@ -66,13 +67,13 @@ public class Player {
   @param n the name of the player
 */
 
- public Player(String c, int p, String n) {
-   this.color = c;
-   this.position = p;
-   this.name = n;
-   this.difficulty = "e";
-   this.computer = false;
- }
+  public Player(String c, int p, String n) {
+    this.color = c;
+    this.position = p;
+    this.name = n;
+    this.difficulty = "e";
+    this.computer = false;
+  }
   
   /*****************************************************************
   Takes in a column and attempts to place it on the grid. If it is a
@@ -242,7 +243,7 @@ public class Player {
     return difficulty;
   }
   
-  public boolean getCompStatus(){
+  public boolean getCompStatus() {
     return computer;
   }
 
@@ -267,7 +268,7 @@ public class Player {
     return;
   }
   
-  public void setCompStatus(boolean b){
+  public void setCompStatus(boolean b) {
     this.computer = b;
     return;
   }

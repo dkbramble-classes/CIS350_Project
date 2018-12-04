@@ -1,15 +1,15 @@
 package application;
 
-import View.ViewManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import view.ViewManager;
 
 
 /******************************************************************
 * Creates an instance of ViewManager and shows the initial screen 
-* of the application
+* of the application.
 ******************************************************************/
-public class DesignFX extends Application {
+public class DesignFx extends Application {
   @Override
   public void start(Stage primaryStage) {
     try {

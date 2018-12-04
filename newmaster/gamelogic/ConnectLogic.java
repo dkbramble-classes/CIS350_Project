@@ -5,14 +5,14 @@ import playertype.Player;
 
 public class ConnectLogic {
 
-  private int[][] gameGrid;
+  public int[][] gameGrid;
 
   private int width; // the width of the board
   private int height; // the height of the board
   private int numPlayers; //number of players in the game
   private int activePlayer; //the position of the player currently playing
 
-  private Player[] playerlist = new Player[4]; //list holding all real players
+  public Player[] playerlist = new Player[4]; //list holding all real players
   //private ComputerPlayer[] complist = new ComputerPlayer[4]; //list holding all computer players
 
 
@@ -40,7 +40,7 @@ public class ConnectLogic {
       }
     }
 
-    activePlayer = 0;
+    activePlayer = 1;
 
   }
 
@@ -66,6 +66,7 @@ public class ConnectLogic {
    *Drop: Find the lowest space in the column, set it to be active player.
    *@param col the column of the game board in which to drop the chip
    */
+  
   public int drop(int col) {
 
     int depth = 0;
@@ -90,11 +91,6 @@ public class ConnectLogic {
    *player to place a new chip.
    **************************************************************************/
   public int nextTurn(int input) {
-    if (activePlayer < numPlayers) { // set the next player
-      activePlayer++;
-    } else {
-      activePlayer = 1;
-    }
 
     int column = -1;
     for (Player play : playerlist) { //Find if any players are the current player
@@ -106,14 +102,14 @@ public class ConnectLogic {
       }
     }
 
-//    for (ComputerPlayer play : complist) { //find if any computer players are the current player
-//      if (play != null) {
-//        if (play.getPosition() == activePlayer) {
-//          column = play.computerTurn(this); //place the computer players new chip
-//          break;
-//        }
-//      }
-//    }
+    //    for (ComputerPlayer play : complist) { 
+    //      if (play != null) {
+    //        if (play.getPosition() == activePlayer) {
+    //          column = play.computerTurn(this); //place the computer players new chip
+    //          break;
+    //        }
+    //      }
+    //    }
     
     boolean possible = false;
     for (int i = 0; i < width; i++) { //check if any more chips can be added
@@ -124,8 +120,14 @@ public class ConnectLogic {
     }
 
     if (!possible) {
-      column = -1; //if no more open slots, game over
+      column = -20; //if no more open slots, game over
       System.out.println("Game board is filled, it's a tie!");
+    }
+    
+    if (activePlayer < numPlayers) { // set the next player
+      activePlayer++;
+    } else {
+      activePlayer = 1;
     }
 
     return column; //if -1, end the game
@@ -224,21 +226,21 @@ public class ConnectLogic {
   }
 
   /**************************************************************************
-   *Adds a computer player to the list of current players. 
-   *@param play - the computer player to be added to the list
-   */
-//  public void addPlayer(ComputerPlayer play) {
-//    if (numPlayers < 4) { //can't have more than 4
-//      for (int i = 0; i < 4; i++) {
-//        if (complist[i] == null) {
-//          complist[i] = play;
-//          numPlayers++;
-//          break;
-//        }
-//      }
-//    }
-//    return;  
-//  }
+     *Adds a computer player to the list of current players. 
+     *@param play - the computer player to be added to the list
+     */
+  //  public void addPlayer(ComputerPlayer play) {
+  //    if (numPlayers < 4) { //can't have more than 4
+  //      for (int i = 0; i < 4; i++) {
+  //        if (complist[i] == null) {
+  //          complist[i] = play;
+  //          numPlayers++;
+  //          break;
+  //        }
+  //      }
+  //    }
+  //    return;  
+  //  }
 
 
   /**************************************************************************
@@ -278,15 +280,15 @@ public class ConnectLogic {
       }
     }
 
-//    for (ComputerPlayer play : complist) { //check if a computer player is the current player
-//      if (play != null) {
-//        if (play.getPosition() == activePlayer) {
-//          current = play.getName();
-//          break;
-//        }
-//      }
-//
-//    }
+    //    for (ComputerPlayer play : complist) { //check if a computer player is the current player
+    //      if (play != null) {
+    //        if (play.getPosition() == activePlayer) {
+    //          current = play.getName();
+    //          break;
+    //        }
+    //      }
+    //
+    //    }
     return current;
   }
 
@@ -301,7 +303,7 @@ public class ConnectLogic {
   }
 
   /**************************************************************************
-   * Get Player List: used for testing
+   * Get Player List: used for testing.
    * @return list of players in the game
    */
   public Player[] getPlayerlist() {
@@ -309,7 +311,7 @@ public class ConnectLogic {
   }
 
   /**************************************************************************
-   * Set Number of Players: used for testing
+   * Set Number of Players: used for testing.
    * @param n Number of players
    */
   public void setNumPlayers(int n) {
