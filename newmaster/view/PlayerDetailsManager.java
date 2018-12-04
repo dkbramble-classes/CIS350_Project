@@ -27,8 +27,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import javax.sound.sampled.LineUnavailableException;
-
 import model.ExitButton;
 //import model.MusicButton;
 import model.PlayButton;
@@ -60,12 +58,10 @@ public class PlayerDetailsManager extends Player {
   /******************************************************************
   *   initializes the pane, scene, and stage, creates the background 
   *   image, adds all the items, including buttons, labels, and icons.
-   * @throws LineUnavailableException if not instantiated
-   * @throws IOException if issues with input
-  ******************************************************************/
+  * @throws IOException if issues with file paths
+  */
 
-  public PlayerDetailsManager() throws IOException,
-       LineUnavailableException {
+  public PlayerDetailsManager() throws IOException {
     initializeStage();
     createBackground();
     createItems();
@@ -104,7 +100,7 @@ public class PlayerDetailsManager extends Player {
   ******************************************************************/
   
   public void createItems() throws
-       IOException, LineUnavailableException {
+       IOException {
     Label title = new Label("PLAYER   DETAILS");
     Label names = new Label("NAME");
     title.setLayoutX(135);
@@ -114,10 +110,10 @@ public class PlayerDetailsManager extends Player {
     Label colors = new Label("COLOR");
     colors.setLayoutX(500);
     colors.setLayoutY(170);
-
+ 
     //MusicButton musicButton = new MusicButton(null);
-//    musicButton.setLayoutX(640);
-//    musicButton.setLayoutY(27);
+    //    musicButton.setLayoutX(640);
+    //musicButton.setLayoutY(27);
     ExitButton exitButton = new ExitButton(null);
     exitButton.setLayoutX(700);
     exitButton.setLayoutY(0);
@@ -722,20 +718,20 @@ public class PlayerDetailsManager extends Player {
       
       
       int counter = 0;
-      if(player1Name.getText().isEmpty()) {
+      if (player1Name.getText().isEmpty()) {
         counter++;
       }
-      if(player2Name.getText().isEmpty()) {
+      if (player2Name.getText().isEmpty()) {
         counter++;
       }
-      if(player3Name.getText().isEmpty()) {
+      if (player3Name.getText().isEmpty()) {
         counter++;
       }
-      if(player4Name.getText().isEmpty()) {
+      if (player4Name.getText().isEmpty()) {
         counter++;
       }
       
-      if(counter > 2) {
+      if (counter > 2) {
         dialogPane = new AnchorPane();
         final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
@@ -758,37 +754,35 @@ public class PlayerDetailsManager extends Player {
         }
         alert.setTextFill(Color.DARKSLATEGRAY);
         dialogPane.getChildren().addAll(alert);
-      }
+      } else {     
+        //Validation to make sure each player that wants to play,
+        //has a color selected, or else they aren't added to the
+        //game
+        if (color1.getValue() != null 
+            && player1Name.getText().isEmpty() == false) {
+          logic.addPlayer(player1);
+        }
       
-      else {     
-      //Validation to make sure each player that wants to play,
-      //has a color selected, or else they aren't added to the
-      //game
-      if(color1.getValue() != null && 
-          player1Name.getText().isEmpty() == false) {
-        logic.addPlayer(player1);
-      }
+        if (color2.getValue() != null 
+            && player2Name.getText().isEmpty() == false) {
+          logic.addPlayer(player2);
+        }
+        
+        if (color3.getValue() != null 
+            && player3Name.getText().isEmpty() == false) {
+          logic.addPlayer(player3);
+        }
+         
+        if (color4.getValue() != null 
+            && player4Name.getText().isEmpty() == false) {
+          logic.addPlayer(player4);
+        } 
       
-      if(color2.getValue() != null && 
-          player2Name.getText().isEmpty() == false) {
-        logic.addPlayer(player2);
-      }
+        logic.startGame();
       
-      if(color3.getValue() != null && 
-          player3Name.getText().isEmpty() == false) {
-        logic.addPlayer(player3);
-      }
-      
-      if(color4.getValue() != null && 
-          player4Name.getText().isEmpty() == false) {
-        logic.addPlayer(player4);
-      } 
-      
-      logic.startGame();
-      
-      GameManager gameManager = new GameManager(logic.getX(), logic.getY());
-      gameManager.createNewGame(playerDetailsStage);
-      gameManager.setLogic(logic);
+        GameManager gameManager = new GameManager(logic.getX(), logic.getY());
+        gameManager.createNewGame(playerDetailsStage);
+        gameManager.setLogic(logic);
       
       }
       

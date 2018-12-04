@@ -27,7 +27,6 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import javax.sound.sampled.LineUnavailableException;
 
 public class GameManager extends Application {
 
@@ -230,12 +229,11 @@ public class GameManager extends Application {
   /******************************************************************
   * This method displays a pop message with the given information.
   * This is used for the win / tie conditions.
-   * @throws LineUnavailableException if t
-   * @throws IOException 
-  ******************************************************************/
+  * @throws IOException if there are issues with file paths.
+  */
   
   private void showMessage(String message) 
-      throws IOException, LineUnavailableException {
+      throws IOException {
 
     Alert alert = new Alert(Alert.AlertType.INFORMATION);
     alert.setTitle("Game Finished");
@@ -245,7 +243,7 @@ public class GameManager extends Application {
     alert.setOnCloseRequest(evt -> { 
       try {
         restartApp();
-      } catch (IOException | LineUnavailableException e) {
+      } catch (IOException e) {
         e.printStackTrace();
       }
     });
@@ -254,10 +252,9 @@ public class GameManager extends Application {
 
   /******************************************************************
   * Resets the View Manager so the game can be played again.
-  * @throws IOException if ViewManager has issues with input
-  * @throws LineUnavailableException if ViewManager has issues with other executions
+  * @throws IOException if ViewManager has issues with file paths.
   */
-  public void restartApp() throws IOException, LineUnavailableException {
+  public void restartApp() throws IOException{
     ViewManager viewManager = new ViewManager(); //create a new menu screen
     viewManager.createNewGame(gameStage);
     gameStage.close(); //close the old game board stage

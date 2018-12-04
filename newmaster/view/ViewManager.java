@@ -19,8 +19,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import javax.sound.sampled.LineUnavailableException;
-
 import model.ExitButton;
 import model.PlayButton;
 
@@ -43,11 +41,10 @@ public class ViewManager {
   * Class that deals with the second screen of the program; the 
   * player details including the names and colors of each person 
   * playing Connect 4.
-   * @throws LineUnavailableException if the code cannot be executed
-   * @throws IOException if there is an issue with the input
-  ******************************************************************/
+  * @throws IOException if there is an issue with the file paths
+  */
 
-  public ViewManager() throws IOException, LineUnavailableException {
+  public ViewManager() throws IOException {
     mainPane = new AnchorPane();
     mainScene = new Scene(mainPane, WIDTH, HEIGHT);
     mainStage = new Stage();
@@ -67,12 +64,11 @@ public class ViewManager {
 
   /******************************************************************
   * Creates labels and buttons and adds all of them to the main pane.
-   * @throws LineUnavailableException if the code cannot be executed
-   * @throws IOException if there is an issue with the input
-  ******************************************************************/
+  * @throws IOException if there is an issue with FONT_PATH
+  */
 
   private void createButtons() throws
-      IOException, LineUnavailableException {
+      IOException {
     Label title = new Label("CONNECT 4");
     title.setLayoutX(180);
     title.setLayoutY(100);
@@ -109,9 +105,6 @@ public class ViewManager {
         } catch (IOException e) {
           // TODO Auto-generated catch block
           e.printStackTrace();
-        } catch (LineUnavailableException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
         }
 
         }
@@ -136,9 +129,12 @@ public class ViewManager {
 
   }
   
+  /******************************************************************
+  * Creates a new instance of the gameStage to be played on.
+  ******************************************************************/
   public void createNewGame(Stage gameStage) {
     this.gameStage = gameStage;
-    this.gameStage.hide();
+    this.gameStage.close(); // remove the old gameStage
     mainStage.show();
 
   }
