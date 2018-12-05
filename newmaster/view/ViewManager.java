@@ -18,7 +18,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
+import javafx.stage.StageStyle;
 import model.ExitButton;
 import model.PlayButton;
 
@@ -48,6 +48,7 @@ public class ViewManager {
     mainPane = new AnchorPane();
     mainScene = new Scene(mainPane, WIDTH, HEIGHT);
     mainStage = new Stage();
+    mainStage.initStyle(StageStyle.UNDECORATED);
     mainStage.setScene(mainScene);
     createButtons();
     createBackground();

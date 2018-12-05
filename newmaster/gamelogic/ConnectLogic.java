@@ -54,8 +54,8 @@ public class ConnectLogic {
       height = 7;
       width = 9;
     } else if (numPlayers == 4) {
-      height = 9;
-      width = 10;
+      height = 7;
+      width = 11;
     } else { //default for 2 players or error
       height = 6;
       width = 7;

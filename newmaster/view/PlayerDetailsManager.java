@@ -26,7 +26,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
+import javafx.stage.StageStyle;
 import model.ExitButton;
 //import model.MusicButton;
 import model.PlayButton;
@@ -77,6 +77,7 @@ public class PlayerDetailsManager extends Player {
     playerDetailsScene = new Scene(playerDetailsPane, 
         SCREEN_WIDTH, SCREEN_HEIGHT);
     playerDetailsStage = new Stage();
+    playerDetailsStage.initStyle(StageStyle.UNDECORATED);
     playerDetailsStage.setScene(playerDetailsScene);
 
   }
@@ -512,22 +513,22 @@ public class PlayerDetailsManager extends Player {
     player4Name.setLayoutY(440);
     
     ChoiceBox<String> color1 = new ChoiceBox<>();
-    color1.getItems().addAll("Red", "Blue", "Green", "Yellow");
+    color1.getItems().addAll("Red", "Blue", "Green", "Black");
     color1.setPrefWidth(80);
     color1.setLayoutX(520);
     color1.setLayoutY(230);
     ChoiceBox<String> color2 = new ChoiceBox<>();
-    color2.getItems().addAll("Red", "Blue", "Green", "Yellow");
+    color2.getItems().addAll("Red", "Blue", "Green", "Black");
     color2.setPrefWidth(80);
     color2.setLayoutX(520);
     color2.setLayoutY(300);
     ChoiceBox<String> color3 = new ChoiceBox<>();
-    color3.getItems().addAll("Red", "Blue", "Green", "Yellow");
+    color3.getItems().addAll("Red", "Blue", "Green", "Black");
     color3.setPrefWidth(80);
     color3.setLayoutX(520);
     color3.setLayoutY(370);
     ChoiceBox<String> color4 = new ChoiceBox<>();
-    color4.getItems().addAll("Red", "Blue", "Green", "Yellow");
+    color4.getItems().addAll("Red", "Blue", "Green", "Black");
     color4.setPrefWidth(80);
     color4.setLayoutX(520);
     color4.setLayoutY(440);

@@ -9,9 +9,12 @@ import java.util.Optional;
 
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
@@ -25,7 +28,9 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import model.ExitButton;
 
 
 public class GameManager extends Application {
@@ -37,12 +42,16 @@ public class GameManager extends Application {
   private Scene gameScene; //the instance of the board
   private Stage gameStage; //the stage that the scene will be on
   private boolean gameOver = false; // if the game is ended, the buttons can't be used
+  private boolean playClick = true;;
   private Shape gridShape; // allows the placement of chips
   private Stage playerDetailsStage; //the previous screen
   private Disc[][] grid;  //all of the Disc objects
   private Pane discRoot =  new Pane(); // the disc placement aspect of the GUI
   private ConnectLogic logic = new ConnectLogic();  //the actual game logic
   private String winner = ""; //will be populated with the winner's name
+  
+  private final StringProperty valueProperty = new SimpleStringProperty();
+  Label title = new Label();
   
   /******************************************************************
   * Creates the game panel for when you start a new game from
@@ -55,16 +64,42 @@ public class GameManager extends Application {
     gridRows = rows;
     //Create the game board
     grid = new Disc[columns][rows];
-    Pane gamePane = new Pane();
-    gameScene = new Scene(gamePane);
+    Pane gamePane = new Pane(); 
+    ExitButton exitButton = new ExitButton(null);
+    title.textProperty().bind(valueProperty);
+    title.setTextFill(Color.RED);
+    if(columns == 7) {
+      gameScene = new Scene(gamePane, 750, 560);
+      exitButton.setLayoutX(645);
+      exitButton.setLayoutY(0);
+      title.setLayoutX(650);
+      title.setLayoutY(280);
+    } else if(columns == 9) {
+      gameScene = new Scene(gamePane, 900, 640);
+      exitButton.setLayoutX(800);
+      exitButton.setLayoutY(0);
+      title.setLayoutX(805);
+      title.setLayoutY(280);
+    } else if(columns == 11) {
+      gameScene = new Scene(gamePane, 1075, 640);
+      exitButton.setLayoutX(965);
+      exitButton.setLayoutY(0);
+      title.setLayoutX(970);
+      title.setLayoutY(280);
+    }
+ 
     gameStage = new Stage();
     gameStage.setScene(gameScene);
     gridShape = makeGrid();
     gamePane.getChildren().add(discRoot); 
     gamePane.getChildren().add(gridShape);
     gamePane.getChildren().addAll(makeColumns());
+    gamePane.getChildren().addAll(exitButton, title);
+    
+
     gridShape.setLayoutX(100);
     gridShape.setLayoutX(0);
+    gameStage.initStyle(StageStyle.UNDECORATED);
     
   }
   
@@ -94,6 +129,8 @@ public class GameManager extends Application {
    ******************************************************************/
   public void setLogic(ConnectLogic logic) {
     this.logic = logic; //Receives this from PlayerDetailsManager
+    valueProperty.set("Player " + logic.getCurrentPlayer().getPosition()+ "'s Turn!");
+    findColor();
   }
   
   /******************************************************************
@@ -168,7 +205,7 @@ public class GameManager extends Application {
   */
   private void placeDisc(Disc disc, int column, boolean computer) 
       throws Throwable {
-    if (!gameOver) { // if the game is not over, accept mouse clicks
+    if (!gameOver && ((!playClick && computer) || (playClick && !computer))) { // if the game is not over, accept mouse clicks
       //find all of the discs on the grid, create the animation where there are no discs
       int row = gridRows - 1; //where to place disc
       do {
@@ -192,7 +229,9 @@ public class GameManager extends Application {
         System.out.println(column); //for logging
         int result = 0;
         winner = logic.getCurrentPlayer().getName(); //set winner name
-        result = logic.nextTurn(column); //place the chip in the logic       
+        result = logic.nextTurn(column); //place the chip in the logic      
+        findColor();
+        playClick = false;;
         animation.setOnFinished(e -> { //once the animation is done
           try {
             checkComputer(column); //check if the next player is a computer
@@ -312,19 +351,24 @@ public class GameManager extends Application {
     switch (playcolor) { //
       case "Red":
         color =  Color.RED;
+        title.setTextFill(Color.RED);
         break;
       case "Blue":
         color = Color.BLUE;
+        title.setTextFill(Color.BLUE);
         break;
       case "Green":
         color = Color.GREEN;
+        title.setTextFill(Color.GREEN);
         break;
-      case "Yellow":
-        color = Color.YELLOW;
+      case "Black":
+        color = Color.BLACK;
+        title.setTextFill(Color.BLACK);
         break;
       default:
         break;
     }
+    valueProperty.set("Player " + logic.getCurrentPlayer().getPosition()+ "'s Turn!");
     return color;
   }
   
@@ -340,6 +384,7 @@ public class GameManager extends Application {
       Color color = findColor(); //get computer chip color
       winner = logic.getCurrentPlayer().getName(); //get computer name in case it wins
       result = logic.nextTurn(column); //find the computer's chip placement, move to next turn
+      findColor();
       placeDisc(new Disc(color), result, computer); //place the chip
       if (result == -20 && !gameOver) { //a tie
         showMessage("No more chips can be placed, it's a tie!");
@@ -350,6 +395,8 @@ public class GameManager extends Application {
         showMessage(winner + " Wins!");  
         gameOver = true;
       }
+    } else {
+      playClick = true;
     }
   }
 
