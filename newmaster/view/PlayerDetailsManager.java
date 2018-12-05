@@ -44,7 +44,6 @@ public class PlayerDetailsManager extends Player {
   private AnchorPane dialogPane;
   private Scene playerDetailsScene;
   private Stage playerDetailsStage;
-  //private Stage namePopUp;
   private static final String FONT_PATH = "kenvector_future.ttf";
   private static final int SCREEN_WIDTH = 800;
   private static final int SCREEN_HEIGHT = 600;
@@ -53,13 +52,12 @@ public class PlayerDetailsManager extends Player {
   public Player player2 = new Player();
   public Player player3 = new Player();
   public Player player4 = new Player();
-  //private int maxChar = 10;
   
   /******************************************************************
   *   initializes the pane, scene, and stage, creates the background 
   *   image, adds all the items, including buttons, labels, and icons.
   * @throws IOException if issues with file paths
-  ******************************************************************/
+  */
 
   public PlayerDetailsManager() throws IOException {
     initializeStage();
@@ -640,28 +638,28 @@ public class PlayerDetailsManager extends Player {
       //a unique color
       int colorCounter = 0;
       
-      if (color1.getValue() != null &&
-          (color1.getValue() == color2.getValue() || 
-          color1.getValue() == color3.getValue() || 
-          color1.getValue() == color4.getValue())) {
+      if (color1.getValue() != null 
+          && (color1.getValue() == color2.getValue() 
+          || color1.getValue() == color3.getValue()
+          || color1.getValue() == color4.getValue())) {
         colorCounter++;
       }
-      if (color2.getValue() != null &&
-          (color2.getValue() == color1.getValue() || 
-          color2.getValue() == color3.getValue() || 
-          color2.getValue() == color4.getValue())) {
+      if (color2.getValue() != null 
+          && (color2.getValue() == color1.getValue() 
+          || color2.getValue() == color3.getValue() 
+          || color2.getValue() == color4.getValue())) {
         colorCounter++;
       }
-      if (color3.getValue() != null &&
-          (color3.getValue() == color1.getValue() || 
-          color3.getValue() == color2.getValue() || 
-          color3.getValue() == color4.getValue())) {
+      if (color3.getValue() != null 
+          && (color3.getValue() == color1.getValue() 
+          || color3.getValue() == color2.getValue() 
+          || color3.getValue() == color4.getValue())) {
         colorCounter++;
       }
-      if (color4.getValue() != null &&
-          (color4.getValue() == color1.getValue() || 
-          color4.getValue() == color2.getValue() || 
-          color4.getValue() == color3.getValue())) {
+      if (color4.getValue() != null 
+          && (color4.getValue() == color1.getValue() 
+          || color4.getValue() == color2.getValue() 
+          || color4.getValue() == color3.getValue())) {
         colorCounter++;
       }
       
@@ -707,8 +705,7 @@ public class PlayerDetailsManager extends Player {
         }
         alert.setTextFill(Color.DARKSLATEGRAY);
         dialogPane.getChildren().addAll(alert);
-      } 
-      else if(colorCounter > 0) {
+      }  else if (colorCounter > 0) {
         dialogPane = new AnchorPane();
         final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
@@ -731,10 +728,7 @@ public class PlayerDetailsManager extends Player {
         }
         alert.setTextFill(Color.DARKSLATEGRAY);
         dialogPane.getChildren().addAll(alert);
-      }
-      
-      
-      else {     
+      } else {     
         //Validation to make sure each player that wants to play,
         //has a color selected, or else they aren't added to the
         //game
@@ -763,14 +757,14 @@ public class PlayerDetailsManager extends Player {
           playerCounter++;
         } 
         
-      if (playerCounter > 1) {
-        logic.startGame();
-      
-              GameManager gameManager = new GameManager(logic.getX(), 
-            logic.getY());
-        gameManager.createNewGame(playerDetailsStage);
-        gameManager.setLogic(logic);
-      }
+        if (playerCounter > 1) {
+          logic.startGame();
+        
+          GameManager gameManager = new GameManager(logic.getX(), 
+              logic.getY());
+          gameManager.createNewGame(playerDetailsStage);
+          gameManager.setLogic(logic);
+        }
       
       }
       

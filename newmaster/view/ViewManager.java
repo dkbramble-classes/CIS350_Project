@@ -22,8 +22,6 @@ import javafx.stage.StageStyle;
 import model.ExitButton;
 import model.PlayButton;
 
-
-
 public class ViewManager {
 
   private static final int HEIGHT = 600; 
@@ -33,8 +31,6 @@ public class ViewManager {
   private Stage mainStage;
   private Stage gameStage;
   
-  //private final static int MENU_BUTTONS_START_X = 100;
-  //private final static int MENU_BUTTONS_START_Y = 150;
   private static final String FONT_PATH = "kenvector_future.ttf";
 
   /******************************************************************
@@ -78,18 +74,12 @@ public class ViewManager {
 
     ExitButton exitButton = new ExitButton(null);
     PlayButton startButton = new PlayButton("PLAY NOW");
-    //PlayButton intenseButton = new PlayButton("INTENSE4");
-    // MusicButton musicButton = new MusicButton(null);
     mainPane.getChildren().addAll(exitButton, startButton, title);
     
     exitButton.setLayoutX(700);
     exitButton.setLayoutY(0);
     startButton.setLayoutX(320);
     startButton.setLayoutY(300);
-    //  intenseButton.setLayoutX(320);
-    //  intenseButton.setLayoutY(330);
-    //musicButton.setLayoutX(640);
-    //musicButton.setLayoutY(27);
 
     /******************************************************************
     *  creates an instance of playerDetailsManager and creates the 
@@ -104,7 +94,6 @@ public class ViewManager {
           playerDetailsManager = new PlayerDetailsManager();
           playerDetailsManager.createDetailsScreen(mainStage);
         } catch (IOException e) {
-          // TODO Auto-generated catch block
           e.printStackTrace();
         }
 

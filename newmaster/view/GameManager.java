@@ -41,8 +41,8 @@ public class GameManager extends Application {
   private Pane gamePane = new Pane(); //the actual screen
   private Scene gameScene; //the instance of the board
   private Stage gameStage; //the stage that the scene will be on
-  private boolean gameOver = false; // if the game is ended, the buttons can't be used
-  private boolean playClick = true;;
+  private boolean gameOver = false; // if the game is ended, the buttons can't be used  
+  private boolean playClick = true;// prevents the buttons from being clicked if false
   private Shape gridShape; // allows the placement of chips
   private Stage playerDetailsStage; //the previous screen
   private Disc[][] grid;  //all of the Disc objects
@@ -50,8 +50,8 @@ public class GameManager extends Application {
   private ConnectLogic logic = new ConnectLogic();  //the actual game logic
   private String winner = ""; //will be populated with the winner's name
   
-  private final StringProperty valueProperty = new SimpleStringProperty();
-  Label title = new Label();
+  private final StringProperty valueProperty = new SimpleStringProperty(); //for the status label
+  Label title = new Label(); //the status label that displays the current turn
   
   /******************************************************************
   * Creates the game panel for when you start a new game from
@@ -66,21 +66,22 @@ public class GameManager extends Application {
     grid = new Disc[columns][rows];
     Pane gamePane = new Pane(); 
     ExitButton exitButton = new ExitButton(null);
-    title.textProperty().bind(valueProperty);
+    title.textProperty().bind(valueProperty); //allow the status to be changed
     title.setTextFill(Color.RED);
-    if(columns == 7) {
+    
+    if (columns == 7) { //change the screen size depending on the board size
       gameScene = new Scene(gamePane, 750, 560);
       exitButton.setLayoutX(645);
       exitButton.setLayoutY(0);
       title.setLayoutX(650);
       title.setLayoutY(280);
-    } else if(columns == 9) {
+    } else if (columns == 9) {
       gameScene = new Scene(gamePane, 900, 640);
       exitButton.setLayoutX(800);
       exitButton.setLayoutY(0);
       title.setLayoutX(805);
       title.setLayoutY(280);
-    } else if(columns == 11) {
+    } else if (columns == 11) {
       gameScene = new Scene(gamePane, 1075, 640);
       exitButton.setLayoutX(965);
       exitButton.setLayoutY(0);
@@ -129,7 +130,7 @@ public class GameManager extends Application {
    ******************************************************************/
   public void setLogic(ConnectLogic logic) {
     this.logic = logic; //Receives this from PlayerDetailsManager
-    valueProperty.set("Player " + logic.getCurrentPlayer().getPosition()+ "'s Turn!");
+    valueProperty.set("Player " + logic.getCurrentPlayer().getPosition() + "'s Turn!");
     findColor();
   }
   
@@ -205,7 +206,8 @@ public class GameManager extends Application {
   */
   private void placeDisc(Disc disc, int column, boolean computer) 
       throws Throwable {
-    if (!gameOver && ((!playClick && computer) || (playClick && !computer))) { // if the game is not over, accept mouse clicks
+    if (!gameOver && (// if the game is not over, accept mouse clicks
+            (!playClick && computer) || (playClick && !computer))) { //not in the middle of a turn
       //find all of the discs on the grid, create the animation where there are no discs
       int row = gridRows - 1; //where to place disc
       do {
@@ -230,8 +232,8 @@ public class GameManager extends Application {
         int result = 0;
         winner = logic.getCurrentPlayer().getName(); //set winner name
         result = logic.nextTurn(column); //place the chip in the logic      
-        findColor();
-        playClick = false;;
+        findColor(); //change the label's status
+        playClick = false; //prevent more clicking until finished
         animation.setOnFinished(e -> { //once the animation is done
           try {
             checkComputer(column); //check if the next player is a computer
@@ -281,7 +283,7 @@ public class GameManager extends Application {
     alert.setContentText("The Game is over, returning to menu");
     alert.setOnCloseRequest(evt -> { 
       try {
-        restartApp();
+        restartApp(); //reset the game
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -293,7 +295,7 @@ public class GameManager extends Application {
   * Resets the View Manager so the game can be played again.
   * @throws IOException if ViewManager has issues with file paths.
   */
-  public void restartApp() throws IOException{
+  public void restartApp() throws IOException {
     ViewManager viewManager = new ViewManager(); //create a new menu screen
     viewManager.createNewGame(gameStage);
     gameStage.close(); //close the old game board stage
@@ -343,7 +345,7 @@ public class GameManager extends Application {
 
   /******************************************************************
   * Method that returns the current player's chip color so that 
-  * the chip can be created.
+  * the chip can be created. Also changes the current status' color.
   ******************************************************************/
   private Color findColor() {
     Color color = Color.RED; //by default, the color is red
@@ -351,24 +353,24 @@ public class GameManager extends Application {
     switch (playcolor) { //
       case "Red":
         color =  Color.RED;
-        title.setTextFill(Color.RED);
+        title.setTextFill(Color.RED); //update the label color
         break;
       case "Blue":
         color = Color.BLUE;
-        title.setTextFill(Color.BLUE);
+        title.setTextFill(Color.BLUE);//update the label color
         break;
       case "Green":
         color = Color.GREEN;
-        title.setTextFill(Color.GREEN);
+        title.setTextFill(Color.GREEN);//update the label color
         break;
       case "Black":
         color = Color.BLACK;
-        title.setTextFill(Color.BLACK);
+        title.setTextFill(Color.BLACK);//update the label color
         break;
       default:
         break;
     }
-    valueProperty.set("Player " + logic.getCurrentPlayer().getPosition()+ "'s Turn!");
+    valueProperty.set("Player " + logic.getCurrentPlayer().getPosition() + "'s Turn!");
     return color;
   }
   
@@ -384,8 +386,8 @@ public class GameManager extends Application {
       Color color = findColor(); //get computer chip color
       winner = logic.getCurrentPlayer().getName(); //get computer name in case it wins
       result = logic.nextTurn(column); //find the computer's chip placement, move to next turn
-      findColor();
       placeDisc(new Disc(color), result, computer); //place the chip
+      findColor(); 
       if (result == -20 && !gameOver) { //a tie
         showMessage("No more chips can be placed, it's a tie!");
         gameOver = true;

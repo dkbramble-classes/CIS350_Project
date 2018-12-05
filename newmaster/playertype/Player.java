@@ -81,6 +81,7 @@ public class Player {
   
   @param logic - the game logic for the player to interact with
   @param column - the column where the Player want to place the chip
+  @return column where the computer player places the chip / error codes
   */
   
   public int playerTurn(ConnectLogic logic, int column) {
@@ -105,6 +106,7 @@ public class Player {
   /*****************************************************************
   Calculates the next chip placement for the computer player.
   @param logic - the game board to use in calculations
+  @return calcturn - the calculated column
   */
   public int calculateTurn(ConnectLogic logic) {
     Random rand = new Random(); //to calculate random columns
@@ -182,6 +184,7 @@ public class Player {
   /*****************************************************************
   Calculates the chip placement for the computer player and drops it onto the game board.
   @param logic the game logic for the computer to interact with
+  @return column - the column the computer has picked
   */
   public int computerTurn(ConnectLogic logic) {
     int column = 0; //column to be generated

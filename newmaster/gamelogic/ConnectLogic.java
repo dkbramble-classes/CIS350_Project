@@ -1,6 +1,5 @@
 package gamelogic;
 
-//import playertype.ComputerPlayer;
 import playertype.Player;
 
 public class ConnectLogic {
@@ -13,7 +12,6 @@ public class ConnectLogic {
   private int activePlayer; //the position of the player currently playing
 
   public Player[] playerlist = new Player[4]; //list holding all real players
-  //private ComputerPlayer[] complist = new ComputerPlayer[4]; //list holding all computer players
 
 
   /**************************************************************************
@@ -62,11 +60,12 @@ public class ConnectLogic {
     }
  
   }
-  /**************************************************************************
-   *Drop: Find the lowest space in the column, set it to be active player.
-   *@param col the column of the game board in which to drop the chip
-   */
   
+  /**************************************************************************
+  *Drop: Find the lowest space in the column, set it to be active player.
+  *@param col the column of the game board in which to drop the chip
+  *@return depth - the lowest space in the column
+  */
   public int drop(int col) {
 
     int depth = 0;
@@ -89,7 +88,9 @@ public class ConnectLogic {
   /**************************************************************************
    *Next Turn: Increment whose turn it is, and run the logic for the current 
    *player to place a new chip.
-   **************************************************************************/
+   *@param input the chosen column for Players
+   *@return column - any picked columns or error codes if there are issues
+   */
   public int nextTurn(int input) {
 
     int column = -1;
@@ -102,15 +103,6 @@ public class ConnectLogic {
       }
     }
 
-    //    for (ComputerPlayer play : complist) { 
-    //      if (play != null) {
-    //        if (play.getPosition() == activePlayer) {
-    //          column = play.computerTurn(this); //place the computer players new chip
-    //          break;
-    //        }
-    //      }
-    //    }
-    
     boolean possible = false;
     for (int i = 0; i < width; i++) { //check if any more chips can be added
       if (gameGrid [i][0] == 0) {
@@ -136,7 +128,8 @@ public class ConnectLogic {
   /**************************************************************************
    *Check Win: find if a line of 4 exists horizontally, vertically, or
    *           diagonally.
-   **************************************************************************/
+   * @return p - if greater than 0 is a win, else not a win
+   */
 
   public int checkWin() {
     for (int i = 0; i < width; i++) {
@@ -192,7 +185,8 @@ public class ConnectLogic {
 
   /**************************************************************************
    *Is Valid: Returns the validity of a move, false if out of bounds.
-   *@param col the column of the game board in order check validity
+   *@param col - the column of the game board in order check validity
+   *@return valid - true if the move is not out of bounds, else false
    */
   public boolean isValid(int col) {
     boolean valid = false;
@@ -226,26 +220,9 @@ public class ConnectLogic {
   }
 
   /**************************************************************************
-     *Adds a computer player to the list of current players. 
-     *@param play - the computer player to be added to the list
-     */
-  //  public void addPlayer(ComputerPlayer play) {
-  //    if (numPlayers < 4) { //can't have more than 4
-  //      for (int i = 0; i < 4; i++) {
-  //        if (complist[i] == null) {
-  //          complist[i] = play;
-  //          numPlayers++;
-  //          break;
-  //        }
-  //      }
-  //    }
-  //    return;  
-  //  }
-
-
-  /**************************************************************************
    *Return the game Grid.
-   **************************************************************************/
+   *@return gameGrid - the location of all the chips.
+   */
   public int[][] getGrid() {
     return gameGrid;
   }
@@ -253,7 +230,8 @@ public class ConnectLogic {
 
   /**************************************************************************
    *Return the height of the grid.
-   **************************************************************************/
+   *@return height - the grid height (rows).
+   */
   public int getY() {
     return height;
   }
@@ -261,14 +239,16 @@ public class ConnectLogic {
 
   /**************************************************************************
    *Return the width of the grid.
-   **************************************************************************/
+   *@return width - the grid width (columns).
+   */
   public int getX() {
     return width;
   }
 
   /**************************************************************************
    *Get return the name of the player that is currently playing.
-   **************************************************************************/
+   *@return Player - the Player object that is the active player
+   */
   public Player getCurrentPlayer() {
     Player current = new Player();
     for (Player play : playerlist) { //check if a player is the current player
@@ -280,15 +260,6 @@ public class ConnectLogic {
       }
     }
 
-    //    for (ComputerPlayer play : complist) { //check if a computer player is the current player
-    //      if (play != null) {
-    //        if (play.getPosition() == activePlayer) {
-    //          current = play.getName();
-    //          break;
-    //        }
-    //      }
-    //
-    //    }
     return current;
   }
 
