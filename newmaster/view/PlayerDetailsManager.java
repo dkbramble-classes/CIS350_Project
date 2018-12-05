@@ -59,7 +59,7 @@ public class PlayerDetailsManager extends Player {
   *   initializes the pane, scene, and stage, creates the background 
   *   image, adds all the items, including buttons, labels, and icons.
   * @throws IOException if issues with file paths
-  */
+  ******************************************************************/
 
   public PlayerDetailsManager() throws IOException {
     initializeStage();
@@ -129,19 +129,12 @@ public class PlayerDetailsManager extends Player {
     });
 
     
-    Button plus1 = new Button(null);
-    plus1
-        .setStyle("-fx-background-color: transparent; -fx-background-image: "
-        + "url('/model/resources/plus-sign.png');");
-    plus1.setPrefHeight(24);
-    plus1.setPrefWidth(24);
-    plus1.setLayoutX(315);
-    plus1.setLayoutY(230);
     
     Button plus2 = new Button(null);
     plus2
-         .setStyle("-fx-background-color: transparent; -fx-background-image: "
-        + "url('/model/resources/plus-sign.png');");
+         .setStyle("-fx-background-color: transparent; "
+             + "-fx-background-image: "
+        + "url('/model/resources/plus-sign.png'); -fx-min-height: 10px;");
     plus2.setPrefHeight(24);
     plus2.setPrefWidth(24);
     plus2.setLayoutX(315);
@@ -149,8 +142,9 @@ public class PlayerDetailsManager extends Player {
 
     Button plus3 = new Button(null);
     plus3
-        .setStyle("-fx-background-color: transparent; -fx-background-image: "
-        + "url('/model/resources/plus-sign.png');");
+        .setStyle("-fx-background-color: transparent; "
+            + "-fx-background-image: "
+        + "url('/model/resources/plus-sign.png'); -fx-min-height: 10px;");
     plus3.setPrefHeight(24);
     plus3.setPrefWidth(24);
     plus3.setLayoutX(315);
@@ -158,8 +152,9 @@ public class PlayerDetailsManager extends Player {
 
     Button plus4 = new Button(null);
     plus4
-        .setStyle("-fx-background-color: transparent; -fx-background-image: "
-        + "url('/model/resources/plus-sign.png');");
+        .setStyle("-fx-background-color: transparent;"
+            + " -fx-background-image: "
+        + "url('/model/resources/plus-sign.png'); -fx-min-height: 10px;");
     plus4.setPrefHeight(24);
     plus4.setPrefWidth(24);
     plus4.setLayoutX(315);
@@ -171,105 +166,6 @@ public class PlayerDetailsManager extends Player {
     *  information.
     ******************************************************************/
     
-    //player 1 dialog box for potential CPU 
-    
-    plus1.setOnAction(e -> {
-      dialogPane = new AnchorPane();
-      final Stage dialog = new Stage();
-      dialog.initModality(Modality.APPLICATION_MODAL);
-      dialog.initOwner(playerDetailsStage);
-      Scene dialogScene = new Scene(dialogPane, 500, 250);
-      dialog.setScene(dialogScene);
-      dialog.show();
-      dialogPane.setStyle("-fx-background-color: #E9EE24;");
-
-      //label for the title of the pop-up window, CPU Difficulty
-      Label cpuDifficulty = new Label("CPU   Difficulty");
-      cpuDifficulty.setLayoutX(140);
-      try {
-        cpuDifficulty.setFont(Font.loadFont(new FileInputStream(FONT_PATH),20));
-      } catch (FileNotFoundException e1) {
-        e1.printStackTrace();
-      }
-      cpuDifficulty.setTextFill(Color.DARKSLATEGRAY);
-      
-      //buttons for the user to choose the CPU difficulty
-      PlayButton easy = new PlayButton("EASY");
-      easy.setLayoutX(10);
-      easy.setLayoutY(60);
-      
-      PlayButton medium = new PlayButton("MEDIUM");
-      medium.setLayoutX(10);
-      medium.setLayoutY(130);
-   
-      
-      //descriptions of the two difficulties
-      Label easyDescription = new Label("CPU  isn't  the  best.  It  will "
-          + "place  \na  chip  randomly  on  the  board.");
-      easyDescription.setLayoutX(210);
-      easyDescription.setLayoutY(65);
-      try {
-        easyDescription.setFont(Font.loadFont(new FileInputStream(FONT_PATH),12));
-      } catch (FileNotFoundException e1) {
-        e1.printStackTrace();
-      }
-      easyDescription.setTextFill(Color.DARKSLATEGRAY);
-      
-      easy.setOnAction(r -> {
-        player1.setDifficulty("e");
-        easyDescription.setTextFill(Color.BLUE);
-        try {
-          easyDescription.setFont(Font.loadFont(new FileInputStream(FONT_PATH),12.5));
-        } catch (FileNotFoundException e1) {
-          e1.printStackTrace();
-        }
-      });
-      
-      
-      Label mediumDescription = new Label("CPU  has  decent  skill."
-          + "  It  will\nplace  a  chip  near  its'  previous\nchip.");
-      mediumDescription.setLayoutX(210);
-      mediumDescription.setLayoutY(135);
-      try {
-        mediumDescription.setFont(Font.loadFont(new FileInputStream(FONT_PATH),12));
-      } catch (FileNotFoundException e1) {
-        e1.printStackTrace();
-      }
-      mediumDescription.setTextFill(Color.DARKSLATEGRAY);
-      
-      medium.setOnAction(r -> {
-        player1.setDifficulty("m");
-        mediumDescription.setTextFill(Color.BLUE);
-        try {
-          mediumDescription.setFont(Font.loadFont(new FileInputStream(FONT_PATH),12.5));
-        } catch (FileNotFoundException e1) {
-          e1.printStackTrace();
-        }
-      });
-      
-      
-      //confirm difficulty button
-      Button confirm = new Button(null);
-      confirm
-          .setStyle("-fx-background-color: transparent; -fx-background-image: "
-          + "url('/model/resources/smallPlayButton.png');");
-      confirm.setPrefHeight(48);
-      confirm.setPrefWidth(48);
-      confirm.setLayoutX(435);
-      confirm.setLayoutY(185);
-      
-      
-      confirm.setOnAction(r -> {
-        
-        player1.setCompStatus(true);
-        
-        dialog.close();
-      });
-    
-      dialogPane.getChildren().addAll(cpuDifficulty, easy, medium,
-          easyDescription, mediumDescription, confirm);
-      
-    });
     
     //player 2 dialog box for potential CPU 
     
@@ -287,7 +183,8 @@ public class PlayerDetailsManager extends Player {
       Label cpuDifficulty = new Label("CPU   Difficulty");
       cpuDifficulty.setLayoutX(140);
       try {
-        cpuDifficulty.setFont(Font.loadFont(new FileInputStream(FONT_PATH),20));
+        cpuDifficulty.setFont(Font.loadFont(new 
+            FileInputStream(FONT_PATH),20));
       } catch (FileNotFoundException e1) {
         e1.printStackTrace();
       }
@@ -304,12 +201,14 @@ public class PlayerDetailsManager extends Player {
    
       
       //descriptions of the two difficulties
-      Label easyDescription = new Label("CPU  isn't  the  best.  It  will "
+      Label easyDescription = new Label("CPU  isn't  the  best. "
+          + " It  will "
           + "place  \na  chip  randomly  on  the  board.");
       easyDescription.setLayoutX(210);
       easyDescription.setLayoutY(65);
       try {
-        easyDescription.setFont(Font.loadFont(new FileInputStream(FONT_PATH),12));
+        easyDescription.setFont(Font.loadFont(new 
+            FileInputStream(FONT_PATH),12));
       } catch (FileNotFoundException e1) {
         e1.printStackTrace();
       }
@@ -319,7 +218,8 @@ public class PlayerDetailsManager extends Player {
         player2.setDifficulty("e");
         easyDescription.setTextFill(Color.BLUE);
         try {
-          easyDescription.setFont(Font.loadFont(new FileInputStream(FONT_PATH),12.5));
+          easyDescription.setFont(Font.loadFont(new 
+              FileInputStream(FONT_PATH),12.5));
         } catch (FileNotFoundException e1) {
           e1.printStackTrace();
         }
@@ -331,7 +231,8 @@ public class PlayerDetailsManager extends Player {
       mediumDescription.setLayoutX(210);
       mediumDescription.setLayoutY(135);
       try {
-        mediumDescription.setFont(Font.loadFont(new FileInputStream(FONT_PATH),12));
+        mediumDescription.setFont(Font.loadFont(new
+            FileInputStream(FONT_PATH),12));
       } catch (FileNotFoundException e1) {
         e1.printStackTrace();
       }
@@ -341,7 +242,8 @@ public class PlayerDetailsManager extends Player {
         player2.setDifficulty("m");
         mediumDescription.setTextFill(Color.BLUE);
         try {
-          mediumDescription.setFont(Font.loadFont(new FileInputStream(FONT_PATH),12.5));
+          mediumDescription.setFont(Font.loadFont(new 
+              FileInputStream(FONT_PATH),12.5));
         } catch (FileNotFoundException e1) {
           e1.printStackTrace();
         }
@@ -351,7 +253,8 @@ public class PlayerDetailsManager extends Player {
       //confirm difficulty button
       Button confirm = new Button(null);
       confirm
-          .setStyle("-fx-background-color: transparent; -fx-background-image: "
+          .setStyle("-fx-background-color: transparent; "
+              + "-fx-background-image: "
           + "url('/model/resources/smallPlayButton.png');");
       confirm.setPrefHeight(48);
       confirm.setPrefWidth(48);
@@ -388,7 +291,8 @@ public class PlayerDetailsManager extends Player {
       Label cpuDifficulty = new Label("CPU   Difficulty");
       cpuDifficulty.setLayoutX(140);
       try {
-        cpuDifficulty.setFont(Font.loadFont(new FileInputStream(FONT_PATH),20));
+        cpuDifficulty.setFont(Font.loadFont(new 
+            FileInputStream(FONT_PATH),20));
       } catch (FileNotFoundException e1) {
         e1.printStackTrace();
       }
@@ -405,12 +309,14 @@ public class PlayerDetailsManager extends Player {
    
       
       //descriptions of the two difficulties
-      Label easyDescription = new Label("CPU  isn't  the  best.  It  will "
+      Label easyDescription = new Label("CPU  isn't  the  best. "
+          + " It  will "
           + "place  \na  chip  randomly  on  the  board.");
       easyDescription.setLayoutX(210);
       easyDescription.setLayoutY(65);
       try {
-        easyDescription.setFont(Font.loadFont(new FileInputStream(FONT_PATH),12));
+        easyDescription.setFont(Font.loadFont(new 
+            FileInputStream(FONT_PATH),12));
       } catch (FileNotFoundException e1) {
         e1.printStackTrace();
       }
@@ -420,7 +326,8 @@ public class PlayerDetailsManager extends Player {
         player3.setDifficulty("e");
         easyDescription.setTextFill(Color.BLUE);
         try {
-          easyDescription.setFont(Font.loadFont(new FileInputStream(FONT_PATH),12.5));
+          easyDescription.setFont(Font.loadFont(new 
+              FileInputStream(FONT_PATH),12.5));
         } catch (FileNotFoundException e1) {
           e1.printStackTrace();
         }
@@ -432,7 +339,8 @@ public class PlayerDetailsManager extends Player {
       mediumDescription.setLayoutX(210);
       mediumDescription.setLayoutY(135);
       try {
-        mediumDescription.setFont(Font.loadFont(new FileInputStream(FONT_PATH),12));
+        mediumDescription.setFont(Font.loadFont(new 
+            FileInputStream(FONT_PATH),12));
       } catch (FileNotFoundException e1) {
         e1.printStackTrace();
       }
@@ -442,7 +350,8 @@ public class PlayerDetailsManager extends Player {
         player3.setDifficulty("m");
         mediumDescription.setTextFill(Color.BLUE);
         try {
-          mediumDescription.setFont(Font.loadFont(new FileInputStream(FONT_PATH),12.5));
+          mediumDescription.setFont(Font.loadFont(new 
+              FileInputStream(FONT_PATH),12.5));
         } catch (FileNotFoundException e1) {
           e1.printStackTrace();
         }
@@ -452,7 +361,8 @@ public class PlayerDetailsManager extends Player {
       //confirm difficulty button
       Button confirm = new Button(null);
       confirm
-          .setStyle("-fx-background-color: transparent; -fx-background-image: "
+          .setStyle("-fx-background-color: transparent; "
+              + "-fx-background-image: "
           + "url('/model/resources/smallPlayButton.png');");
       confirm.setPrefHeight(48);
       confirm.setPrefWidth(48);
@@ -489,7 +399,8 @@ public class PlayerDetailsManager extends Player {
       Label cpuDifficulty = new Label("CPU   Difficulty");
       cpuDifficulty.setLayoutX(140);
       try {
-        cpuDifficulty.setFont(Font.loadFont(new FileInputStream(FONT_PATH),20));
+        cpuDifficulty.setFont(Font.loadFont(new 
+            FileInputStream(FONT_PATH),20));
       } catch (FileNotFoundException e1) {
         e1.printStackTrace();
       }
@@ -506,12 +417,14 @@ public class PlayerDetailsManager extends Player {
    
       
       //descriptions of the two difficulties
-      Label easyDescription = new Label("CPU  isn't  the  best.  It  will "
+      Label easyDescription = new Label("CPU  isn't  the  best. "
+          + " It  will "
           + "place  \na  chip  randomly  on  the  board.");
       easyDescription.setLayoutX(210);
       easyDescription.setLayoutY(65);
       try {
-        easyDescription.setFont(Font.loadFont(new FileInputStream(FONT_PATH),12));
+        easyDescription.setFont(Font.loadFont(new
+            FileInputStream(FONT_PATH),12));
       } catch (FileNotFoundException e1) {
         e1.printStackTrace();
       }
@@ -521,7 +434,8 @@ public class PlayerDetailsManager extends Player {
         player4.setDifficulty("e");
         easyDescription.setTextFill(Color.BLUE);
         try {
-          easyDescription.setFont(Font.loadFont(new FileInputStream(FONT_PATH),12.5));
+          easyDescription.setFont(Font.loadFont(new 
+              FileInputStream(FONT_PATH),12.5));
         } catch (FileNotFoundException e1) {
           e1.printStackTrace();
         }
@@ -533,7 +447,8 @@ public class PlayerDetailsManager extends Player {
       mediumDescription.setLayoutX(210);
       mediumDescription.setLayoutY(135);
       try {
-        mediumDescription.setFont(Font.loadFont(new FileInputStream(FONT_PATH),12));
+        mediumDescription.setFont(Font.loadFont(new 
+            FileInputStream(FONT_PATH),12));
       } catch (FileNotFoundException e1) {
         e1.printStackTrace();
       }
@@ -543,7 +458,8 @@ public class PlayerDetailsManager extends Player {
         player4.setDifficulty("m");
         mediumDescription.setTextFill(Color.BLUE);
         try {
-          mediumDescription.setFont(Font.loadFont(new FileInputStream(FONT_PATH),12.5));
+          mediumDescription.setFont(Font.loadFont(new 
+              FileInputStream(FONT_PATH),12.5));
         } catch (FileNotFoundException e1) {
           e1.printStackTrace();
         }
@@ -553,7 +469,8 @@ public class PlayerDetailsManager extends Player {
       //confirm difficulty button
       Button confirm = new Button(null);
       confirm
-          .setStyle("-fx-background-color: transparent; -fx-background-image: "
+          .setStyle("-fx-background-color: transparent; "
+              + "-fx-background-image: "
           + "url('/model/resources/smallPlayButton.png');");
       confirm.setPrefHeight(48);
       confirm.setPrefWidth(48);
@@ -618,7 +535,8 @@ public class PlayerDetailsManager extends Player {
     
     //number icons and play game and return to menu icons
     returnToMenu
-        .setStyle("-fx-background-color: transparent; -fx-background-image: "
+        .setStyle("-fx-background-color: transparent;"
+            + " -fx-background-image: "
         + "url('/model/resources/backArrow.png');");
     returnToMenu.setPrefHeight(45);
     returnToMenu.setPrefWidth(64);
@@ -627,7 +545,8 @@ public class PlayerDetailsManager extends Player {
     Button playGame = new Button(null);
 
     playGame
-        .setStyle("-fx-background-color: transparent; -fx-background-image:"
+        .setStyle("-fx-background-color: transparent; "
+            + "-fx-background-image:"
         + " url('/model/resources/playButton.png');");
     playGame.setPrefHeight(120);
     playGame.setPrefWidth(120);
@@ -636,7 +555,8 @@ public class PlayerDetailsManager extends Player {
 
     Button playerOneIcon = new Button(null);
     playerOneIcon
-        .setStyle("-fx-background-color: transparent; -fx-background-image: "
+        .setStyle("-fx-background-color: transparent; "
+            + "-fx-background-image: "
         + "url('/model/resources/numberone.png');");
     playerOneIcon.setPrefHeight(48);
     playerOneIcon.setPrefWidth(48);
@@ -645,7 +565,8 @@ public class PlayerDetailsManager extends Player {
 
     Button playerTwoIcon = new Button(null);
     playerTwoIcon
-        .setStyle("-fx-background-color: transparent; -fx-background-image: "
+        .setStyle("-fx-background-color: transparent; "
+            + "-fx-background-image: "
         + "url('/model/resources/numbertwo.png');");
     playerTwoIcon.setPrefHeight(48);
     playerTwoIcon.setPrefWidth(48);
@@ -654,7 +575,8 @@ public class PlayerDetailsManager extends Player {
 
     Button playerThreeIcon = new Button(null);
     playerThreeIcon
-        .setStyle("-fx-background-color: transparent; -fx-background-image: "
+        .setStyle("-fx-background-color: transparent; "
+            + "-fx-background-image: "
         + "url('/model/resources/numberthree.png');");
     playerThreeIcon.setPrefHeight(48);
     playerThreeIcon.setPrefWidth(48);
@@ -663,7 +585,8 @@ public class PlayerDetailsManager extends Player {
 
     Button playerFourIcon = new Button(null);
     playerFourIcon
-        .setStyle("-fx-background-color: transparent; -fx-background-image: "
+        .setStyle("-fx-background-color: transparent; "
+            + "-fx-background-image: "
         + "url('/model/resources/numberfour.png');");
     playerFourIcon.setPrefHeight(48);
     playerFourIcon.setPrefWidth(48);
@@ -685,7 +608,7 @@ public class PlayerDetailsManager extends Player {
         playerOneIcon, playerTwoIcon, playerThreeIcon,
         playerFourIcon, color1, color2, color3, color4, 
         returnToMenu, playGame, player1Name, player2Name, 
-        player3Name, player4Name, exitButton, plus1,
+        player3Name, player4Name, exitButton,
         plus2, plus3, plus4);
     
     
@@ -708,30 +631,60 @@ public class PlayerDetailsManager extends Player {
       player4.setName(player4Name.getText());
       player4.setColor(color4.getValue());
       
-      
-      // int width = 7;
-      //int height = 6;
+    
       ConnectLogic logic = new ConnectLogic();
 
+      //if there are two of the same colors, a pop-up will
+      //notify the user(s) to make sure every player has
+      //a unique color
+      int colorCounter = 0;
       
-
+      if (color1.getValue() != null &&
+          (color1.getValue() == color2.getValue() || 
+          color1.getValue() == color3.getValue() || 
+          color1.getValue() == color4.getValue())) {
+        colorCounter++;
+      }
+      if (color2.getValue() != null &&
+          (color2.getValue() == color1.getValue() || 
+          color2.getValue() == color3.getValue() || 
+          color2.getValue() == color4.getValue())) {
+        colorCounter++;
+      }
+      if (color3.getValue() != null &&
+          (color3.getValue() == color1.getValue() || 
+          color3.getValue() == color2.getValue() || 
+          color3.getValue() == color4.getValue())) {
+        colorCounter++;
+      }
+      if (color4.getValue() != null &&
+          (color4.getValue() == color1.getValue() || 
+          color4.getValue() == color2.getValue() || 
+          color4.getValue() == color3.getValue())) {
+        colorCounter++;
+      }
       
       
-      int counter = 0;
+       
+      //checks for empty name fields, if there are more than 
+      //two empty fields, game will not start, and will pop-up
+      //a dialog, letting the user know to have at least 2 users
+      
+      int nameCounter = 0;
       if (player1Name.getText().isEmpty()) {
-        counter++;
+        nameCounter++;
       }
       if (player2Name.getText().isEmpty()) {
-        counter++;
+        nameCounter++;
       }
       if (player3Name.getText().isEmpty()) {
-        counter++;
+        nameCounter++;
       }
       if (player4Name.getText().isEmpty()) {
-        counter++;
+        nameCounter++;
       }
       
-      if (counter > 2) {
+      if (nameCounter > 2) {
         dialogPane = new AnchorPane();
         final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
@@ -740,7 +693,6 @@ public class PlayerDetailsManager extends Player {
         dialog.setScene(dialogScene);
         dialog.show();
         dialogPane.setStyle("-fx-background-color: #E9EE24;");
-        
         
         Label alert = new Label("      Not  enough  players,\n"
             + "Need  at  least  two  to  play");
@@ -754,35 +706,70 @@ public class PlayerDetailsManager extends Player {
         }
         alert.setTextFill(Color.DARKSLATEGRAY);
         dialogPane.getChildren().addAll(alert);
-      } else {     
+      } 
+      else if(colorCounter > 0) {
+        dialogPane = new AnchorPane();
+        final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(playerDetailsStage);
+        Scene dialogScene = new Scene(dialogPane, 280, 90);
+        dialog.setScene(dialogScene);
+        dialog.show();
+        dialogPane.setStyle("-fx-background-color: #E9EE24;");
+        
+        
+        Label alert = new Label(" Two  or  more  players  "
+            + "\nhave  the  same  color!\n  Can't  play  yet!");
+        alert.setLayoutX(30);
+        alert.setLayoutY(25);
+        try {
+          alert.setFont(Font.loadFont(new 
+              FileInputStream(FONT_PATH),13));
+        } catch (FileNotFoundException e1) {
+          e1.printStackTrace();
+        }
+        alert.setTextFill(Color.DARKSLATEGRAY);
+        dialogPane.getChildren().addAll(alert);
+      }
+      
+      
+      else {     
         //Validation to make sure each player that wants to play,
         //has a color selected, or else they aren't added to the
         //game
+        int playerCounter = 0;
         if (color1.getValue() != null 
             && player1Name.getText().isEmpty() == false) {
           logic.addPlayer(player1);
+          playerCounter++;
         }
       
         if (color2.getValue() != null 
             && player2Name.getText().isEmpty() == false) {
           logic.addPlayer(player2);
+          playerCounter++;
         }
         
         if (color3.getValue() != null 
             && player3Name.getText().isEmpty() == false) {
           logic.addPlayer(player3);
+          playerCounter++;
         }
          
         if (color4.getValue() != null 
             && player4Name.getText().isEmpty() == false) {
           logic.addPlayer(player4);
+          playerCounter++;
         } 
-      
+        
+      if (playerCounter > 1) {
         logic.startGame();
       
-        GameManager gameManager = new GameManager(logic.getX(), logic.getY());
+              GameManager gameManager = new GameManager(logic.getX(), 
+            logic.getY());
         gameManager.createNewGame(playerDetailsStage);
         gameManager.setLogic(logic);
+      }
       
       }
       
