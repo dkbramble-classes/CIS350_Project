@@ -31,7 +31,8 @@ public class ExitButton extends Button {
   /******************************************************************
   * constructor for ExitButton class, sets the height and width of 
   * icon along with the style.
-  ******************************************************************/
+  * @param text - the displayed text for the Exit Button 
+  */
 
   public ExitButton(String text) {
     setText(text);

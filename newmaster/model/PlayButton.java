@@ -27,7 +27,8 @@ public class PlayButton extends Button {
   /******************************************************************
   * constructor for ExitButton class, sets the height and width of 
   * icon along with the style.
-  ******************************************************************/
+  * @param text - the displayed text for the Play Button
+  */
   public PlayButton(String text) {
     setText(text);
     setButtonFont();
@@ -44,7 +45,7 @@ public class PlayButton extends Button {
     try {
       setFont(Font.loadFont(new FileInputStream(FONT_PATH), 20));
     } catch (FileNotFoundException e) {
-      setFont(Font.font("Verdana", 20));
+      setFont(Font.font("Verdana", 20)); 
     }
   }
 

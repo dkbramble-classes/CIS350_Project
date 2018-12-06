@@ -53,8 +53,8 @@ public class ViewManager {
 
   /******************************************************************
   * returns the current stage.
-  ******************************************************************/
-  //returns the current stage
+  * @return mainStage - the current main menu stage 
+  */
   public Stage getMainStage() {
     return mainStage;
   }
@@ -121,7 +121,8 @@ public class ViewManager {
   
   /******************************************************************
   * Creates a new instance of the gameStage to be played on.
-  ******************************************************************/
+  * @param gameStage - the current instance of the Game Manager Stage
+  */
   public void createNewGame(Stage gameStage) {
     this.gameStage = gameStage;
     this.gameStage.close(); // remove the old gameStage

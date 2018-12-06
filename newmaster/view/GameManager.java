@@ -56,7 +56,9 @@ public class GameManager extends Application {
   /******************************************************************
   * Creates the game panel for when you start a new game from
   * the Players Detail Manager.
-  ******************************************************************/
+  * @param columns - the amount of columns on the board
+  * @param rows - the amount of rows on the board
+  */
   public GameManager(int columns, int rows) {
 
     //set the board size
@@ -117,7 +119,8 @@ public class GameManager extends Application {
   
   /******************************************************************
   * Goes to the next page in the game menu.
-  ******************************************************************/ 
+  * @param playerDetailsStage - creates a new Stage Select
+  */ 
   public void createNewGame(Stage playerDetailsStage) {
     this.playerDetailsStage = playerDetailsStage;
     this.playerDetailsStage.close(); //get rid of the previous screen
@@ -126,8 +129,9 @@ public class GameManager extends Application {
   }
   
   /******************************************************************
-   * Setter that takes in logic from ConnectLogic.
-   ******************************************************************/
+   * Setter that updates this logic with logic from PlayerDetailsManager.
+   * @param logic - the new game logic to be update the old one
+   */
   public void setLogic(ConnectLogic logic) {
     this.logic = logic; //Receives this from PlayerDetailsManager
     valueProperty.set("Player " + logic.getCurrentPlayer().getPosition() + "'s Turn!");

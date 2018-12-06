@@ -9,6 +9,9 @@ import gamelogic.ConnectLogic;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -81,9 +84,10 @@ public class PlayerDetailsManager extends Player {
   }
   
   /******************************************************************
-  *   will be called from ViewManager, hides the menu screen and 
+  *   Called from ViewManager, hides the menu screen and 
   *   shows the player details screen.
-  ******************************************************************/
+  *   @param menuStage - the main menu to be hidden
+  */
 
   public void createDetailsScreen(Stage menuStage) {
     this.menuStage = menuStage;
@@ -98,8 +102,7 @@ public class PlayerDetailsManager extends Player {
   *   names and link that data to each player.
   ******************************************************************/
   
-  public void createItems() throws
-       IOException {
+  public void createItems() {
     Label title = new Label("PLAYER   DETAILS");
     Label names = new Label("NAME");
     title.setLayoutX(135);
@@ -110,9 +113,6 @@ public class PlayerDetailsManager extends Player {
     colors.setLayoutX(500);
     colors.setLayoutY(170);
  
-    //MusicButton musicButton = new MusicButton(null);
-    //    musicButton.setLayoutX(640);
-    //musicButton.setLayoutY(27);
     ExitButton exitButton = new ExitButton(null);
     exitButton.setLayoutX(700);
     exitButton.setLayoutY(0);
@@ -203,6 +203,7 @@ public class PlayerDetailsManager extends Player {
       Label easyDescription = new Label("CPU  isn't  the  best. "
           + " It  will "
           + "place  \na  chip  randomly  on  the  board.");
+      
       easyDescription.setLayoutX(210);
       easyDescription.setLayoutY(65);
       try {
@@ -213,9 +214,14 @@ public class PlayerDetailsManager extends Player {
       }
       easyDescription.setTextFill(Color.DARKSLATEGRAY);
       
+      
+      Label mediumDescription = new Label("CPU  has  decent  skill."
+          + "  It  will\nplace  a  chip  near  its'  previous\nchip.");
+      
       easy.setOnAction(r -> {
         player2.setDifficulty("e");
         easyDescription.setTextFill(Color.BLUE);
+        mediumDescription.setTextFill(Color.DARKSLATEGRAY);
         try {
           easyDescription.setFont(Font.loadFont(new 
               FileInputStream(FONT_PATH),12.5));
@@ -223,10 +229,7 @@ public class PlayerDetailsManager extends Player {
           e1.printStackTrace();
         }
       });
-      
-      
-      Label mediumDescription = new Label("CPU  has  decent  skill."
-          + "  It  will\nplace  a  chip  near  its'  previous\nchip.");
+
       mediumDescription.setLayoutX(210);
       mediumDescription.setLayoutY(135);
       try {
@@ -240,6 +243,7 @@ public class PlayerDetailsManager extends Player {
       medium.setOnAction(r -> {
         player2.setDifficulty("m");
         mediumDescription.setTextFill(Color.BLUE);
+        easyDescription.setTextFill(Color.DARKSLATEGRAY);
         try {
           mediumDescription.setFont(Font.loadFont(new 
               FileInputStream(FONT_PATH),12.5));
@@ -321,9 +325,13 @@ public class PlayerDetailsManager extends Player {
       }
       easyDescription.setTextFill(Color.DARKSLATEGRAY);
       
+      Label mediumDescription = new Label("CPU  has  decent  skill."
+          + "  It  will\nplace  a  chip  near  its'  previous\nchip.");
+      
       easy.setOnAction(r -> {
         player3.setDifficulty("e");
         easyDescription.setTextFill(Color.BLUE);
+        mediumDescription.setTextFill(Color.DARKSLATEGRAY);
         try {
           easyDescription.setFont(Font.loadFont(new 
               FileInputStream(FONT_PATH),12.5));
@@ -333,8 +341,7 @@ public class PlayerDetailsManager extends Player {
       });
       
       
-      Label mediumDescription = new Label("CPU  has  decent  skill."
-          + "  It  will\nplace  a  chip  near  its'  previous\nchip.");
+ 
       mediumDescription.setLayoutX(210);
       mediumDescription.setLayoutY(135);
       try {
@@ -348,6 +355,7 @@ public class PlayerDetailsManager extends Player {
       medium.setOnAction(r -> {
         player3.setDifficulty("m");
         mediumDescription.setTextFill(Color.BLUE);
+        easyDescription.setTextFill(Color.DARKSLATEGRAY);
         try {
           mediumDescription.setFont(Font.loadFont(new 
               FileInputStream(FONT_PATH),12.5));
@@ -429,9 +437,13 @@ public class PlayerDetailsManager extends Player {
       }
       easyDescription.setTextFill(Color.DARKSLATEGRAY);
       
+      Label mediumDescription = new Label("CPU  has  decent  skill."
+          + "  It  will\nplace  a  chip  near  its'  previous\nchip.");
+      
       easy.setOnAction(r -> {
         player4.setDifficulty("e");
         easyDescription.setTextFill(Color.BLUE);
+        mediumDescription.setTextFill(Color.DARKSLATEGRAY);
         try {
           easyDescription.setFont(Font.loadFont(new 
               FileInputStream(FONT_PATH),12.5));
@@ -441,8 +453,7 @@ public class PlayerDetailsManager extends Player {
       });
       
       
-      Label mediumDescription = new Label("CPU  has  decent  skill."
-          + "  It  will\nplace  a  chip  near  its'  previous\nchip.");
+
       mediumDescription.setLayoutX(210);
       mediumDescription.setLayoutY(135);
       try {
@@ -456,6 +467,7 @@ public class PlayerDetailsManager extends Player {
       medium.setOnAction(r -> {
         player4.setDifficulty("m");
         mediumDescription.setTextFill(Color.BLUE);
+        easyDescription.setTextFill(Color.DARKSLATEGRAY);
         try {
           mediumDescription.setFont(Font.loadFont(new 
               FileInputStream(FONT_PATH),12.5));
@@ -497,18 +509,22 @@ public class PlayerDetailsManager extends Player {
     TextField player1Name = new TextField();
     player1Name.setLayoutX(140);
     player1Name.setLayoutY(230);
+    addTextLimiter(player1Name, 20); //restricts how many characters can be added for a persons name
     
     TextField player2Name = new TextField();
     player2Name.setLayoutX(140);
     player2Name.setLayoutY(300);
+    addTextLimiter(player2Name, 20);//restricts how many characters can be added for a persons name
     
     TextField player3Name = new TextField();
     player3Name.setLayoutX(140);
     player3Name.setLayoutY(370);
+    addTextLimiter(player3Name, 20); //restricts how many characters can be added for a persons name
     
     TextField player4Name = new TextField();
     player4Name.setLayoutX(140);
     player4Name.setLayoutY(440);
+    addTextLimiter(player4Name, 20); //restricts how many characters can be added for a persons name
     
     ChoiceBox<String> color1 = new ChoiceBox<>();
     color1.getItems().addAll("Red", "Blue", "Green", "Black");
@@ -776,11 +792,10 @@ public class PlayerDetailsManager extends Player {
  
 
   /******************************************************************
-  * Needs more work, but the button should have a shadow around it 
-  * when pressed, when released it goes back to the "freestyle".
+  *creates the background to the player details screen. 
+  * same as main menu background.
   ******************************************************************/
-  //creates the background to the player details screen. 
-  //same as main menu background
+
   private void createBackground() {
 
     Image backgroundImage = new Image("model/resources/"
@@ -792,5 +807,34 @@ public class PlayerDetailsManager extends Player {
         BackgroundPosition.DEFAULT, null);
     playerDetailsPane.setBackground(new Background(background));
 
+  }
+  
+  /******************************************************************
+  *This function is a listener that will not allow any more characters
+  *in the text field after the max length is set.
+  *This is to prevent names of infinite length.
+  *Code pulled from stackoverflow.com but we understand what it is doing.
+  *@param tf - the text input field to be restricted
+  *@param maxLength - the maximum number of characters allowed
+  */
+  public static void addTextLimiter(final TextField tf, final int maxLength) {
+    tf.textProperty().addListener(new ChangeListener<String>() { //adds listener to text field
+        @Override
+        /******************************************************************
+         *This function checks when the string is changed and then
+         *allows no more change if beyond the maximum length.
+         *@param ov - the String Observable to be observed for changes
+         *@param oldValue - before the String was changed
+         *@param newValue - the requested update to the String
+         ******************************************************************/
+        public void changed(//when the input field is changed in some way
+            final ObservableValue<? extends String> ov, 
+            final String oldValue, final String newValue) {
+            if (tf.getText().length() > maxLength) { //if the new string is too big
+              String s = tf.getText().substring(0, maxLength); //cut off the new String
+              tf.setText(s); //set the value of the new String
+            }
+        }
+    });
   }
 }
