@@ -6,7 +6,7 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 import playertype.Player;
 
-class LogicTests {
+public class LogicTests {
 
   
   @Test
@@ -179,7 +179,7 @@ class LogicTests {
     logic.addPlayer(new Player("d", 1, "tester1"));
     logic.addPlayer(new Player());
     logic.addPlayer(new Player("d", 3, "tester3"));
-    logic.addPlayer(new Player("d", 4, "tester4"));
+    logic.addPlayer(new Player("d", 4, "tester4","m",true));
     logic.addPlayer(new Player("d", 5, "tester5"));
 
     assertEquals(logic.getPlayerlist().length,4);
@@ -228,6 +228,14 @@ class LogicTests {
     logic.startGame();
     logic.nextTurn(2);
     assertEquals(logic.getCurrentPlayer().getName(), "DEFAULT");
+  }
+  
+  @Test
+  public void getCurrentPlayerCpuDifficulty() {
+    ConnectLogic logic = new ConnectLogic();
+    Player player = new Player("d",1,"cpu","e",true);
+    logic.startGame();
+    assertEquals(logic.getCurrentPlayer().getDifficulty(), "e");
   }
  
 
