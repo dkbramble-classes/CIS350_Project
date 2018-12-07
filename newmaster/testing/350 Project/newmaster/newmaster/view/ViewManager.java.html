@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ViewManager.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Dec 6, 2018 7:56:07 PM)</a> &gt; <a href="../../index.html" class="el_group">newmaster</a> &gt; <a href="../index.html" class="el_bundle">newmaster</a> &gt; <a href="index.source.html" class="el_package">view</a> &gt; <span class="el_source">ViewManager.java</span></div><h1>ViewManager.java</h1><pre class="source lang-java linenums">//icons imported from https://kenney.nl/assets/ui-pack
+
+package view;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import model.ExitButton;
+import model.PlayButton;
+
+
+
+public class ViewManager {
+
+  private static final int HEIGHT = 600; 
+  private static final int WIDTH = 800;
+  private AnchorPane mainPane;
+  private Scene mainScene;
+  private Stage mainStage;
+  private Stage gameStage;
+  
+  //private final static int MENU_BUTTONS_START_X = 100;
+  //private final static int MENU_BUTTONS_START_Y = 150;
+  private static final String FONT_PATH = &quot;kenvector_future.ttf&quot;;
+
+  /******************************************************************
+  * Class that deals with the second screen of the program; the 
+  * player details including the names and colors of each person 
+  * playing Connect 4.
+  * @throws IOException if there is an issue with the file paths
+  */
+
+<span class="fc" id="L47">  public ViewManager() throws IOException {</span>
+<span class="fc" id="L48">    mainPane = new AnchorPane();</span>
+<span class="fc" id="L49">    mainScene = new Scene(mainPane, WIDTH, HEIGHT);</span>
+<span class="fc" id="L50">    mainStage = new Stage();</span>
+<span class="fc" id="L51">    mainStage.initStyle(StageStyle.UNDECORATED);</span>
+<span class="fc" id="L52">    mainStage.setScene(mainScene);</span>
+<span class="fc" id="L53">    createButtons();</span>
+<span class="fc" id="L54">    createBackground();</span>
+
+<span class="fc" id="L56">  }</span>
+
+  /******************************************************************
+  * returns the current stage.
+  ******************************************************************/
+  //returns the current stage
+  public Stage getMainStage() {
+<span class="fc" id="L63">    return mainStage;</span>
+  }
+
+  /******************************************************************
+  * Creates labels and buttons and adds all of them to the main pane.
+  * @throws IOException if there is an issue with FONT_PATH
+  */
+
+  private void createButtons() throws
+      IOException {
+<span class="fc" id="L73">    Label title = new Label(&quot;CONNECT 4&quot;);</span>
+<span class="fc" id="L74">    title.setLayoutX(180);</span>
+<span class="fc" id="L75">    title.setLayoutY(100);</span>
+<span class="fc" id="L76">    title.setFont(Font.loadFont(new FileInputStream(FONT_PATH),70));</span>
+<span class="fc" id="L77">    title.setTextFill(Color.DARKSLATEGRAY);</span>
+
+<span class="fc" id="L79">    ExitButton exitButton = new ExitButton(null);</span>
+<span class="fc" id="L80">    PlayButton startButton = new PlayButton(&quot;PLAY NOW&quot;);</span>
+    //PlayButton intenseButton = new PlayButton(&quot;INTENSE4&quot;);
+    // MusicButton musicButton = new MusicButton(null);
+<span class="fc" id="L83">    mainPane.getChildren().addAll(exitButton, startButton, title);</span>
+    
+<span class="fc" id="L85">    exitButton.setLayoutX(700);</span>
+<span class="fc" id="L86">    exitButton.setLayoutY(0);</span>
+<span class="fc" id="L87">    startButton.setLayoutX(320);</span>
+<span class="fc" id="L88">    startButton.setLayoutY(300);</span>
+    //  intenseButton.setLayoutX(320);
+    //  intenseButton.setLayoutY(330);
+    //musicButton.setLayoutX(640);
+    //musicButton.setLayoutY(27);
+
+    /******************************************************************
+    *  creates an instance of playerDetailsManager and creates the 
+    *  screen when user clicks on the CONNECT 4 button on the main menu.
+    ******************************************************************/
+    
+<span class="fc" id="L99">    startButton.setOnAction(new EventHandler&lt;ActionEvent&gt;()  {</span>
+      @Override
+      public void handle(ActionEvent event) {
+        PlayerDetailsManager playerDetailsManager;
+        try {
+<span class="fc" id="L104">          playerDetailsManager = new PlayerDetailsManager();</span>
+<span class="fc" id="L105">          playerDetailsManager.createDetailsScreen(mainStage);</span>
+<span class="pc" id="L106">        } catch (IOException e) {</span>
+          // TODO Auto-generated catch block
+<span class="nc" id="L108">          e.printStackTrace();</span>
+        }
+
+<span class="fc" id="L111">        }</span>
+
+    });
+
+<span class="fc" id="L115">  }</span>
+
+  /******************************************************************
+  * creates the background to the player details screen. same as 
+  * main menu background.
+  ******************************************************************/
+  private void createBackground() {
+
+<span class="fc" id="L123">    Image backgroundImage = new Image(&quot;model/resources/&quot;</span>
+        + &quot;Slider-CL01-Background-256x256.png&quot;,
+<span class="fc" id="L125">        256,256,false,true);</span>
+<span class="fc" id="L126">    BackgroundImage background = new BackgroundImage(backgroundImage,</span>
+<span class="fc" id="L127">        BackgroundRepeat.REPEAT,</span>
+<span class="fc" id="L128">        BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);</span>
+<span class="fc" id="L129">    mainPane.setBackground(new Background(background));</span>
+
+<span class="fc" id="L131">  }</span>
+  
+  /******************************************************************
+  * Creates a new instance of the gameStage to be played on.
+  ******************************************************************/
+  public void createNewGame(Stage gameStage) {
+<span class="fc" id="L137">    this.gameStage = gameStage;</span>
+<span class="fc" id="L138">    this.gameStage.close(); // remove the old gameStage</span>
+<span class="fc" id="L139">    mainStage.show();</span>
+
+<span class="fc" id="L141">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Dec 6, 2018 7:56:07 PM)</div></body></html>

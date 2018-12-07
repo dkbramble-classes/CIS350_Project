@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Player.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Dec 6, 2018 7:56:07 PM)</a> &gt; <a href="../../index.html" class="el_group">newmaster</a> &gt; <a href="../index.html" class="el_bundle">newmaster</a> &gt; <a href="index.source.html" class="el_package">playertype</a> &gt; <span class="el_source">Player.java</span></div><h1>Player.java</h1><pre class="source lang-java linenums">/*****************************************************************
+A Player that plays the Connect 4 game. 
+The player chooses the color of the chip and his name.
+Each player has an order in which his turn will be.
+The player can also be a computer player with different difficulties
+
+
+@author Dane Bramble
+@version November 2018
+*****************************************************************/
+
+package playertype;
+
+import gamelogic.ConnectLogic;
+import java.util.Random;
+
+
+
+public class Player {
+  private String color; //The color of the player's chip
+  private int position; // The order of the players (1st, 2nd, 3rd, 4th)
+  private String name; //The name displayed
+  private String difficulty; // The computer's level of difficulty (e = easy, m = medium, h = hard)
+  private boolean computer; //true if a computer player, false if otherwise
+  
+<span class="pc" id="L26">  private int min = -1; //the minimum range for the computer to pick</span>
+<span class="pc" id="L27">  private int max = -1; // the maximum range for the computer to pick</span>
+<span class="pc" id="L28">  private int current = -1; //the column location of this computer's last chip placement</span>
+
+
+  /*****************************************************************
+    Constructor - a player without any inputs
+    Sets default values.
+    *****************************************************************/
+<span class="fc" id="L35">  public Player() {</span>
+<span class="fc" id="L36">    this.color = &quot;n&quot;;</span>
+<span class="fc" id="L37">    this.position = 0;</span>
+<span class="fc" id="L38">    this.name = &quot;DEFAULT&quot;;</span>
+<span class="fc" id="L39">    this.difficulty = &quot;e&quot;;</span>
+<span class="fc" id="L40">    this.computer = false;</span>
+<span class="fc" id="L41">  }</span>
+
+  /*****************************************************************
+    Constructor - a player with all valid inputs
+    .
+    @param c the color of the chip
+    @param p the position of the player
+    @param n the name of the player
+    @param d the difficulty of the computer player
+    @param b whether or not the player is a computer
+  */
+  
+<span class="nc" id="L53">  public Player(String c, int p, String n, String d, boolean b) {</span>
+<span class="nc" id="L54">    this.color = c;</span>
+<span class="nc" id="L55">    this.position = p;</span>
+<span class="nc" id="L56">    this.name = n;</span>
+<span class="nc" id="L57">    this.difficulty = d;</span>
+<span class="nc" id="L58">    this.computer = b;</span>
+<span class="nc" id="L59">  }</span>
+  
+  /*****************************************************************
+  Constructor - a player with a name, position, and color. 
+  If not a computer player, can provide only the necessary details
+  
+  @param c the color of the chip
+  @param p the position of the player
+  @param n the name of the player
+*/
+
+<span class="nc" id="L70">  public Player(String c, int p, String n) {</span>
+<span class="nc" id="L71">    this.color = c;</span>
+<span class="nc" id="L72">    this.position = p;</span>
+<span class="nc" id="L73">    this.name = n;</span>
+<span class="nc" id="L74">    this.difficulty = &quot;e&quot;;</span>
+<span class="nc" id="L75">    this.computer = false;</span>
+<span class="nc" id="L76">  }</span>
+  
+  /*****************************************************************
+  Takes in a column and attempts to place it on the grid. If it is a
+  computer player, then it will generate the next column on its own.
+  
+  @param logic - the game logic for the player to interact with
+  @param column - the column where the Player want to place the chip
+  */
+  
+  public int playerTurn(ConnectLogic logic, int column) {
+<span class="fc bfc" id="L87" title="All 2 branches covered.">    if (!computer) {   //if not a computer</span>
+<span class="fc" id="L88">      System.out.println(name + &quot;'s turn&quot;);</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">      if (!logic.isValid(column)) { //check if a chip can be placed</span>
+<span class="nc" id="L90">        System.out.println(&quot;*out of bounds*&quot;);</span>
+<span class="nc" id="L91">        column = -1; //exit the game</span>
+<span class="nc" id="L92">      } else {</span>
+<span class="fc" id="L93">        logic.drop(column); ///place the chip</span>
+<span class="fc" id="L94">        System.out.println(&quot;Player &quot; </span>
+<span class="fc" id="L95">            + name + &quot; (&quot; + position + &quot;) placed a chip at column &quot; </span>
+<span class="fc" id="L96">            + (column + 1));</span>
+      }
+<span class="fc" id="L98">    } else {</span>
+<span class="fc" id="L99">      column = this.computerTurn(logic); //generate column for computer</span>
+    }
+    
+<span class="fc" id="L102">    return column;</span>
+  }
+  
+  /*****************************************************************
+  Calculates the next chip placement for the computer player.
+  @param logic - the game board to use in calculations
+  */
+  public int calculateTurn(ConnectLogic logic) {
+<span class="fc" id="L110">    Random rand = new Random(); //to calculate random columns</span>
+<span class="fc" id="L111">    int[][] grid = logic.getGrid(); //grid of the board</span>
+<span class="fc" id="L112">    boolean col = false; //if the column is available</span>
+<span class="fc" id="L113">    int calcturn = 0; //column to be generated</span>
+
+<span class="fc bfc" id="L115" title="All 2 branches covered.">    if (min == -1) { //if the range has not been set</span>
+<span class="fc" id="L116">      min = rand.nextInt(grid.length); //set the range</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">      if ((grid.length - min) &lt; 4) { //if the range is beyond the game grid, fix it</span>
+<span class="fc" id="L118">        min -= 4;</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">        if (min &lt; 0) {</span>
+<span class="nc" id="L120">          min = 0;</span>
+        }
+      } 
+
+<span class="fc" id="L124">      calcturn = min; // first chip placement</span>
+<span class="fc" id="L125">      current = min;</span>
+<span class="fc" id="L126">      max = min + 4; </span>
+<span class="fc" id="L127">    } else {</span>
+      
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">      if (max &gt; grid.length) {</span>
+<span class="nc" id="L130">        max = grid.length; //if the range is beyond the game grid, fix it</span>
+      }
+      
+<span class="fc bfc" id="L133" title="All 2 branches covered.">      for (int i = min; i &lt; max; i++) {</span>
+<span class="fc" id="L134">        int count = 0; //amount of chips on top</span>
+<span class="fc" id="L135">        int zeroes = 0; // amount spaces available in the column</span>
+        
+<span class="fc bfc" id="L137" title="All 2 branches covered.">        for (int j = 1; j &lt; grid[i].length; j++) {</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">          if (grid[i][j] == position) { //if the chips on top are yours</span>
+<span class="fc" id="L139">            count++;</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">          } else if (grid[i][j] != 0 </span>
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">              &amp;&amp; grid[i][j] != position) { //if someone else's chip is on top dont bother</span>
+<span class="fc" id="L142">            break; </span>
+          } else { //if this is an empty space
+<span class="fc" id="L144">            zeroes++;</span>
+          }
+        }
+        
+<span class="pc bpc" id="L148" title="3 of 4 branches missed.">        if (count &gt; 1 &amp;&amp; zeroes &gt;= 2) { //if you are on top and there is room keep placing chips</span>
+<span class="nc" id="L149">          calcturn = i;</span>
+<span class="nc" id="L150">          col = true;</span>
+<span class="nc" id="L151">          break;</span>
+        }
+      }
+      
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">      if (!col) {</span>
+<span class="pc bpc" id="L156" title="1 of 4 branches missed.">        if ((current + 1) &gt;= max &amp;&amp; (current - 1) &lt;= min) {</span>
+<span class="nc" id="L157">          calcturn = rand.nextInt((current + 1) - (current - 1))</span>
+<span class="nc" id="L158">              + (current - 1); //picks on of the slots by current position</span>
+<span class="nc" id="L159">        } else {</span>
+<span class="fc" id="L160">          calcturn = rand.nextInt(max - min) + min;</span>
+        }
+<span class="fc" id="L162">        boolean valid = false;</span>
+<span class="fc" id="L163">        int rangecount = 0; // don't check more than 4 times</span>
+<span class="pc bpc" id="L164" title="1 of 4 branches missed.">        while (!valid &amp;&amp; rangecount &lt; 4) { //if not a valid column, move until one is found </span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">          if (logic.isValid(calcturn)) {</span>
+<span class="fc" id="L166">            valid = true;</span>
+<span class="fc" id="L167">          } else {</span>
+<span class="nc" id="L168">            calcturn++;</span>
+<span class="nc" id="L169">            rangecount++;</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">            if (calcturn &gt; max) {</span>
+<span class="nc" id="L171">              calcturn = min;</span>
+            }
+          }
+        }
+      }  
+    }
+    
+<span class="fc" id="L178">    return calcturn;</span>
+  }
+  
+  
+  /*****************************************************************
+  Calculates the chip placement for the computer player and drops it onto the game board.
+  @param logic the game logic for the computer to interact with
+  */
+  public int computerTurn(ConnectLogic logic) {
+<span class="fc" id="L187">    int column = 0; //column to be generated</span>
+<span class="fc" id="L188">    int[][] grid = logic.getGrid();</span>
+    
+<span class="fc" id="L190">    boolean valid = false; //don't stop until the chip is valid</span>
+    
+<span class="fc" id="L192">    Random rand = new Random();</span>
+    
+<span class="fc bfc" id="L194" title="All 2 branches covered.">    if (difficulty.equals(&quot;m&quot;)) { </span>
+<span class="fc" id="L195">      column = calculateTurn(logic); // if medium difficulty, generate column</span>
+<span class="fc" id="L196">    } else {</span>
+<span class="fc" id="L197">      column = rand.nextInt(grid.length); // easy difficulty is just random</span>
+    }
+    
+    // if you want to delay the input for effect
+    //try {
+    //TimeUnit.SECONDS.sleep(4);
+    //}catch (InterruptedException e) {
+    //e.printStackTrace();
+    //}
+<span class="fc" id="L206">    int rangecount = 0;</span>
+<span class="pc bpc" id="L207" title="1 of 4 branches missed.">    while (!valid &amp;&amp; rangecount &lt; grid.length) { //if not a valid column, move until one is found </span>
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">      if (logic.isValid(column)) {</span>
+<span class="fc" id="L209">        valid = true;</span>
+<span class="fc" id="L210">        logic.drop(column);</span>
+<span class="fc" id="L211">      } else {</span>
+<span class="nc" id="L212">        column = (column + 1) % grid.length; //move to next column, loops back on the grid</span>
+      }
+    }
+    
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">    if (rangecount &gt;= grid.length) { // if no chips could be placed, exit game</span>
+<span class="nc" id="L217">      column = -1;</span>
+<span class="nc" id="L218">    } else {</span>
+<span class="fc" id="L219">      System.out.println(</span>
+<span class="fc" id="L220">          &quot;Computer Player &quot; </span>
+<span class="fc" id="L221">          + name + &quot; (&quot; + position + &quot;) placed a chip at column &quot;</span>
+<span class="fc" id="L222">          + (column + 1));</span>
+    }
+    
+<span class="fc" id="L225">    current = column;</span>
+<span class="fc" id="L226">    return column;</span>
+  }
+
+  //Retrieve the player characteristics
+  public String getColor() {
+<span class="fc" id="L231">    return color;</span>
+  }
+  
+  public int getPosition() {
+<span class="fc" id="L235">    return position;</span>
+  }
+  
+  public String getName() {
+<span class="fc" id="L239">    return name;</span>
+  }
+  
+  public String getDifficulty() {
+<span class="nc" id="L243">    return difficulty;</span>
+  }
+  
+  public boolean getCompStatus() {
+<span class="fc" id="L247">    return computer;</span>
+  }
+
+  //set the player characteristics
+  public void setColor(String c) {
+<span class="fc" id="L252">    this.color = c;</span>
+<span class="fc" id="L253">    return;</span>
+  }
+  
+  public void setPosition(int p) {
+<span class="fc" id="L257">    this.position = p;</span>
+<span class="fc" id="L258">    return;</span>
+  }
+  
+  public void setName(String n) {
+<span class="fc" id="L262">    this.name = n;</span>
+<span class="fc" id="L263">    return;</span>
+  }
+  
+  public void setDifficulty(String d) {
+<span class="fc" id="L267">    this.difficulty = d;</span>
+<span class="fc" id="L268">    return;</span>
+  }
+  
+  public void setCompStatus(boolean b) {
+<span class="fc" id="L272">    this.computer = b;</span>
+<span class="fc" id="L273">    return;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Dec 6, 2018 7:56:07 PM)</div></body></html>

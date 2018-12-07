@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>GameManager.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Dec 6, 2018 7:56:07 PM)</a> &gt; <a href="../../index.html" class="el_group">newmaster</a> &gt; <a href="../index.html" class="el_bundle">newmaster</a> &gt; <a href="index.source.html" class="el_package">view</a> &gt; <span class="el_source">GameManager.java</span></div><h1>GameManager.java</h1><pre class="source lang-java linenums">package view;
+
+import gamelogic.ConnectLogic;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import javafx.animation.TranslateTransition;
+import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
+import model.ExitButton;
+
+
+public class GameManager extends Application {
+
+  private static final int TILE_SIZE = 80; // size of each chip
+  private int gridColumns; // how many columns on the board
+  private int gridRows; // how many rows on the board 
+<span class="fc" id="L41">  private Pane gamePane = new Pane(); //the actual screen</span>
+  private Scene gameScene; //the instance of the board
+  private Stage gameStage; //the stage that the scene will be on
+<span class="fc" id="L44">  private boolean gameOver = false; // if the game is ended, the buttons can't be used</span>
+<span class="fc" id="L45">  private boolean playClick = true;;</span>
+  private Shape gridShape; // allows the placement of chips
+  private Stage playerDetailsStage; //the previous screen
+  private Disc[][] grid;  //all of the Disc objects
+<span class="fc" id="L49">  private Pane discRoot =  new Pane(); // the disc placement aspect of the GUI</span>
+<span class="fc" id="L50">  private ConnectLogic logic = new ConnectLogic();  //the actual game logic</span>
+<span class="fc" id="L51">  private String winner = &quot;&quot;; //will be populated with the winner's name</span>
+  
+<span class="fc" id="L53">  private final StringProperty valueProperty = new SimpleStringProperty();</span>
+<span class="fc" id="L54">  Label title = new Label();</span>
+  
+  /******************************************************************
+  * Creates the game panel for when you start a new game from
+  * the Players Detail Manager.
+  ******************************************************************/
+<span class="fc" id="L60">  public GameManager(int columns, int rows) {</span>
+
+    //set the board size
+<span class="fc" id="L63">    gridColumns = columns;</span>
+<span class="fc" id="L64">    gridRows = rows;</span>
+    //Create the game board
+<span class="fc" id="L66">    grid = new Disc[columns][rows];</span>
+<span class="fc" id="L67">    Pane gamePane = new Pane(); </span>
+<span class="fc" id="L68">    ExitButton exitButton = new ExitButton(null);</span>
+<span class="fc" id="L69">    title.textProperty().bind(valueProperty);</span>
+<span class="fc" id="L70">    title.setTextFill(Color.RED);</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">    if(columns == 7) {</span>
+<span class="fc" id="L72">      gameScene = new Scene(gamePane, 750, 560);</span>
+<span class="fc" id="L73">      exitButton.setLayoutX(645);</span>
+<span class="fc" id="L74">      exitButton.setLayoutY(0);</span>
+<span class="fc" id="L75">      title.setLayoutX(650);</span>
+<span class="fc" id="L76">      title.setLayoutY(280);</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">    } else if(columns == 9) {</span>
+<span class="nc" id="L78">      gameScene = new Scene(gamePane, 900, 640);</span>
+<span class="nc" id="L79">      exitButton.setLayoutX(800);</span>
+<span class="nc" id="L80">      exitButton.setLayoutY(0);</span>
+<span class="nc" id="L81">      title.setLayoutX(805);</span>
+<span class="nc" id="L82">      title.setLayoutY(280);</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">    } else if(columns == 11) {</span>
+<span class="fc" id="L84">      gameScene = new Scene(gamePane, 1075, 640);</span>
+<span class="fc" id="L85">      exitButton.setLayoutX(965);</span>
+<span class="fc" id="L86">      exitButton.setLayoutY(0);</span>
+<span class="fc" id="L87">      title.setLayoutX(970);</span>
+<span class="fc" id="L88">      title.setLayoutY(280);</span>
+    }
+ 
+<span class="fc" id="L91">    gameStage = new Stage();</span>
+<span class="fc" id="L92">    gameStage.setScene(gameScene);</span>
+<span class="fc" id="L93">    gridShape = makeGrid();</span>
+<span class="fc" id="L94">    gamePane.getChildren().add(discRoot); </span>
+<span class="fc" id="L95">    gamePane.getChildren().add(gridShape);</span>
+<span class="fc" id="L96">    gamePane.getChildren().addAll(makeColumns());</span>
+<span class="fc" id="L97">    gamePane.getChildren().addAll(exitButton, title);</span>
+    
+
+<span class="fc" id="L100">    gridShape.setLayoutX(100);</span>
+<span class="fc" id="L101">    gridShape.setLayoutX(0);</span>
+<span class="fc" id="L102">    gameStage.initStyle(StageStyle.UNDECORATED);</span>
+    
+<span class="fc" id="L104">  }</span>
+  
+  /******************************************************************
+  * This method returns gamePane, which acts as the rectangles
+  * that allow you to pick what column to place your chip. 
+  ******************************************************************/
+  private Parent createContent() {
+
+   // createBackground();
+<span class="nc" id="L113">    return gamePane;</span>
+
+  }
+  
+  /******************************************************************
+  * Goes to the next page in the game menu.
+  ******************************************************************/ 
+  public void createNewGame(Stage playerDetailsStage) {
+<span class="fc" id="L121">    this.playerDetailsStage = playerDetailsStage;</span>
+<span class="fc" id="L122">    this.playerDetailsStage.close(); //get rid of the previous screen</span>
+<span class="fc" id="L123">    gameStage.show();</span>
+    
+<span class="fc" id="L125">  }</span>
+  
+  /******************************************************************
+   * Setter that takes in logic from ConnectLogic.
+   ******************************************************************/
+  public void setLogic(ConnectLogic logic) {
+<span class="fc" id="L131">    this.logic = logic; //Receives this from PlayerDetailsManager</span>
+<span class="fc" id="L132">    valueProperty.set(&quot;Player &quot; + logic.getCurrentPlayer().getPosition()+ &quot;'s Turn!&quot;);</span>
+<span class="fc" id="L133">    findColor();</span>
+<span class="fc" id="L134">  }</span>
+  
+  /******************************************************************
+  * Creates the game board grid.
+  ******************************************************************/
+  private Shape makeGrid() {
+<span class="fc" id="L140">    Shape shape = new Rectangle((gridColumns + 1) * TILE_SIZE, </span>
+<span class="fc" id="L141">        (gridRows + 1) * TILE_SIZE);</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">    for (int y = 0; y &lt; gridRows; y++) { //create the circles for each section of the grid</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">      for (int x = 0; x &lt; gridColumns; x++) {</span>
+<span class="fc" id="L144">        Circle circle = new Circle(TILE_SIZE / 2);</span>
+<span class="fc" id="L145">        circle.setCenterX(TILE_SIZE / 2);</span>
+<span class="fc" id="L146">        circle.setCenterY(TILE_SIZE / 2);</span>
+<span class="fc" id="L147">        circle.setTranslateX(x * (TILE_SIZE + 5) + TILE_SIZE / 3);</span>
+<span class="fc" id="L148">        circle.setTranslateY(y * (TILE_SIZE + 5) + TILE_SIZE / 3);</span>
+        
+<span class="fc" id="L150">        shape = Shape.subtract(shape, circle);</span>
+      }
+    } 
+    
+    //basic lighting for the board
+<span class="fc" id="L155">    Light.Distant light = new Light.Distant();</span>
+<span class="fc" id="L156">    light.setAzimuth(45.0);</span>
+<span class="fc" id="L157">    light.setElevation(30.0);</span>
+
+<span class="fc" id="L159">    Lighting lighting = new Lighting();</span>
+<span class="fc" id="L160">    lighting.setLight(light);</span>
+<span class="fc" id="L161">    lighting.setSurfaceScale(5.0);</span>
+
+<span class="fc" id="L163">    shape.setFill(Color.BLUE);</span>
+<span class="fc" id="L164">    shape.setEffect(lighting);</span>
+<span class="fc" id="L165">    return shape;</span>
+
+
+  }
+  
+  /******************************************************************
+  * Transparent rectangle that indicates which column you are 
+  * choosing to drop a chip into.
+  * @throws Throwable in order to call functions after a mouse click
+  */
+  private List&lt;Rectangle&gt; makeColumns() {
+<span class="fc" id="L176">    List&lt;Rectangle&gt; list = new ArrayList&lt;&gt;();</span>
+     
+<span class="fc bfc" id="L178" title="All 2 branches covered.">    for (int x = 0; x &lt; gridColumns; x++) {</span>
+<span class="fc" id="L179">      Rectangle rect = </span>
+<span class="fc" id="L180">          new Rectangle(TILE_SIZE, (gridRows + 1) * TILE_SIZE); //which column will be chosen</span>
+      //animation for when the rectangle is hovered over / clicked 
+<span class="fc" id="L182">      rect.setTranslateX(x * (TILE_SIZE + 5) + TILE_SIZE / 3);</span>
+<span class="fc" id="L183">      rect.setFill(Color.TRANSPARENT);</span>
+<span class="fc" id="L184">      rect.setOnMouseEntered(e -&gt; rect.setFill(Color.rgb(200, 200, 50, 0.3)));</span>
+<span class="fc" id="L185">      rect.setOnMouseExited(e -&gt; rect.setFill(Color.TRANSPARENT));</span>
+         
+<span class="fc" id="L187">      final int column = x;</span>
+<span class="fc" id="L188">      rect.setOnMouseClicked(e -&gt; {</span>
+        try {
+<span class="fc" id="L190">          placeDisc(new Disc(findColor()), column, false); //create a new disc / place it at column</span>
+<span class="pc" id="L191">        } catch (Throwable e1) {</span>
+<span class="nc" id="L192">          e1.printStackTrace();</span>
+        }
+<span class="fc" id="L194">      });</span>
+        
+<span class="fc" id="L196">      list.add(rect); // add rectangle to list </span>
+    }
+<span class="fc" id="L198">    return list;</span>
+  }
+  
+  /******************************************************************
+  * Method that implements game logic to determine winner.
+  * Also creates the animation of the chip falling
+  * @throws Throwable if checkComputer cannot be ran after the animation.
+  */
+  private void placeDisc(Disc disc, int column, boolean computer) 
+      throws Throwable {
+<span class="pc bpc" id="L208" title="2 of 10 branches missed.">    if (!gameOver &amp;&amp; ((!playClick &amp;&amp; computer) || (playClick &amp;&amp; !computer))) { // if the game is not over, accept mouse clicks</span>
+      //find all of the discs on the grid, create the animation where there are no discs
+<span class="fc" id="L210">      int row = gridRows - 1; //where to place disc</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">      do {</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">        if (!getDisc(column, row).isPresent()) {</span>
+<span class="fc" id="L213">          break;</span>
+        }
+
+<span class="fc" id="L216">        row--;</span>
+<span class="fc" id="L217">      } while (row &gt;= 0); </span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">      if (row &lt; 0) {</span>
+<span class="fc" id="L219">        return;</span>
+      }
+<span class="fc" id="L221">      grid[column][row] = disc;</span>
+<span class="fc" id="L222">      discRoot.getChildren().add(disc);</span>
+<span class="fc" id="L223">      disc.setTranslateX(column * (TILE_SIZE + 5) </span>
+<span class="fc" id="L224">          + (TILE_SIZE / 3)); //set animation</span>
+
+<span class="fc" id="L226">      TranslateTransition animation = new TranslateTransition(Duration.seconds(0.5), disc);</span>
+<span class="fc" id="L227">      animation.setToY(row * (TILE_SIZE + 5) + (TILE_SIZE / 3));</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">      if (!computer) { //if not a computer</span>
+<span class="fc" id="L229">        System.out.println(column); //for logging</span>
+<span class="fc" id="L230">        int result = 0;</span>
+<span class="fc" id="L231">        winner = logic.getCurrentPlayer().getName(); //set winner name</span>
+<span class="fc" id="L232">        result = logic.nextTurn(column); //place the chip in the logic      </span>
+<span class="fc" id="L233">        findColor();</span>
+<span class="fc" id="L234">        playClick = false;;</span>
+<span class="fc" id="L235">        animation.setOnFinished(e -&gt; { //once the animation is done</span>
+          try {
+<span class="fc" id="L237">            checkComputer(column); //check if the next player is a computer</span>
+<span class="pc" id="L238">          } catch (Throwable e1) {</span>
+<span class="nc" id="L239">            e1.printStackTrace();</span>
+          }
+<span class="fc" id="L241">        }); </span>
+<span class="fc" id="L242">        animation.play(); //play the animation</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">        if (result == -20) { //a tie</span>
+<span class="fc" id="L244">          showMessage(&quot;No more chips can be placed, it's a tie!&quot;);</span>
+<span class="fc" id="L245">          gameOver = true; //stop accepting button presses</span>
+          
+        }
+        
+<span class="fc bfc" id="L249" title="All 2 branches covered.">        if (logic.checkWin() != 0) { //if won</span>
+<span class="fc" id="L250">          showMessage(winner + &quot; Wins!&quot;);</span>
+<span class="fc" id="L251">          gameOver = true; //stop accepting button presses</span>
+<span class="fc" id="L252">          return;</span>
+        }
+      } else { //if its a computer
+
+<span class="fc" id="L256">        animation.setOnFinished(e -&gt; { </span>
+          try {
+<span class="fc" id="L258">            checkComputer(column); //check if the next player is a computer</span>
+<span class="pc" id="L259">          } catch (Throwable e1) {</span>
+<span class="nc" id="L260">            e1.printStackTrace();  </span>
+          } 
+<span class="fc" id="L262">        });</span>
+<span class="fc" id="L263">        animation.play(); //play the animation</span>
+
+      }
+    }
+<span class="fc" id="L267">  }</span>
+  /******************************************************************
+  * This method displays a pop message with the given information.
+  * This is used for the win / tie conditions.
+  * @throws IOException if there are issues with file paths.
+  */
+  
+  private void showMessage(String message) 
+      throws IOException {
+
+<span class="fc" id="L277">    Alert alert = new Alert(Alert.AlertType.INFORMATION);</span>
+<span class="fc" id="L278">    alert.setTitle(&quot;Game Finished&quot;);</span>
+<span class="fc" id="L279">    alert.setHeaderText(message);</span>
+<span class="fc" id="L280">    alert.setResizable(false);</span>
+<span class="fc" id="L281">    alert.setContentText(&quot;The Game is over, returning to menu&quot;);</span>
+<span class="fc" id="L282">    alert.setOnCloseRequest(evt -&gt; { </span>
+      try {
+<span class="fc" id="L284">        restartApp();</span>
+<span class="pc" id="L285">      } catch (IOException e) {</span>
+<span class="nc" id="L286">        e.printStackTrace();</span>
+      }
+<span class="fc" id="L288">    });</span>
+<span class="fc" id="L289">    alert.show();</span>
+<span class="fc" id="L290">  }</span>
+
+  /******************************************************************
+  * Resets the View Manager so the game can be played again.
+  * @throws IOException if ViewManager has issues with file paths.
+  */
+  public void restartApp() throws IOException{
+<span class="fc" id="L297">    ViewManager viewManager = new ViewManager(); //create a new menu screen</span>
+<span class="fc" id="L298">    viewManager.createNewGame(gameStage);</span>
+<span class="fc" id="L299">    gameStage.close(); //close the old game board stage</span>
+  
+<span class="fc" id="L301">  }</span>
+  
+  /******************************************************************
+  * Returns optional discs if they exist at the given grid location.
+  */
+  private Optional&lt;Disc&gt; getDisc(int column, int row) {
+<span class="pc bpc" id="L307" title="2 of 4 branches missed.">    if (column &lt; 0 || column &gt;= gridColumns </span>
+<span class="pc bpc" id="L308" title="2 of 4 branches missed.">        || row &lt; 0 || row &gt;= gridRows) {</span>
+<span class="nc" id="L309">      return Optional.empty();</span>
+    }
+<span class="fc" id="L311">    return Optional.ofNullable(grid[column][row]);</span>
+  }
+  
+  /******************************************************************
+  * Class creates a disc, which can be used the game board.
+  ******************************************************************/
+  private static class Disc extends Circle {
+    /******************************************************************
+    * Constructor creates a disk with the chosen color.
+    * @param  playcolor - the color that the disk will be
+    */
+    public Disc(Color playcolor) {
+<span class="fc" id="L323">      super(TILE_SIZE / 2, playcolor); //calls super to create a circle with the given color</span>
+
+<span class="fc" id="L325">      setCenterX(TILE_SIZE / 2); </span>
+<span class="fc" id="L326">      setCenterY(TILE_SIZE / 2);</span>
+<span class="fc" id="L327">    }</span>
+  }
+  
+
+  /******************************************************************
+  * Method that returns the current player's chip color so that 
+  * the chip can be created.
+  ******************************************************************/
+  private Color findColor() {
+<span class="fc" id="L336">    Color color = Color.RED; //by default, the color is red</span>
+<span class="fc" id="L337">    String playcolor = logic.getCurrentPlayer().getColor();</span>
+<span class="fc bfc" id="L338" title="All 5 branches covered.">    switch (playcolor) { //</span>
+      case &quot;Red&quot;:
+<span class="fc" id="L340">        color =  Color.RED;</span>
+<span class="fc" id="L341">        title.setTextFill(Color.RED);</span>
+<span class="fc" id="L342">        break;</span>
+      case &quot;Blue&quot;:
+<span class="fc" id="L344">        color = Color.BLUE;</span>
+<span class="fc" id="L345">        title.setTextFill(Color.BLUE);</span>
+<span class="fc" id="L346">        break;</span>
+      case &quot;Green&quot;:
+<span class="fc" id="L348">        color = Color.GREEN;</span>
+<span class="fc" id="L349">        title.setTextFill(Color.GREEN);</span>
+<span class="fc" id="L350">        break;</span>
+      case &quot;Black&quot;:
+<span class="fc" id="L352">        color = Color.BLACK;</span>
+<span class="fc" id="L353">        title.setTextFill(Color.BLACK);</span>
+<span class="fc" id="L354">        break;</span>
+      default:
+        break;
+    }
+<span class="fc" id="L358">    valueProperty.set(&quot;Player &quot; + logic.getCurrentPlayer().getPosition()+ &quot;'s Turn!&quot;);</span>
+<span class="fc" id="L359">    return color;</span>
+  }
+  
+  /******************************************************************
+  * This method runs Computer Player GUI logic.
+  * @throws Throwable in case placeDisc or showMessage have issues
+  */
+  
+  private void checkComputer(int column) throws Throwable {
+<span class="fc" id="L368">    boolean computer = logic.getCurrentPlayer().getCompStatus();</span>
+<span class="fc bfc" id="L369" title="All 4 branches covered.">    if (computer &amp; !gameOver) { //if the current player is a computer</span>
+      int result;
+<span class="fc" id="L371">      Color color = findColor(); //get computer chip color</span>
+<span class="fc" id="L372">      winner = logic.getCurrentPlayer().getName(); //get computer name in case it wins</span>
+<span class="fc" id="L373">      result = logic.nextTurn(column); //find the computer's chip placement, move to next turn</span>
+<span class="fc" id="L374">      findColor();</span>
+<span class="fc" id="L375">      placeDisc(new Disc(color), result, computer); //place the chip</span>
+<span class="pc bpc" id="L376" title="3 of 4 branches missed.">      if (result == -20 &amp;&amp; !gameOver) { //a tie</span>
+<span class="nc" id="L377">        showMessage(&quot;No more chips can be placed, it's a tie!&quot;);</span>
+<span class="nc" id="L378">        gameOver = true;</span>
+      }
+          
+<span class="pc bpc" id="L381" title="3 of 4 branches missed.">      if (logic.checkWin() != 0 &amp;&amp; !gameOver) { //if won</span>
+<span class="nc" id="L382">        showMessage(winner + &quot; Wins!&quot;);  </span>
+<span class="nc" id="L383">        gameOver = true;</span>
+      }
+<span class="nc" id="L385">    } else {</span>
+<span class="fc" id="L386">      playClick = true;</span>
+    }
+<span class="fc" id="L388">  }</span>
+
+  /******************************************************************
+  * This method creates the scene needed to play the game.
+  ******************************************************************/
+  @Override
+  public void start(Stage stage) throws Exception { 
+<span class="nc" id="L395">    stage.setScene(new Scene(createContent()));</span>
+<span class="nc" id="L396">    stage.show();</span>
+<span class="nc" id="L397">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Dec 6, 2018 7:56:07 PM)</div></body></html>
