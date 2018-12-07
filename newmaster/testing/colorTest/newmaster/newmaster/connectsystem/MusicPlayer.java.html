@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>MusicPlayer.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">DesignFx (Dec 6, 2018 7:32:52 PM)</a> &gt; <a href="../../index.html" class="el_group">newmaster</a> &gt; <a href="../index.html" class="el_bundle">newmaster</a> &gt; <a href="index.source.html" class="el_package">connectsystem</a> &gt; <span class="el_source">MusicPlayer.java</span></div><h1>MusicPlayer.java</h1><pre class="source lang-java linenums">/*****************************************************************
+This Music class starts playing a sound file in a 
+continuous loop. Offers methods to pause/resume. 
+Code based on class found on 
+https://www.geeksforgeeks.org/play-audio-file-using-java/
+
+@author Dane Bramble
+@version November 2018
+*****************************************************************/
+
+package connectsystem;
+
+import java.io.File; 
+import java.io.IOException; 
+
+import javax.sound.sampled.AudioInputStream; 
+import javax.sound.sampled.AudioSystem; 
+import javax.sound.sampled.Clip; 
+import javax.sound.sampled.LineUnavailableException; 
+import javax.sound.sampled.UnsupportedAudioFileException; 
+
+public class MusicPlayer {
+  // to store current position in song
+  Long currentFrame; 
+  Clip clip; 
+      
+  // current status of clip (play, paused)
+  String status; 
+      
+  AudioInputStream audioInputStream; 
+<span class="nc" id="L31">  static String filePath = &quot;model/resources/First Try.wav&quot;;  // the file path of the desired file</span>
+    
+  /*****************************************************************
+  Constructor - initializes the streams and clip.
+  */
+<span class="nc" id="L36">  public MusicPlayer() </span>
+      throws UnsupportedAudioFileException, 
+      IOException, LineUnavailableException { 
+    // create AudioInputStream object 
+<span class="nc" id="L40">    audioInputStream = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile()); </span>
+          
+    // create clip reference 
+<span class="nc" id="L43">    clip = AudioSystem.getClip(); </span>
+          
+    // open audioInputStream to the clip 
+<span class="nc" id="L46">    clip.open(audioInputStream); </span>
+<span class="nc" id="L47">    clip.stop();</span>
+        
+<span class="nc" id="L49">    clip.loop(Clip.LOOP_CONTINUOUSLY); </span>
+<span class="nc" id="L50">  } </span>
+    
+  /*****************************************************************
+  Plays the given audio file, and sets a new status.
+  */
+  public void play() { 
+    //start the clip 
+<span class="nc" id="L57">    clip.start(); </span>
+<span class="nc" id="L58">    status = &quot;play&quot;; </span>
+<span class="nc" id="L59">  } </span>
+    
+  /*****************************************************************
+  Stops the audio stream and sets a new status.
+  */
+  public void pause() { 
+<span class="nc" id="L65">    this.currentFrame = this.clip.getMicrosecondPosition(); </span>
+<span class="nc" id="L66">    clip.stop(); </span>
+<span class="nc" id="L67">    status = &quot;paused&quot;; </span>
+<span class="nc" id="L68">  } </span>
+    
+  /*****************************************************************
+  Resumes the audio play back from the last point it was paused at.
+  */
+  
+  public void resumeAudio() throws UnsupportedAudioFileException, 
+                                IOException, LineUnavailableException { 
+<span class="nc" id="L76">    clip.close(); </span>
+<span class="nc" id="L77">    resetAudioStream(); </span>
+<span class="nc" id="L78">    clip.setMicrosecondPosition(currentFrame); </span>
+<span class="nc" id="L79">    this.play(); </span>
+<span class="nc" id="L80">  } </span>
+    
+    
+  /*****************************************************************
+  Resets the audio stream to be played again when resumed.
+  */
+  public void resetAudioStream() throws UnsupportedAudioFileException, IOException, 
+                                            LineUnavailableException { 
+<span class="nc" id="L88">    audioInputStream = AudioSystem.getAudioInputStream(</span>
+<span class="nc" id="L89">    new File(filePath).getAbsoluteFile()); </span>
+<span class="nc" id="L90">    clip.open(audioInputStream); </span>
+<span class="nc" id="L91">    clip.loop(Clip.LOOP_CONTINUOUSLY); </span>
+<span class="nc" id="L92">  } </span>
+    
+    
+  /*****************************************************************
+  Returns the status of the audioPlayer ('play' for currently 
+  playing, 'paused' for currently paused).
+  */
+  public String getStatus() {
+<span class="nc" id="L100">    return status;</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>DesignFx (Dec 6, 2018 7:32:52 PM)</div></body></html>

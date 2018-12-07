@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ConnectLogic.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">DesignFx (Dec 6, 2018 7:32:52 PM)</a> &gt; <a href="../../index.html" class="el_group">newmaster</a> &gt; <a href="../index.html" class="el_bundle">newmaster</a> &gt; <a href="index.source.html" class="el_package">gamelogic</a> &gt; <span class="el_source">ConnectLogic.java</span></div><h1>ConnectLogic.java</h1><pre class="source lang-java linenums">package gamelogic;
+
+//import playertype.ComputerPlayer;
+import playertype.Player;
+
+public class ConnectLogic {
+
+  public int[][] gameGrid;
+
+  private int width; // the width of the board
+  private int height; // the height of the board
+  private int numPlayers; //number of players in the game
+  private int activePlayer; //the position of the player currently playing
+
+<span class="fc" id="L15">  public Player[] playerlist = new Player[4]; //list holding all real players</span>
+  //private ComputerPlayer[] complist = new ComputerPlayer[4]; //list holding all computer players
+
+
+  /**************************************************************************
+   *Connect Logic Constructor.
+   */
+<span class="fc" id="L22">  public ConnectLogic() {</span>
+    
+    //default size in case of error
+<span class="fc" id="L25">    this.width = 7;</span>
+<span class="fc" id="L26">    this.height = 6;</span>
+<span class="fc" id="L27">    this.numPlayers = 0;</span>
+<span class="fc" id="L28">  }</span>
+
+  /**************************************************************************
+   *Start Game: Initialize all spaces to be empty, and start with player 1.
+   */
+  public void startGame() {
+    
+<span class="nc" id="L35">    gameGrid = new int[width][height];</span>
+    
+<span class="nc bnc" id="L37" title="All 2 branches missed.">    for (int i = 0; i &lt; width - 1; i++) {</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">      for (int j = 0; j &lt; height - 1; j++) {</span>
+<span class="nc" id="L39">        gameGrid[i][j] = 0;</span>
+      }
+    }
+
+<span class="nc" id="L43">    activePlayer = 1;</span>
+
+<span class="nc" id="L45">  }</span>
+
+
+  /*************************************************************************
+   * Update Grid Size: Variable game board sized for different number of 
+   *                   players.
+   */
+  public void updateGridSize() {
+<span class="nc bnc" id="L53" title="All 2 branches missed.">    if (numPlayers == 3) {</span>
+<span class="nc" id="L54">      height = 7;</span>
+<span class="nc" id="L55">      width = 9;</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">    } else if (numPlayers == 4) {</span>
+<span class="nc" id="L57">      height = 7;</span>
+<span class="nc" id="L58">      width = 11;</span>
+<span class="nc" id="L59">    } else { //default for 2 players or error</span>
+<span class="nc" id="L60">      height = 6;</span>
+<span class="nc" id="L61">      width = 7;</span>
+    }
+ 
+<span class="nc" id="L64">  }</span>
+  /**************************************************************************
+   *Drop: Find the lowest space in the column, set it to be active player.
+   *@param col the column of the game board in which to drop the chip
+   */
+  
+  public int drop(int col) {
+
+<span class="nc" id="L72">    int depth = 0;</span>
+
+    //find the lowest point before chip hits bottom or another chip 
+<span class="nc bnc" id="L75" title="All 2 branches missed.">    if (height &gt; 1) { //just in case</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">      while (gameGrid[col][depth + 1] == 0) {</span>
+<span class="nc" id="L77">        depth++;</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        if (depth + 1 &gt;= height) {</span>
+<span class="nc" id="L79">          break;</span>
+        }
+      }
+    }
+
+    //System.out.println(depth);
+<span class="nc" id="L85">    gameGrid[col][depth] = activePlayer;</span>
+<span class="nc" id="L86">    return depth;</span>
+  }
+
+  /**************************************************************************
+   *Next Turn: Increment whose turn it is, and run the logic for the current 
+   *player to place a new chip.
+   **************************************************************************/
+  public int nextTurn(int input) {
+
+<span class="nc" id="L95">    int column = -1;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">    for (Player play : playerlist) { //Find if any players are the current player</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">      if (play != null) {</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        if (play.getPosition() == activePlayer) {</span>
+<span class="nc" id="L99">          column = play.playerTurn(this, input); //place the players new chip</span>
+<span class="nc" id="L100">          break;</span>
+        }
+      }
+    }
+
+    //    for (ComputerPlayer play : complist) { 
+    //      if (play != null) {
+    //        if (play.getPosition() == activePlayer) {
+    //          column = play.computerTurn(this); //place the computer players new chip
+    //          break;
+    //        }
+    //      }
+    //    }
+    
+<span class="nc" id="L114">    boolean possible = false;</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">    for (int i = 0; i &lt; width; i++) { //check if any more chips can be added</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">      if (gameGrid [i][0] == 0) {</span>
+<span class="nc" id="L117">        possible = true;</span>
+<span class="nc" id="L118">        break;</span>
+      }
+    }
+
+<span class="nc bnc" id="L122" title="All 2 branches missed.">    if (!possible) {</span>
+<span class="nc" id="L123">      column = -20; //if no more open slots, game over</span>
+<span class="nc" id="L124">      System.out.println(&quot;Game board is filled, it's a tie!&quot;);</span>
+    }
+    
+<span class="nc bnc" id="L127" title="All 2 branches missed.">    if (activePlayer &lt; numPlayers) { // set the next player</span>
+<span class="nc" id="L128">      activePlayer++;</span>
+<span class="nc" id="L129">    } else {</span>
+<span class="nc" id="L130">      activePlayer = 1;</span>
+    }
+
+<span class="nc" id="L133">    return column; //if -1, end the game</span>
+  }
+
+  /**************************************************************************
+   *Check Win: find if a line of 4 exists horizontally, vertically, or
+   *           diagonally.
+   **************************************************************************/
+
+  public int checkWin() {
+<span class="nc bnc" id="L142" title="All 2 branches missed.">    for (int i = 0; i &lt; width; i++) {</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">      for (int j = 0; j &lt; height; j++) {</span>
+
+        //check for each player
+<span class="nc bnc" id="L146" title="All 2 branches missed.">        for (int p = 1; p &lt;= numPlayers; p++) {</span>
+
+<span class="nc bnc" id="L148" title="All 2 branches missed.">          if (j &lt; height - 3) {</span>
+
+
+            //vertical win
+<span class="nc bnc" id="L152" title="All 4 branches missed.">            if (gameGrid[i][j] == p &amp;&amp; gameGrid[i][j + 1] == p </span>
+<span class="nc bnc" id="L153" title="All 4 branches missed.">                &amp;&amp; gameGrid[i][j + 2] == p &amp;&amp; gameGrid[i][j + 3] == p) {</span>
+<span class="nc" id="L154">              return p;   </span>
+            }
+          }
+
+<span class="nc bnc" id="L158" title="All 2 branches missed.">          if (i &lt; width - 3) {</span>
+
+            //horizontal win
+<span class="nc bnc" id="L161" title="All 4 branches missed.">            if (gameGrid[i][j] == p &amp;&amp; gameGrid[i + 1][j] == p </span>
+<span class="nc bnc" id="L162" title="All 4 branches missed.">                &amp;&amp; gameGrid[i + 2][j] == p &amp;&amp; gameGrid[i + 3][j] == p) {</span>
+<span class="nc" id="L163">              return p;   </span>
+            }
+          }
+
+<span class="nc bnc" id="L167" title="All 4 branches missed.">          if (i &lt; width - 3 &amp;&amp; j &lt; height - 3) {</span>
+
+            //diagonal down 
+<span class="nc bnc" id="L170" title="All 4 branches missed.">            if (gameGrid[i][j] == p &amp;&amp; gameGrid[i + 1][j + 1] == p </span>
+<span class="nc bnc" id="L171" title="All 4 branches missed.">                &amp;&amp; gameGrid[i + 2][j + 2] == p &amp;&amp; gameGrid[i + 3][j + 3] == p) {</span>
+<span class="nc" id="L172">              return p;   </span>
+            }
+          }
+
+
+<span class="nc bnc" id="L177" title="All 4 branches missed.">          if (i &lt; width - 3 &amp;&amp; j &gt;= 3) {</span>
+
+            //diagonal up                       
+<span class="nc bnc" id="L180" title="All 4 branches missed.">            if (gameGrid[i][j] == p &amp;&amp; gameGrid[i + 1][j - 1] == p </span>
+<span class="nc bnc" id="L181" title="All 4 branches missed.">                &amp;&amp; gameGrid[i + 2][j - 2] == p &amp;&amp; gameGrid[i + 3][j - 3] == p) {</span>
+<span class="nc" id="L182">              return p;   </span>
+            }
+          }
+        }
+      }
+    }   
+
+<span class="nc" id="L189">    return 0;</span>
+  }
+
+
+  /**************************************************************************
+   *Is Valid: Returns the validity of a move, false if out of bounds.
+   *@param col the column of the game board in order check validity
+   */
+  public boolean isValid(int col) {
+<span class="nc" id="L198">    boolean valid = false;</span>
+<span class="nc bnc" id="L199" title="All 4 branches missed.">    if (col &gt;= 0 &amp;&amp; col &lt; width) { //if within the column range</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">      for (int depth : gameGrid[col]) {</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">        if (depth == 0) { // if the column isn't filled with chips</span>
+<span class="nc" id="L202">          valid = true;</span>
+        }
+      }
+    }
+
+<span class="nc" id="L207">    return valid;</span>
+  }
+
+  /**************************************************************************
+   *Adds a player to the list of current players. 
+   *@param play - the player to be added to the list
+   */
+  public void addPlayer(Player play) {
+<span class="nc bnc" id="L215" title="All 2 branches missed.">    if (numPlayers &lt; 4) { //can't have more than 4</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">      for (int i = 0; i &lt; 4; i++) {</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">        if (playerlist[i] == null) {</span>
+<span class="nc" id="L218">          playerlist[i] = play;</span>
+<span class="nc" id="L219">          numPlayers++;</span>
+<span class="nc" id="L220">          break;</span>
+        }
+      }
+    }
+<span class="nc" id="L224">    updateGridSize();</span>
+<span class="nc" id="L225">    return;</span>
+  }
+
+  /**************************************************************************
+     *Adds a computer player to the list of current players. 
+     *@param play - the computer player to be added to the list
+     */
+  //  public void addPlayer(ComputerPlayer play) {
+  //    if (numPlayers &lt; 4) { //can't have more than 4
+  //      for (int i = 0; i &lt; 4; i++) {
+  //        if (complist[i] == null) {
+  //          complist[i] = play;
+  //          numPlayers++;
+  //          break;
+  //        }
+  //      }
+  //    }
+  //    return;  
+  //  }
+
+
+  /**************************************************************************
+   *Return the game Grid.
+   **************************************************************************/
+  public int[][] getGrid() {
+<span class="nc" id="L250">    return gameGrid;</span>
+  }
+
+
+  /**************************************************************************
+   *Return the height of the grid.
+   **************************************************************************/
+  public int getY() {
+<span class="nc" id="L258">    return height;</span>
+  }
+
+
+  /**************************************************************************
+   *Return the width of the grid.
+   **************************************************************************/
+  public int getX() {
+<span class="nc" id="L266">    return width;</span>
+  }
+
+  /**************************************************************************
+   *Get return the name of the player that is currently playing.
+   **************************************************************************/
+  public Player getCurrentPlayer() {
+<span class="nc" id="L273">    Player current = new Player();</span>
+<span class="nc bnc" id="L274" title="All 2 branches missed.">    for (Player play : playerlist) { //check if a player is the current player</span>
+<span class="nc bnc" id="L275" title="All 2 branches missed.">      if (play != null) {</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">        if (play.getPosition() == activePlayer) {</span>
+<span class="nc" id="L277">          current = play;</span>
+<span class="nc" id="L278">          break;</span>
+        }
+      }
+    }
+
+    //    for (ComputerPlayer play : complist) { //check if a computer player is the current player
+    //      if (play != null) {
+    //        if (play.getPosition() == activePlayer) {
+    //          current = play.getName();
+    //          break;
+    //        }
+    //      }
+    //
+    //    }
+<span class="nc" id="L292">    return current;</span>
+  }
+
+  /**************************************************************************
+   * Set Space: allows an individual space to be set for testing purposes.
+   * @param col column place
+   * @param depth depth place
+   * @param player number of the player
+   */
+  public void setSpace(int col, int depth, int player) {
+<span class="nc" id="L302">    gameGrid[col][depth] = player;</span>
+<span class="nc" id="L303">  }</span>
+
+  /**************************************************************************
+   * Get Player List: used for testing.
+   * @return list of players in the game
+   */
+  public Player[] getPlayerlist() {
+<span class="nc" id="L310">    return playerlist;</span>
+  }
+
+  /**************************************************************************
+   * Set Number of Players: used for testing.
+   * @param n Number of players
+   */
+  public void setNumPlayers(int n) {
+<span class="nc" id="L318">    numPlayers = n;</span>
+<span class="nc" id="L319">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>DesignFx (Dec 6, 2018 7:32:52 PM)</div></body></html>
